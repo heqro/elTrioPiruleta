@@ -5,8 +5,8 @@ package p_final;
  * @author j.montes.2018
  */
 public class Posicion {
-    int coordenadax;
-    char coordenaday;
+    private int coordenadax;
+    private char coordenaday;
     
     
     public Posicion(int x, char y, boolean l){

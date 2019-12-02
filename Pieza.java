@@ -17,4 +17,7 @@ public abstract class Pieza {
     public abstract String getColor();
     @Override
     public abstract String toString();
+        public Posicion getPosicion(){
+        return pos;
+    }
 }

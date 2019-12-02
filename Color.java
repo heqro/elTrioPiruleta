@@ -11,4 +11,24 @@ package p_final;
  */
 public enum Color {
     BLANCO, NEGRO;
+    @Override
+    public String toString(){
+        String color;
+        switch(this){
+            case BLANCO:
+            {
+                color = "BLANCO";
+                break;
+            }
+            case NEGRO:
+            {
+                color = "NEGRO";
+                break;
+            }
+            default:{
+                color = null;
+            }
+        }
+        return color;
+    }
 }

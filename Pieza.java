@@ -14,10 +14,14 @@ public abstract class Pieza {
     private Color color;
     private String nombre;
     public abstract void Mover(Posicion p) throws IllegalMovementException;
-    public abstract String getColor();
+    
     @Override
     public abstract String toString();
-        public Posicion getPosicion(){
+    
+    public Posicion getPosicion(){
         return pos;
+    }
+    public abstract String getColor(){
+        return color.toString();
     }
 }

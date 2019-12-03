@@ -23,6 +23,11 @@ public abstract class Pieza {
     public Posicion getPosicion(){
         return pos;
     }
+    
+    public void setPosicion(Posicion p){
+        pos = p;//
+    }
+    
     public abstract String getColor(){
         return color.toString();
     }

@@ -25,7 +25,7 @@ public class miConsultaSQL{
       try{
         st.close();
         con.close();
-      }catch (Exception e){
+      }catch (SQLException e){
         e.printStackTrace();
       }
   }

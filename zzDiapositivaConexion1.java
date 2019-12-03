@@ -13,7 +13,7 @@ public class miAccesoSQL{
     } finally {
       try{
         con.close(); 
-      }catch (Exception e){
+      }catch (SQLException e){
         e.printStackTrace();
       }
   }

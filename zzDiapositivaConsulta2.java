@@ -7,17 +7,14 @@ public class miConsultaSQL{
     Connection con = null;
     Statement st = null;
     ResultSet rs = null;
-    String miConsulta = "SELECT DNI, Nombre, Apellidos, FechaNac From ESTUDIANTES");
+    String miConsulta = "SELECT Sueldo, DNI, Nombre_Apellidos, FechaNac From EMPLEADOS");
+    int contsueldo=0; //inicializamos el contador de los sueldos
     try{
       con = DriverManager.getConnection(URL, USER, PASSWORD);
       st = con.createStatement();
       rs = st.executeQuery(miConsulta);
       while(rs.next()){
-       System.out.println("DNI: " + rs.getInt(1)
-                          + "\n Nombre: " + rs.getString(2) 
-                          + "\n Apellidos: " + rs.getString(3)
-                          + "\n FechaNac: " + rs.getDate(4)
-                          + "\n ----------------------------------------");
+       contsueldo+=rs.getInt(1); // sumamos los sueldos de todas las tuplas de la tabla
       }
     }catch(SQLException e){ //excepción provocada por error de acceso a la base de datos
       e.printStackTrace();

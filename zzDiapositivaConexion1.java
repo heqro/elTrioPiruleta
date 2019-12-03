@@ -8,11 +8,11 @@ public class miConsultaSQL{
     try{
       con = DriverManager.getConnection(URL, USER, PASSWORD);
       System.out.println("Conexion establecida");
-    }catch(SQLException e){
+    }catch(SQLException e){ //excepción provocada por error de acceso a la base de datos
       e.printStackTrace();
     } finally {
       try{
-        con.close();
+        con.close(); 
       }catch (Exception e){
         e.printStackTrace();
       }

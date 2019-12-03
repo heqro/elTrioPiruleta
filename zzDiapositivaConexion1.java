@@ -1,4 +1,4 @@
-public class miConsultaSQL{
+public class miAccesoSQL{
   static final String URL = "jdbc:mysql://urlDeEjemplo.es/NombreDB";
   static final String USER = "AlumnoDePrueba";
   static final String PASSWORD = "qwertyui123";

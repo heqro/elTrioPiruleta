@@ -30,7 +30,7 @@ public class Posicion {
     
     @Override
     public boolean equals(Object o){
-        if (o==null){
+        if (o == null){
             return false;
         }
         if (getClass() != o.getClass()){
@@ -44,6 +44,7 @@ public class Posicion {
                 return false;
             } else return true;
         }
-        
+    }
               
     }
+

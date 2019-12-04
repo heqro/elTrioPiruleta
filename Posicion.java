@@ -9,7 +9,7 @@ public class Posicion {
     private char coordenaday;
     
     
-    public Posicion(int x, char y, boolean l){
+    public Posicion(int x, char y){
         coordenadax = x;
         coordenaday = y;
         

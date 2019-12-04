@@ -4,7 +4,7 @@ package p_final;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import java.util.ArrayList;
 /**
  *
  * @author hr.iglesias.2018
@@ -14,11 +14,9 @@ public abstract class Pieza {
     private Color color;
     private String nombre;
     private ArrayList<Posicion> posiblesMovimientos = new ArrayList<Posicion>();
-    public abstract void Mover(Posicion p) throws IllegalMovementException;
-    
-    
-    @Override
-    public abstract String toString();
+    public String getColor(){
+        return color.toString();
+    }
     
     public Posicion getPosicion(){
         return pos;
@@ -28,13 +26,12 @@ public abstract class Pieza {
         pos = p;//
     }
     
-    public abstract String getColor(){
-        return color.toString();
-    }
-    
     public ArrayList<Posicion> getPosiblesMovimientos(){
         return posiblesMovimientos;   
     }
     
     public abstract ArrayList<Posicion> calcularMovimientos();
+    @Override
+    public abstract String toString();
+    public abstract void Mover(Posicion p) throws IllegalMovementException;
 }

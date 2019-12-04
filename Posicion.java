@@ -10,15 +10,15 @@ public class Posicion {
     
     
     public Posicion(int x, char y, boolean l){
-        coordenadax=x;
-        coordenaday=y;
+        coordenadax = x;
+        coordenaday = y;
         
     }
     public void setCoordenadax(int x){
-        coordenadax=x;
+        coordenadax = x;
     }
     public void setCoordenaday(char y){
-        coordenaday=y;    
+        coordenaday = y;    
     }
     
     public int getCoordenadax(){
@@ -33,18 +33,17 @@ public class Posicion {
         if (o == null){
             return false;
         }
+        
+        if (this == o){
+            return true;
+        }
+        
         if (getClass() != o.getClass()){
             return false;
         }
-        final Posicion pos = (Posicion) o;
-        if (this.coordenadax != pos.coordenadax){
-            return false;
-        }else{
-            if (this.coordenaday != pos.coordenaday){
-                return false;
-            } else return true;
-        }
+        Posicion pos = (Posicion) o;
+        return (this.coordenadax == pos.coordenadax && this.coordenaday == pos.coordenaday);
     }
               
-    }
+}
 

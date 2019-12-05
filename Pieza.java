@@ -42,10 +42,13 @@ public abstract class Pieza {
     
     public abstract ArrayList<Posicion> calcularMovimientos();
     public void Mover(Posicion p) throws IllegalMovementException{
-        if (!posiblesMovimientos.contains(p)) throw (new IllegalMovementException());
-                else{
-            this.getTablero().moverPieza(this.toString(),p)
+        if (!posiblesMovimientos.contains(p))
+        {
+            throw (new IllegalMovementException());
         }
-       
-    };
+        else
+        {
+            this.getTablero().moverPieza(this.toString(), p);
+        }  
+    }
 }

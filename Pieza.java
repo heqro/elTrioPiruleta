@@ -10,28 +10,28 @@ import java.util.ArrayList;
  * @author hr.iglesias.2018
  */
 public abstract class Pieza {
-    private Posicion pos;
     private Color color;
-    private String nombre;
+    private char nombre;
     private ArrayList<Posicion> posiblesMovimientos = new ArrayList<Posicion>();
-    public String getColor(){
-        return color.toString();
+    
+    public Pieza(Color c, char nombre){
+        this.color = c;
+        this.nombre = nombre;
     }
     
-    public Posicion getPosicion(){
-        return pos;
+    public Color getColor(){
+        return color;
     }
     
-    public void setPosicion(Posicion p){
-        pos = p;//
+    public char getNombre(){
+        return nombre;
     }
     
-    public ArrayList<Posicion> getPosiblesMovimientos(){
-        return posiblesMovimientos;   
+    @Override
+    public String toString(){
+        return (getNombre() + getColor().toString());   
     }
     
     public abstract ArrayList<Posicion> calcularMovimientos();
-    @Override
-    public abstract String toString();
     public abstract void Mover(Posicion p) throws IllegalMovementException;
 }

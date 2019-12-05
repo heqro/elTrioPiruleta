@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Peon extends Pieza{
     public Peon (char color){
-        super(new Color(color), 'P');
+        super(new Color(color), 'P', tablero);
     }
 
     @Override

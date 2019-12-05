@@ -20,7 +20,9 @@ public class Tablero {
     public Tablero(Pieza M[][]){
         Marcador = M;
     }
-    private void insertarPieza(String pstring, int x, int y){
+    private void insertarPieza(String pstring, Posicion p){
+        int x = p.getCoordenadax();
+        int y = p.getCoordenaday();
         switch(pstring.charAt(0)){
             case 'R':
             {

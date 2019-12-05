@@ -1,7 +1,0 @@
-package p_final;
-
-
-public class Caballo extends Pieza{
-    public peon (Color color ){
-        super( color, "C");
-    }

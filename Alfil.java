@@ -1,7 +1,20 @@
 package p_final;
 
+import java.util.ArrayList;
+
 
 public class Alfil extends Pieza{
-    public Alfil (Color color){
-        super(color, 'A');
+    public Alfil (char color){
+        super(new Color(color), 'A');
      }
+
+    @Override
+    public ArrayList<Posicion> calcularMovimientos(Tablero t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void Mover(Posicion p) throws IllegalMovementException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}

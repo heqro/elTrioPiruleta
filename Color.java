@@ -12,8 +12,8 @@ package p_final;
 public class Color {
     public enum ColorPieza {BLANCO, NEGRO};
     private final ColorPieza color; 
-    public Color(String colorDePieza) {
-        switch(colorDePieza.charAt(0)){
+    public Color(char colorDePieza) {
+        switch(colorDePieza){
             case 'B':case 'b':{
                 color = ColorPieza.BLANCO;
                 break;

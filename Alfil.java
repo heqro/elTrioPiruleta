@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Alfil extends Pieza{
     public Alfil (char color){
-        super(new Color(color), 'A');
+        super(new Color(color), 'A', tablero);
      }
 
     @Override

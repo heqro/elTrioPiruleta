@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Rey extends Pieza{
     public Rey (char color){
-        super(new Color(color), 'R');
+        super(new Color(color), 'R', tablero);
     }
 
     @Override

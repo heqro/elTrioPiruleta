@@ -9,26 +9,41 @@ package p_final;
  *
  * @author hr.iglesias.2018
  */
-public enum Color {
-    BLANCO, NEGRO;
-    @Override
-    public String toString(){
-        String color;
-        switch(this){
-            case BLANCO:
-            {
-                color = "BLANCO";
+public class Color {
+    public enum ColorPieza {BLANCO, NEGRO};
+    private final ColorPieza color; 
+    public Color(String colorDePieza) {
+        switch(colorDePieza.charAt(0)){
+            case 'B':case 'b':{
+                color = ColorPieza.BLANCO;
                 break;
             }
-            case NEGRO:
-            {
-                color = "NEGRO";
+            case 'N': case'n':{
+                color = ColorPieza.NEGRO;
                 break;
             }
             default:{
                 color = null;
             }
         }
-        return color;
+    }
+    
+    
+@Override
+public String toString(){
+    switch(this.color){
+            case BLANCO:
+            {
+                return "BLANCO";
+            }
+            case NEGRO:
+            {
+                return "NEGRO";
+            }
+            default:
+            {
+                return null;
+            }
+        }
     }
 }

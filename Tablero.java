@@ -11,50 +11,52 @@ package p_final;
  */
 public class Tablero {
     private Pieza Marcador[][] = new Pieza[8][8];
-    public Tablaro(){
-        int i;
-        int j;
-        for (i=0;i==7;i++){
-            for(j=0;j==7;j++){
-                Marcador[i][j] = null;
-            }
-        };
-    }
+    private static int contadorRey = 0;
+    private static int contadorAlfil = 0;
+    private static int contadorPeon = 0;
+    private static int contadorDama = 0;
+    private static int contadorTorre = 0;
+    private static int contadorCaballo = 0;
     public Tablero(Pieza M[][]){
-        Marcador= M;
-        
+        Marcador = M;
     }
-    private ArrayList<Posicion> BuscarPiezas(Char s){
-        ArrayList<Posicion>  p = new ArrayList<Posicion>;
-        int i;
-        int j;
-        for (i = 0; i==7; i++){
-            for (j=0;j==7;j++){
-                if (Marcador[i][j].getNombre == s){
-                    p.add(new Posicion(i,j));
-                }
-            }
-        };
-        return(p);
-        
-    }
-    public Pieza MovimientoValido(String s){
-      char a =  s.charAt(1);
-      this.BuscarPiezas(a)
-    }
-    public void MoverPieza (Posicion posM, Pieza p ){
-        try{
-        }catch()
-    }
-    
     private void insertarPieza(String pstring, int x, int y){
         switch(pstring.charAt(0)){
             case 'R':
-                if (pstring.charAt(1)=='B'){
-                    
-                    
-                    
-                }
+            {
+                contadorRey++;
+                Marcador[x][y] = new Rey(pstring.charAt(1));
+            }
+            case 'A':
+            {
+                contadorAlfil++;
+                Marcador[x][y] = new Alfil(pstring.charAt(1));
+            }
+            case 'T':
+            {
+                contadorTorre++;
+                Marcador[x][y] = new Torre(pstring.charAt(1));
+            }
+            
+            case 'D':
+            {
+                contadorDama++;
+                Marcador[x][y] = new Dama(pstring.charAt(1));
+            }
+            case 'P':
+            {
+                contadorPeon++;
+                Marcador[x][y] = new Peon(pstring.charAt(1));
+            }
+            case 'C':
+            {
+                contadorCaballo++;
+                Marcador[x][y] = new Caballo(pstring.charAt(1));
+            }
+            default: //caso de 'V'
+            {
+                Marcador[x][y] = null;
+            }
         }
         
     }

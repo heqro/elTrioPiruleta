@@ -29,6 +29,9 @@ public abstract class Pieza {
     public String toString(){
         return( nombre + this.color.toString() );
     }
+    public String getNombre(){
+        return (nombre);
+    }
     @Override
 
 }

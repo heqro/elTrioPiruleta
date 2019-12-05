@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Caballo extends Pieza{
     public Caballo (char color){
-        super(new Color(color), 'C');
+        super(new Color(color), 'C', tablero);
     }
 
     @Override

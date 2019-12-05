@@ -27,7 +27,7 @@ public abstract class Pieza {
         return posiblesMovimientos;   
     }
     public String toString(){
-        return(this.color.toString() + nombre);
+        return( nombre + this.color.toString() );
     }
     @Override
 

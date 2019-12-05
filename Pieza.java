@@ -13,6 +13,10 @@ public abstract class Pieza {
     private Color color;
     private String nombre;
     private ArrayList<Posicion> posiblesMovimientos = new ArrayList<Posicion>();
+    public Pieza (Color c, String n){
+        color = c;
+        nombre =n;
+    }
     public Color getColor(){
         return color;
     }
@@ -25,8 +29,6 @@ public abstract class Pieza {
     public String toString(){
         return(this.color.toString() + nombre);
     }
-    public abstract ArrayList<Posicion> calcularMovimientos();
     @Override
-    public abstract String toString();
-    public abstract void Mover(Posicion p) throws IllegalMovementException;
+
 }

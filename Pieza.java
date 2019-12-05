@@ -10,26 +10,21 @@ import java.util.ArrayList;
  * @author hr.iglesias.2018
  */
 public abstract class Pieza {
-    private Posicion pos;
     private Color color;
     private String nombre;
     private ArrayList<Posicion> posiblesMovimientos = new ArrayList<Posicion>();
-    public String getColor(){
+    public Color getColor(){
         return color.toString();
     }
-    
-    public Posicion getPosicion(){
-        return pos;
+    public void setPosiblesMovimientos (ArrayList<Posicion> movimientos){
+        posiblesMovimientos = movimientos;
     }
-    
-    public void setPosicion(Posicion p){
-        pos = p;//
-    }
-    
     public ArrayList<Posicion> getPosiblesMovimientos(){
         return posiblesMovimientos;   
     }
-    
+    public String toString(){
+        return(this.color.toString() + nombre);
+    }
     public abstract ArrayList<Posicion> calcularMovimientos();
     @Override
     public abstract String toString();

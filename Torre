@@ -1,0 +1,7 @@
+package p_final;
+
+
+public class Torre extends Pieza{
+    public peon ( Color color ){
+        super( color, "T");
+    }

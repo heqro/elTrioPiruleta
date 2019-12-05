@@ -13,10 +13,12 @@ public abstract class Pieza {
     private Color color;
     private char nombre;
     private ArrayList<Posicion> posiblesMovimientos = new ArrayList<Posicion>();
+    private Tablero tablero;
     
-    public Pieza(Color c, char nombre){
+    public Pieza(Color c, char nombre,Tablero tablero){
         this.color = c;
         this.nombre = nombre;
+        this.tablero = tablero;
     }
     
     public Color getColor(){
@@ -26,6 +28,12 @@ public abstract class Pieza {
     public char getNombre(){
         return nombre;
     }
+    public void setTablero(Tablero t){
+        tablero=t;
+    }
+    public Tablero getTablero(){
+        return tablero;
+    }
     
     @Override
     public String toString(){
@@ -33,5 +41,11 @@ public abstract class Pieza {
     }
     
     public abstract ArrayList<Posicion> calcularMovimientos();
-    public abstract void Mover(Posicion p) throws IllegalMovementException;
+    public void Mover(Posicion p) throws IllegalMovementException{
+        if (!posiblesMovimientos.contains(p)) throw (new IllegalMovementException());
+                else{
+            this.getTablero().moverPieza(this.toString(),p)
+        }
+       
+    };
 }

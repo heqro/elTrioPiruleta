@@ -14,7 +14,7 @@ public abstract class Pieza {
     private String nombre;
     private ArrayList<Posicion> posiblesMovimientos = new ArrayList<Posicion>();
     public Color getColor(){
-        return color.toString();
+        return color;
     }
     public void setPosiblesMovimientos (ArrayList<Posicion> movimientos){
         posiblesMovimientos = movimientos;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Dama extends Pieza{
     public Dama (char color){
-        super(new Color(color), 'D');
+        super(new Color(color), 'D', tablero);
     }
 
     @Override

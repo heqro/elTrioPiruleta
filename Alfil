@@ -2,6 +2,6 @@ package p_final;
 
 
 public class Alfil extends Pieza{
-    public peon ( Color color ){
-        super( color, "A");
+    public Alfil (Color color){
+        super(color, 'A');
      }

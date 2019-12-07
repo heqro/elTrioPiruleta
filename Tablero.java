@@ -54,7 +54,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Rey(colorPieza);
+                Marcador[x][y] = new Rey(colorPieza, this);
                 break;
             }
             case 'A':
@@ -107,7 +107,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Torre(colorPieza);
+                Marcador[x][y] = new Torre(colorPieza, this);
                 break;
             }
             
@@ -126,7 +126,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Dama(colorPieza);
+                Marcador[x][y] = new Dama(colorPieza, this);
                 break;
             }
             case 'P':
@@ -144,7 +144,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Peon(colorPieza);
+                Marcador[x][y] = new Peon(colorPieza, this);
                 break;
             }
             case 'C':
@@ -162,7 +162,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Rey(colorPieza);
+                Marcador[x][y] = new Rey(colorPieza, this);
                 break;
             }
             case 'V':

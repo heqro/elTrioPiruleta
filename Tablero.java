@@ -144,6 +144,8 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
+                if (x == 7 || x == 0) tableroIlegal = true;
+                //Los peones nunca pueden estar en las últimas filas del tablero
                 Marcador[x][y] = new Peon(colorPieza, this);
                 break;
             }
@@ -178,4 +180,3 @@ public class Tablero {
         
     }
 }
-

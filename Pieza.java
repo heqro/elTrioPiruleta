@@ -40,7 +40,7 @@ public abstract class Pieza {
         return (getNombre() + getColor().toString());   
     }
     
-    public abstract ArrayList<Posicion> calcularMovimientos();
+    public abstract ArrayList<Posicion> calcularMovimientos(Posicion coordenada);
     public void Mover(Posicion p) throws IllegalMovementException{
         if (!posiblesMovimientos.contains(p))
         {

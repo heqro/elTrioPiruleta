@@ -18,7 +18,8 @@ public class Alfil extends Pieza{
         ArrayList<Posicion> aposiciones = new ArrayList();
         int x  = coordenada.getCoordenadax();
         char y = coordenada.getCoordenaday();
-        
+        int xaux=x;
+        char yaux=y;
         aposiciones.add(coordenada);
         
         while( x < 8 ||  y< 'h'){ //diagonal sup derecha
@@ -29,6 +30,8 @@ public class Alfil extends Pieza{
             aposiciones.add(new Posicion(x,y));
             
         }
+        x=xaux;
+        y=yaux;
         while( x < 8 ||  y> 'a'){ //diagonal sup izda
             x= x+1;
             int yn= Character.getNumericValue(y);
@@ -37,6 +40,8 @@ public class Alfil extends Pieza{
             aposiciones.add(new Posicion(x,y));
             
         }
+        x=xaux;
+        y=yaux;
         while( x > 1 ||  y< 'h'){ //diagonal inf derecha
             x= x-1;
             int yn= Character.getNumericValue(y);
@@ -45,6 +50,8 @@ public class Alfil extends Pieza{
             aposiciones.add(new Posicion(x,y));
             
         }
+        x=xaux;
+        y=yaux;
         while( x > 1 ||  y> 'a'){ //diagonal inf izquierda
             x= x-1;
             int yn= Character.getNumericValue(y);

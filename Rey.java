@@ -14,13 +14,15 @@ public class Rey extends Pieza{
     @Override
     public ArrayList<Posicion> calcularMovimientos(Posicion coordenada) {
         ArrayList<Posicion> aposiciones = new ArrayList();
+        
         int x  = coordenada.getCoordenadax();
         char y = coordenada.getCoordenaday();
+        aposiciones.add(new Posicion (x,y));
         char y1 = (char)(Character.getNumericValue(y)+1);
         char y2 = (char)(Character.getNumericValue(y)+1);
         if (y<'h')aposiciones.add(new Posicion (x,y1));
         if (y>'a')aposiciones.add(new Posicion (x,y2));
-        aposiciones.add(new Posicion (x,y));
+        
         if(y<'h' && x<8)aposiciones.add(new Posicion (x+1,y1));
         if(y>'a' && x<8)aposiciones.add(new Posicion (x+1,y2));
         if(x<8)aposiciones.add(new Posicion (x+1,y));

@@ -46,4 +46,14 @@ public String toString(){
             }
         }
     }
+
+@Override
+public boolean equals(Object o){
+    if(o == null){ return false; }
+    if(this == o){ return true; }
+    if(this.getClass() != o.getClass()){ return false; }
+    Color c = (Color)o;
+    return c.toString() == this.toString();
+}
+
 }

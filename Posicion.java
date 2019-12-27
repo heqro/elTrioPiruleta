@@ -44,5 +44,11 @@ public class Posicion {
         Posicion pos = (Posicion) o;
         return (this.coordenadax == pos.coordenadax && this.coordenaday == pos.coordenaday);
     }
-              
+    
+    public boolean posicionLegal(){
+        boolean xCorrecta = (coordenadax < 8) && (coordenadax > 0);
+        int yNumerico = coordenaday - 97;
+        boolean yCorrecta = (coordenaday >= 0) && (coordenaday <=7);
+        return xCorrecta && yCorrecta;
+    }
 }

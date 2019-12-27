@@ -52,13 +52,21 @@ public abstract class Pieza {
         this.posPieza = p;
     }
     
+    public ArrayList<Posicion> getPosiblesMovimientos(){
+        return posiblesMovimientos;
+    }
+    
+    public void setPosiblesMovimientos(ArrayList<Posicion> posiblesMovimientos){
+        this.posiblesMovimientos = posiblesMovimientos;
+    }
+    
     @Override
     public String toString(){
         return (getNombre() + getColor().toString());   
     }
     
-    public abstract ArrayList<Posicion> calcularMovimientos(Posicion coordenada);
-    public abstract ArrayList<Posicion> calcularMovimientos();
+    //public abstract ArrayList<Posicion> calcularMovimientos(Posicion coordenada);
+    public abstract void calcularMovimientos();
     public void Mover(Posicion p) throws IllegalMovementException{
         if (!posiblesMovimientos.contains(p))
         {

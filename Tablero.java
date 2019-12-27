@@ -5,6 +5,8 @@
  */
 package p_final;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author j.montes.2018
@@ -22,18 +24,18 @@ public class Tablero {
     public Tablero(Pieza M[][]){
         Marcador = M;
     }
-//    public Pieza GetPiezaPos (int x , char y){ //recuperar pieza en una posición dada
-//        return(Marcador[x-1][Character.getNumericValue(y)-97]);
-//    }
+    public Pieza GetPiezaPos (int x , char y){ //recuperar pieza en una posición dada
+        return(Marcador[x-1][Character.getNumericValue(y)-97]);
+    }
     
     public Pieza GetPiezaPos (Posicion p){ //recuperar pieza en una posición dada
         return(Marcador[p.getCoordenadax()-1][Character.getNumericValue(p.getCoordenaday())-97]);
     }
     
     
-//    public boolean PosicionOcupada(int x, char y){//comprobamos si la posición está ocupada
-//        return (Marcador[x-1][Character.getNumericValue(y)-97] != null);
-//    }
+    public boolean PosicionOcupada(int x, char y){//comprobamos si la posición está ocupada
+        return (Marcador[x-1][Character.getNumericValue(y)-97] != null);
+    }
     
     public boolean PosicionOcupada(Posicion pos){
         int x = localizarCoordenadaX(pos);
@@ -76,7 +78,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Rey(colorPieza, this);
+                Marcador[x][y] = new Rey(colorPieza, this, pos);
                 break;
             }
             case 'A':
@@ -129,7 +131,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Torre(colorPieza, this);
+                Marcador[x][y] = new Torre(colorPieza, this, pos);
                 break;
             }
             
@@ -148,7 +150,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Dama(colorPieza, this);
+                Marcador[x][y] = new Dama(colorPieza, this, pos);
                 break;
             }
             case 'P':
@@ -168,7 +170,7 @@ public class Tablero {
                 }
                 if (x == 7 || x == 0) tableroIlegal = true;
                 //Los peones nunca pueden estar en las últimas filas del tablero
-                Marcador[x][y] = new Peon(colorPieza, this);
+                Marcador[x][y] = new Peon(colorPieza, this, pos);
                 break;
             }
             case 'C':
@@ -186,7 +188,7 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Rey(colorPieza, this);
+                Marcador[x][y] = new Caballo(colorPieza, this, pos);
                 break;
             }
             case 'V':
@@ -225,6 +227,42 @@ public class Tablero {
         }
     }
     
+    public boolean jugadaIlegalRey(Pieza p, Posicion pos){
+        /*En este método vamos a comprobar si la posición introducida 
+        forma parte de las posiciones posibles de una pieza contraria,
+        para saber si la posición posible a la que se puede mover el rey es
+        legal o no, de la siguiente forma:
+        
+            1. Guardamos la posición en la que se encuentra el rey
+            2. Movemos el rey
+            3. Tras mover el rey, se actualiza el array de posibles movimientos
+        de todas las piezas
+            4. Si alguna pieza del color contrario se puede comer al rey,
+        entonces la jugada era ilegal. En ese caso, movemos el rey a la 
+        posición original y devolvemos true.
+            5. Si ninguna pieza del color contrario se puede comer al rey,
+        entonces la jugada era legal. En ese caso, movemos el rey a la 
+        posición original y devolvemos false.
+        */
+        Posicion posAntigua = p.getPosicion();
+        moverPieza(p,pos);
+        for(int i = 0; i <= 7; i++){
+            for(int j = 0; j <= 7; j++){
+                if(Marcador[i][j] != null){
+                    ArrayList<Posicion> arrayAuxiliar = 
+                            Marcador[i][j].getPosiblesMovimientos();
+                    if(arrayAuxiliar.contains(pos)){
+                        moverPieza(p, posAntigua);
+                        return true;
+                    }
+                }
+            }
+        }
+        moverPieza(p, posAntigua);
+        return false; /*Si se devuelve false, entonces el rey puede moverse
+        a la posición introducida*/
+    }
+    
     private int localizarCoordenadaX(Posicion pos){
         return pos.getCoordenadax()-1;
         /* Este método nos va a devolver la fila del array Marcador
@@ -243,6 +281,74 @@ public class Tablero {
         Marcador[x][y] = null;
         /* Este método hace que una posición del array Marcador pase a ser null 
         (nuestra forma de entender una casilla vacía)*/
+    }
+    
+    ArrayList<Posicion> lecturaTorre(Color c, Posicion pos){
+        /*Vamos a implementar un método lecturaTorre de Tablero para poder
+        reutilizarlo tanto en en el caso de la Torre como en el caso de la Dama */
+        
+        /*
+        Vamos a hacer 4 lecturas: hacia arriba, hacia abajo, a la izquierda
+        y a la derecha.
+        */
+        ArrayList<Posicion> arrayAux = null;
+        //Lectura hacia la derecha
+        for(int j = pos.getCoordenaday(); j <= 'h'; j++){
+            Posicion posAux = new Posicion(pos.getCoordenadax(), (char)j);
+            if(!this.PosicionOcupada(posAux)){
+               arrayAux.add(posAux);
+            }else{
+                Color colorAux = this.GetPiezaPos(posAux).getColor();
+                if(!c.equals(colorAux)){
+                    arrayAux.add(posAux);
+                }
+                break;
+            }
+        }
+        
+        //Lectura hacia la izquierda
+        for(int j = pos.getCoordenaday(); j >= 'a'; j--){
+            Posicion posAux = new Posicion(pos.getCoordenadax(), (char)j);
+            if(!this.PosicionOcupada(posAux)){
+               arrayAux.add(posAux);
+            }else{
+                Color colorAux = this.GetPiezaPos(posAux).getColor();
+                if(!c.equals(colorAux)){
+                    arrayAux.add(posAux);
+                }
+                break;
+            }
+        }
+        
+        //Lectura hacia arriba
+        for(int i = pos.getCoordenadax(); i <= 8; i++){
+            Posicion posAux = new Posicion(i, pos.getCoordenaday());
+            if(!this.PosicionOcupada(posAux)){
+               arrayAux.add(posAux);
+            }else{
+                Color colorAux = this.GetPiezaPos(posAux).getColor();
+                if(!c.equals(colorAux)){
+                    arrayAux.add(posAux);
+                }
+                break;
+            }
+        }
+        
+        //Lectura hacia abajo
+        for(int i = pos.getCoordenadax(); i >= 1; i--){
+            Posicion posAux = new Posicion(i, pos.getCoordenaday());
+            if(!this.PosicionOcupada(posAux)){
+               arrayAux.add(posAux);
+            }else{
+                Color colorAux = this.GetPiezaPos(posAux).getColor();
+                if(!c.equals(colorAux)){
+                    arrayAux.add(posAux);
+                }
+                break;
+            }
+        }
+        arrayAux.remove(pos);
+        return arrayAux;
     }
 }
 

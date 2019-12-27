@@ -20,14 +20,17 @@ public class Alfil extends Pieza{
         char y = coordenada.getCoordenaday();
         int xaux=x;
         char yaux=y;
+        boolean nocupada;
         aposiciones.add(coordenada);
-        
-        while( x < 8 ||  y< 'h'){ //diagonal sup derecha
+        noocupada = true;
+        while( (x < 8 ||  y< 'h')&& nocupada ){ //diagonal sup derecha
             x= x+1;
             int yn= Character.getNumericValue(y);
             yn=yn + 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+            if (not t.PosOcupado(x , y)){
+            aposiciones.add(new Posicion(x,y))} 
+            else { nocupada = false}
             
         }
         x=xaux;

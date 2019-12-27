@@ -283,8 +283,78 @@ public class Tablero {
         (nuestra forma de entender una casilla vacía)*/
     }
     
+    ArrayList<Posicion> lecturaAlfil(Color c, Posicion pos){
+        /*Vamos a implementar un método lecturaAlfil en Tablero para poder
+        reutilizarlo tanto en en el caso del Alfil como en el caso de la Dama */
+        
+        /*
+        Vamos a hacer 4 lecturas: diagonal superior derecha e izquierda, y
+        diagonal inferior izquierda y derecha.
+        */
+        ArrayList<Posicion> arrayAux = null;
+        int i;
+        char j;
+        //Lectura diagonal superior derecha
+        for(i = pos.getCoordenadax(), j = pos.getCoordenaday(); i <= 8 && j <= 'h'; i++, j++){
+            Posicion posAux = new Posicion(i, (char)(j) );
+            if(!this.PosicionOcupada(posAux)){
+                arrayAux.add(posAux);
+            }else{
+                Color colorAux = this.GetPiezaPos(posAux).getColor();
+                if(!c.equals(colorAux)){
+                    arrayAux.add(posAux);
+                }
+                break;
+            }
+        }
+        
+        //Lectura diagonal superior izquierda
+        for(i = pos.getCoordenadax(), j = pos.getCoordenaday(); i >= 1 && j <= 'h'; i--, j++){
+            Posicion posAux = new Posicion(i, (char)(j) );
+            if(!this.PosicionOcupada(posAux)){
+                arrayAux.add(posAux);
+            }else{
+                Color colorAux = this.GetPiezaPos(posAux).getColor();
+                if(!c.equals(colorAux)){
+                    arrayAux.add(posAux);
+                }
+                break;
+            }
+        }
+        
+        //Lectura diagonal inferior izquierda
+        for(i = pos.getCoordenadax(), j = pos.getCoordenaday(); i >= 1 && j >= 'a'; i--, j--){
+            Posicion posAux = new Posicion(i, (char)(j) );
+            if(!this.PosicionOcupada(posAux)){
+                arrayAux.add(posAux);
+            }else{
+                Color colorAux = this.GetPiezaPos(posAux).getColor();
+                if(!c.equals(colorAux)){
+                    arrayAux.add(posAux);
+                }
+                break;
+            }
+        }
+        
+        //Lectura diagonal inferior derecha
+        for(i = pos.getCoordenadax(), j = pos.getCoordenaday(); i <= 8 && j >= 'a'; i++, j--){
+            Posicion posAux = new Posicion(i, (char)(j) );
+            if(!this.PosicionOcupada(posAux)){
+                arrayAux.add(posAux);
+            }else{
+                Color colorAux = this.GetPiezaPos(posAux).getColor();
+                if(!c.equals(colorAux)){
+                    arrayAux.add(posAux);
+                }
+                break;
+            }
+        }
+        arrayAux.remove(pos);
+        return arrayAux;
+    }
+    
     ArrayList<Posicion> lecturaTorre(Color c, Posicion pos){
-        /*Vamos a implementar un método lecturaTorre de Tablero para poder
+        /*Vamos a implementar un método lecturaTorre en Tablero para poder
         reutilizarlo tanto en en el caso de la Torre como en el caso de la Dama */
         
         /*

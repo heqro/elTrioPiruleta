@@ -22,7 +22,12 @@ public class Tablero {
     public Tablero(Pieza M[][]){
         Marcador = M;
     }
-    
+    public Pieza GetPiezaPos (Posicion pos){
+        return(Maracador[pos.getCoordenadax()]Character.getNumericValue(pos.getCoordeneaday())])
+    }
+    public boolean PosicionOcupada(Posicion pos){
+        return (Marcador[pos.getCpprdenadax()][Character.getNumericValue(pos.getCoordenaday())] <> NULL)
+    }
     public void comprobarTableroLegal(){
         boolean legalReyes = contReyNegro == 1 && contReyBlanco == 1;
         boolean legalPeones = contPeonNegro <= 8 && contPeonBlanco <= 8;

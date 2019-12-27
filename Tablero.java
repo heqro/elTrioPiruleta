@@ -22,12 +22,25 @@ public class Tablero {
     public Tablero(Pieza M[][]){
         Marcador = M;
     }
-    public Pieza GetPiezaPos (int x , char y){
-        return(Maracador[x]Character.getNumericValue(y)])
+//    public Pieza GetPiezaPos (int x , char y){ //recuperar pieza en una posición dada
+//        return(Marcador[x-1][Character.getNumericValue(y)-97]);
+//    }
+    
+    public Pieza GetPiezaPos (Posicion p){ //recuperar pieza en una posición dada
+        return(Marcador[p.getCoordenadax()-1][Character.getNumericValue(p.getCoordenaday())-97]);
     }
-    public boolean PosicionOcupada(int x, char y){
-        return (Marcador[x][Character.getNumericValue(y)] <> NULL)
+    
+    
+//    public boolean PosicionOcupada(int x, char y){//comprobamos si la posición está ocupada
+//        return (Marcador[x-1][Character.getNumericValue(y)-97] != null);
+//    }
+    
+    public boolean PosicionOcupada(Posicion pos){
+        int x = localizarCoordenadaX(pos);
+        int y = localizarCoordenadaY(pos);
+        return (Marcador[x][y] != null);
     }
+    
     public void comprobarTableroLegal(){
         boolean legalReyes = contReyNegro == 1 && contReyBlanco == 1;
         boolean legalPeones = contPeonNegro <= 8 && contPeonBlanco <= 8;
@@ -39,10 +52,14 @@ public class Tablero {
         tableroIlegal = legalReyes && legalPeones && legalDamas && legalTorres && legalCaballos && legalAlfiles && !tableroIlegal;
     }
     
-    public void insertarPieza(String pstring, Posicion p){
-        int x = p.getCoordenadax();
-        int y = p.getCoordenaday();
+    public void insertarPieza(String pstring, Posicion pos){/*método para inicializar el tablero*/
+        int x = localizarCoordenadaX(pos);
+        int y = localizarCoordenadaY(pos);
         char colorPieza = pstring.charAt(1);
+        if (PosicionOcupada(pos)){
+            tableroIlegal = true; /*Si intentamos introducir la pieza donde ya hay otra,
+            el tablero es ilegal*/
+        }
         switch(pstring.charAt(0)){
             case 'R':
             {
@@ -69,25 +86,25 @@ public class Tablero {
                         if((x + y) % 2 == 0){
                             contAlfilBlancoCasillasNegras++;
                             /*El alfil blanco de casillas negras se mueve por 
-                            coordenadas x, y cuya suma da un número par. */
+                            coordenadas (x, y) cuya suma da un número par. */
                         }
                         else{
                             contAlfilBlancoCasillasBlancas++;
                             /*El alfil blanco de casillas blancas se mueve por 
-                            coordenadas x, y cuya suma da un número par. */
+                            coordenadas (x, y) cuya suma da un número impar. */
                         }
                         break;
                     }
                     case 'N': case 'n':{
                         if((x + y) % 2 == 0){
-                            contAlfilNegroCasillasNegras++;
-                            /*El alfil negro de casillas negras se mueve por 
-                            coordenadas x, y cuya suma da un número par. */
-                        }
-                        else{
                             contAlfilNegroCasillasBlancas++;
                             /*El alfil negro de casillas blancas se mueve por 
-                            coordenadas x, y cuya suma da un número par. */
+                            coordenadas (x, y) cuya suma da un número par. */
+                        }
+                        else{
+                            contAlfilNegroCasillasNegras++;
+                            /*El alfil negro de casillas negras se mueve por 
+                            coordenadas (x, y) cuya suma da un número impar. */
                         }
                         break;
                     }
@@ -184,4 +201,48 @@ public class Tablero {
         }
         
     }
+    
+    public void moverPieza(Pieza p, Posicion pos){
+        /* Apuntes sobre el objeto pos:
+            - Sabemos que es una posición reglamentaria
+            - No sabemos si está ocupada*/
+        Posicion posicionAntigua = p.getPosicion();
+        this.limpiarPosicion(posicionAntigua);/*vaciamos la posición desde la que se movió la pieza*/
+        
+        Marcador[localizarCoordenadaX(pos)][localizarCoordenadaY(pos)] = p;
+        /* actualizamos el tablero con la pieza movida*/
+        
+        p.setPosicion(pos);
+        /* actualizamos la pieza con la nueva posición */
+        
+        for(int i = 0; i <= 7; i++){
+            for(int j = 0; j <= 7; j++){
+                if(Marcador[i][j] != null){
+                    Marcador[i][j].calcularMovimientos();
+                    /*calculamos los posibles movimientos de todas las piezas*/
+                }
+            }
+        }
+    }
+    
+    private int localizarCoordenadaX(Posicion pos){
+        return pos.getCoordenadax()-1;
+        /* Este método nos va a devolver la fila del array Marcador
+        en el que se encuentra la coordenada X de la posición */
+    }
+    
+    private int localizarCoordenadaY(Posicion pos){
+        return Character.getNumericValue(pos.getCoordenaday())-97;
+        /* Este método nos va a devolver la columna del array Marcador
+        en el que se encuentra la coordenada Y de la posición */
+    }
+    
+    private void limpiarPosicion(Posicion pos){
+        int x = localizarCoordenadaX(pos);
+        int y = localizarCoordenadaY(pos);
+        Marcador[x][y] = null;
+        /* Este método hace que una posición del array Marcador pase a ser null 
+        (nuestra forma de entender una casilla vacía)*/
+    }
 }
+

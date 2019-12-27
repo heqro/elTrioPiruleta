@@ -19,62 +19,126 @@ public class Dama extends Pieza{
         char y = coordenada.getCoordenaday();
         int xaux=x;
         char yaux=y;
+        boolean posnoocupada;
         aposiciones.add(coordenada);
-        
-        while( x < 8 ||  y< 'h'){ //diagonal sup derecha
+        posnoocupada = true;
+        while( (x < 8 ||  y< 'h') && posnoocupada){ //diagonal sup derecha
             x= x+1;
             int yn= Character.getNumericValue(y);
             yn=yn + 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+           if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}
             
         }
         x=xaux;
         y=yaux;
-        while( x < 8 ||  y> 'a'){ //diagonal sup izda
+        posnoocupada = true;
+        while( (x < 8 ||  y> 'a')&& posnoocupada){ //diagonal sup izda
             x= x+1;
             int yn= Character.getNumericValue(y);
             yn=yn - 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}
             
         }
+        posnoocupada = true;
         x=xaux;
         y=yaux;
-        while( x > 1 ||  y< 'h'){ //diagonal inf derecha
+        while( (x > 1 ||  y< 'h') && posnoocupada){ //diagonal inf derecha
             x= x-1;
             int yn= Character.getNumericValue(y);
             yn=yn + 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}
             
         }
+        posnoocupada = true;
         x=xaux;
         y=yaux;
-        while( x > 1 ||  y> 'a'){ //diagonal inf izquierda
+        while( (x > 1 ||  y> 'a') && posnoocupada){ //diagonal inf izquierda
             x= x-1;
             int yn= Character.getNumericValue(y);
             yn=yn - 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}
             
-        }
+        } 
+        posnoocupada = true;
         x=xaux;
         y=yaux;
-         for (int i =0; i<8 ;i++){
-            
-            aposiciones.add(new Posicion(i,y));
-            
+         while (x<8 && posnoocupada){  //vertical sup
+            x= x+1;
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}            
         }
-        for (int j =0; j<'a' ; j++){
-            
-            
-            int jn= Character.getNumericValue(j);
-            jn = jn + 1;
-            char jc = (char)(jn);
-            
-            
-            aposiciones.add(new Posicion(x,jc));
+        posnoocupada = true;
+        x=xaux;
+        while (x>1 && posnoocupada) { // vertcal inf
+            x = x-1;
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}  
+        }
+        posnoocupada = true;
+        x=xaux;
+        while (y < 'h' && posnoocupada){//horizontal derecho
+            int yn= Character.getNumericValue(y);
+            yn=yn + 1;
+            y = (char)yn;
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}              
+        }
+        posnoocupada = true;
+        y = yaux;
+        while (y > 'a' && posnoocupada){//horizontal izquierdo
+            int yn= Character.getNumericValue(y);
+            yn=yn + 1
+            y = (char)yn;
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}  
         }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

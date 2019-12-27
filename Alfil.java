@@ -20,36 +20,59 @@ public class Alfil extends Pieza{
         char y = coordenada.getCoordenaday();
         int xaux=x;
         char yaux=y;
+        boolean posnoocuppada;
         aposiciones.add(coordenada);
-        
-        while( x < 8 ||  y< 'h'){ //diagonal sup derecha
+        posnoocupada = true;
+        while( (x < 8 ||  y< 'h')&& posnoocupada){ //diagonal sup derecha
             x= x+1;
             int yn= Character.getNumericValue(y);
             yn=yn + 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false};
             
         }
         x=xaux;
         y=yaux;
+        posnoocupada = true;
         while( x < 8 ||  y> 'a'){ //diagonal sup izda
             x= x+1;
             int yn= Character.getNumericValue(y);
             yn=yn - 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}
+            
             
         }
         x=xaux;
         y=yaux;
+        posnoocupada = true;
         while( x > 1 ||  y< 'h'){ //diagonal inf derecha
             x= x-1;
             int yn= Character.getNumericValue(y);
             yn=yn + 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+            if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}
             
         }
+        posnoocupada = true;
         x=xaux;
         y=yaux;
         while( x > 1 ||  y> 'a'){ //diagonal inf izquierda
@@ -57,7 +80,13 @@ public class Alfil extends Pieza{
             int yn= Character.getNumericValue(y);
             yn=yn - 1;
             y = (char)yn;
-            aposiciones.add(new Posicion(x,y));
+           if (not(t.PosicionOcupada(x,y))){
+                aposiciones.add(new Posicion(x,y))}
+            else if (GetPiezaPos (x,y).getColor() <> this.getColor()){
+                aposiciones.add(new Posicion(x,y));
+                posnoocupada = false;
+            }
+            else {posnoocupada = false}
             
         }
         

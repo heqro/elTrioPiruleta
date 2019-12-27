@@ -14,6 +14,12 @@ public class ModeloUsuario {
     private boolean Resuelto ;
     private int contadorIntentos,contadorErrores;
     
+    public ModeloUsuario(Modelo m, boolean res, int conint, int conerr){
+    Modelo=m;
+    Resuelto=res;
+    contadorIntentos=conint;
+    contadorErrores=conerr;
+}
     public Modelo getModelo(){
         return Modelo;
     }

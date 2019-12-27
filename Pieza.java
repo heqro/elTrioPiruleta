@@ -14,11 +14,19 @@ public abstract class Pieza {
     private char nombre;
     private ArrayList<Posicion> posiblesMovimientos = new ArrayList<Posicion>();
     private Tablero tablero;
+    private Posicion posPieza;
     
-    public Pieza(Color c, char nombre,Tablero tablero){
+//    public Pieza(Color c, char nombre, Tablero tablero){
+//        this.color = c;
+//        this.nombre = nombre;
+//        this.tablero = tablero;
+//    }
+    
+    public Pieza(Color c, char nombre, Tablero tablero, Posicion posPieza){
         this.color = c;
         this.nombre = nombre;
         this.tablero = tablero;
+        this.posPieza = posPieza;
     }
     
     public Color getColor(){
@@ -28,11 +36,20 @@ public abstract class Pieza {
     public char getNombre(){
         return nombre;
     }
+    
+    public Posicion getPosicion(){
+        return posPieza;
+    }
+    
     public void setTablero(Tablero t){
         tablero=t;
     }
     public Tablero getTablero(){
         return tablero;
+    }
+    
+    public void setPosicion(Posicion p){
+        this.posPieza = p;
     }
     
     @Override
@@ -41,6 +58,7 @@ public abstract class Pieza {
     }
     
     public abstract ArrayList<Posicion> calcularMovimientos(Posicion coordenada);
+    public abstract ArrayList<Posicion> calcularMovimientos();
     public void Mover(Posicion p) throws IllegalMovementException{
         if (!posiblesMovimientos.contains(p))
         {
@@ -48,7 +66,8 @@ public abstract class Pieza {
         }
         else
         {
-            this.getTablero().moverPieza(this.toString(), p);
-        }  
+            this.getTablero().moverPieza(this, p);
+        }
     }
 }
+

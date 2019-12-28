@@ -62,7 +62,7 @@ public abstract class Pieza {
     
     @Override
     public String toString(){
-        return (getNombre() + getColor().toString());   
+        return (getNombre() + getColor().toString() + posPieza.toString());   
     }
     
     //public abstract ArrayList<Posicion> calcularMovimientos(Posicion coordenada);
@@ -77,5 +77,15 @@ public abstract class Pieza {
             this.getTablero().moverPieza(this, p);
         }
     }
+    @Override
+    public boolean equals(Object o){
+        if(o == null){ return false; }
+        if(this == o){ return true; }
+        if(this.getClass() != o.getClass()){ return false; }
+        Pieza p = (Pieza) o;
+        return (this.nombre == p.nombre) && this.getPosicion().equals(p.getPosicion()) 
+                && this.getColor().equals(p.getColor()) && this.tablero == p.tablero;
+    }
+    
 }
 

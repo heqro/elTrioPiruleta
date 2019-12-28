@@ -51,4 +51,9 @@ public class Posicion {
         boolean yCorrecta = (yNumerico >= 0) && (yNumerico <=7);
         return xCorrecta && yCorrecta;
     }
+    
+    @Override
+    public String toString(){
+        return "("+coordenadax+", "+coordenaday+")";
+    }
 }

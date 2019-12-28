@@ -257,6 +257,10 @@ public class Tablero {
         p.setPosicion(pos);
         /* actualizamos la pieza con la nueva posición */
         
+        this.actualizarTablero();
+    }
+    
+    public void actualizarTablero(){
         for(int i = 0; i <= 7; i++){
             for(int j = 0; j <= 7; j++){
                 if(Marcador[i][j] != null){
@@ -285,12 +289,12 @@ public class Tablero {
         posición original y devolvemos false.
         */
         Posicion posAntigua = p.getPosicion();
+        ArrayList<Posicion> arrayAuxiliar = new ArrayList<>();
         moverPieza(p,pos);
         for(int i = 0; i <= 7; i++){
             for(int j = 0; j <= 7; j++){
                 if(Marcador[i][j] != null){
-                    ArrayList<Posicion> arrayAuxiliar = 
-                            Marcador[i][j].getPosiblesMovimientos();
+                    arrayAuxiliar.addAll(Marcador[i][j].getPosiblesMovimientos());
                     if(arrayAuxiliar.contains(pos)){
                         moverPieza(p, posAntigua);
                         return true;
@@ -463,6 +467,59 @@ public class Tablero {
         }
         arrayAux.remove(pos);
         return arrayAux;
+    }
+    // EN ESTANBAI
+    ArrayList<Posicion> lecturaRey(Color c, Posicion p){
+        ArrayList<Posicion> aposiciones = new ArrayList<>();
+        int x = p.getCoordenadax();
+        char y = p.getCoordenaday();
+        //Horizontales
+        aposiciones.add(new Posicion(x+1, y));
+        aposiciones.add(new Posicion(x-1, y));
+        //Verticales
+        aposiciones.add(new Posicion(x, (char)(y+1) ));
+        aposiciones.add(new Posicion(x, (char)(y-1) ));
+        //Diagonales
+        aposiciones.add(new Posicion(x+1, (char)(y+1) ));
+        aposiciones.add(new Posicion(x+1, (char)(y-1) ));
+        aposiciones.add(new Posicion(x-1, (char)(y+1) ));
+        aposiciones.add(new Posicion(x-1, (char)(y-1) ));
+        
+        Pieza piezaRey = this.GetPiezaPos(p);
+        
+        for(Posicion pos: aposiciones){
+            if(!pos.posicionLegal()){
+                aposiciones.remove(pos);
+            }else{
+                if(PosicionOcupada(pos)){
+                    //Recoger el color de la pieza que ocupa la posición
+                    Color piezaOcupante = GetPiezaPos(pos).getColor();
+                    if(piezaOcupante.equals(c)){
+                        //Si tienen el mismo color, este movimiento no se puede
+                        aposiciones.remove(pos);
+                    }
+                }
+                /* Llegados a este punto del código, sabemos que la posición que
+                estamos estudiando es legal, y que no estará ocupada por una
+                pieza del mismo color que el rey.
+                
+                Por tanto, en este punto lo único que nos queda preguntarnos es
+                si, una vez hecho el movimiento, se provoca jaque sobre el rey.
+                
+                Si lo hay, entonces el movimiento es ilegal y hay que eliminarlo
+                de la lista.
+                
+                Si no lo hay, entonces el movimiento es legal y, además,
+                la solución propuesta no era jaque mate.
+                
+                Lo vamos a comprobar con un método auxiliar de tablero: jugadaIlegalRey.
+                */
+                if (jugadaIlegalRey(piezaRey, pos)){
+                    aposiciones.remove(pos);
+                }
+            }
+        }
+        return aposiciones;
     }
     
     public void limpiarTablero(){

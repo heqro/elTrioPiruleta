@@ -15,9 +15,8 @@ public class Alfil extends Pieza{
 
     @Override
     public void calcularMovimientos(){
-        ArrayList<Posicion> aposiciones = new ArrayList();
         Tablero t = this.getTablero();
-        aposiciones = t.lecturaAlfil(this.getColor(), this.getPosicion());
+        ArrayList<Posicion> aposiciones = t.lecturaAlfil(this.getColor(), this.getPosicion());
         this.setPosiblesMovimientos(aposiciones);
     }
     

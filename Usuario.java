@@ -26,7 +26,7 @@ public class Usuario {
     }
     public void leerEjemplo(String archivo)throws FileNotFoundException, IOException{ //esta cadena es la ruta donde esta el txt
       String cadena;
-      int cfila=7; //contador fila
+      int cfila=8; //contador fila
       char c;
       int ccolumna=0;// contador columna
       
@@ -39,26 +39,27 @@ public class Usuario {
           
           // b es la cadena que tiene la primera linea del tablero empezando por arriba
           for(int i=0; i<cadena.length();i++){
-              if(cadena.charAt(i)!=','){
+              if(cadena.charAt(i) != ','){
+                  Posicion pos = new Posicion(cfila, (char)(ccolumna+97));
                   switch(cadena.charAt(i)){
-                      case 'V': Marcador[cfila][ccolumna]=null;
+                      case 'V': tablero.insertarPieza(cadena, pos);
                                 break;
-                      case 'R': Marcador[cfila][ccolumna]=new Rey(cadena.charAt(i+1),tablero);
+                      case 'R': tablero.insertarPieza(cadena, pos);
                                 i=i+1; //sabemos que el siguiente caracter a leer es el tipo de pieza asi que lo adelantamos intencionadamente para tener un buen control del contador de columnas
                                 break;
-                      case 'P': Marcador[cfila][ccolumna]=new Rey(cadena.charAt(i+1),tablero);
+                      case 'P': tablero.insertarPieza(cadena, pos);
                                 i=i+1;
                                 break;
-                      case 'C': Marcador[cfila][ccolumna]=new Rey(cadena.charAt(i+1),tablero);
+                      case 'C': tablero.insertarPieza(cadena, pos);
                                 i=i+1;
                                 break;
-                      case 'T': Marcador[cfila][ccolumna]=new Rey(cadena.charAt(i+1),tablero);
+                      case 'T': tablero.insertarPieza(cadena, pos);
                                 i=i+1;
                                 break;    
-                      case 'A': Marcador[cfila][ccolumna]=new Rey(cadena.charAt(i+1),tablero);
+                      case 'A': tablero.insertarPieza(cadena, pos);
                                 i=i+1;
                                 break;
-                      case 'D': Marcador[cfila][ccolumna]=new Rey(cadena.charAt(i+1),tablero);
+                      case 'D': tablero.insertarPieza(cadena, pos);
                                 i=i+1;
                                 break;
                                 
@@ -73,7 +74,7 @@ public class Usuario {
       b.close();
       //Ahora crearemos el modelo correspondiente teniendo ya el tablero
       //La jugada ganadora sera siempre el ultimo string que sacamos de b
-      Modelo modelo = new Modelo(tablero,cadena); //nuestro modelo
+      Modelo modelo = new Modelo(tablero, cadena); //nuestro modelo
       this.ModelosUsuario.add(new ModeloUsuario(modelo,false,0,0)); //ya lo hemos añadido al almacen incializado
       
       
@@ -106,7 +107,7 @@ public class Usuario {
         return cont;
     }
     public ArrayList<Modelo> getModelosResueltos(){
-        ArrayList<Modelo> aux = new ArrayList<Modelo>();
+        ArrayList<Modelo> aux = new ArrayList<>();
         for(ModeloUsuario m : ModelosUsuario ){
             if(m.getResuelto()) aux.add(m.getModelo());
         }

@@ -12,9 +12,8 @@ public class Torre extends Pieza{
      
     @Override 
     public void calcularMovimientos(){
-        ArrayList<Posicion> aposiciones = new ArrayList();
         Tablero t = this.getTablero();
-        aposiciones = t.lecturaTorre(this.getColor(), this.getPosicion());
+        ArrayList<Posicion> aposiciones = t.lecturaTorre(this.getColor(), this.getPosicion());
         this.setPosiblesMovimientos(aposiciones);
     }
 

@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * @author hr.iglesias.2018
  */
 public abstract class Pieza {
-    private Color color;
+    private final Color color;
     private char nombre;
-    private ArrayList<Posicion> posiblesMovimientos = new ArrayList<Posicion>();
+    private ArrayList<Posicion> posiblesMovimientos;
     private Tablero tablero;
     private Posicion posPieza;
     

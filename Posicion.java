@@ -48,7 +48,7 @@ public class Posicion {
     public boolean posicionLegal(){
         boolean xCorrecta = (coordenadax < 8) && (coordenadax > 0);
         int yNumerico = coordenaday - 97;
-        boolean yCorrecta = (coordenaday >= 0) && (coordenaday <=7);
+        boolean yCorrecta = (yNumerico >= 0) && (yNumerico <=7);
         return xCorrecta && yCorrecta;
     }
 }

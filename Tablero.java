@@ -28,14 +28,16 @@ public class Tablero {
         return(Marcador[x-1][Character.getNumericValue(y)-97]);
     }
     
-    public Pieza GetPiezaPos (Posicion p){ //recuperar pieza en una posición dada
-        return(Marcador[p.getCoordenadax()-1][Character.getNumericValue(p.getCoordenaday())-97]);
+    public Pieza GetPiezaPos (Posicion pos){ //recuperar pieza en una posición dada
+        int x = this.localizarCoordenadaX(pos);
+        int y = this.localizarCoordenadaY(pos);
+        return(Marcador[x][y]);
     }
     
-    
-    public boolean PosicionOcupada(int x, char y){//comprobamos si la posición está ocupada
-        return (Marcador[x-1][Character.getNumericValue(y)-97] != null);
-    }
+//    
+//    public boolean PosicionOcupada(int x, char y){//comprobamos si la posición está ocupada
+//        return (Marcador[x-1][Character.getNumericValue(y)-97] != null);
+//    }
     
     public boolean PosicionOcupada(Posicion pos){
         int x = localizarCoordenadaX(pos);
@@ -46,7 +48,7 @@ public class Tablero {
     public void comprobarTableroLegal(){
         boolean legalReyes = contReyNegro == 1 && contReyBlanco == 1;
         //boolean legalPeones = contPeonNegro <= 8 && contPeonBlanco <= 8;
-        int piezasExtrasNegra =0;
+        int piezasExtrasNegra = 0;
         int piezasExtrasBlanca = 0;
         
         if (contDamaBlanca > 1){
@@ -333,21 +335,25 @@ public class Tablero {
         int i;
         char j;
         //Lectura diagonal superior derecha
-        for(i = pos.getCoordenadax(), j = pos.getCoordenaday(); i <= 8 && j <= 'h'; i++, j++){
+        for(i = (pos.getCoordenadax() + 1), j = (char)(pos.getCoordenaday() + 1); i <= 8 && j <= 'h'; i++, j++){
             Posicion posAux = new Posicion(i, (char)(j) );
             if(!this.PosicionOcupada(posAux)){
-                arrayAux.add(posAux);
+                arrayAux.add(posAux); 
+                /*Si la posición no está ocupada, la añadimos al array.*/
             }else{
                 Color colorAux = this.GetPiezaPos(posAux).getColor();
+                /*ColorAux será el color de la pieza que haya en la posición
+                auxiliar.*/
                 if(!c.equals(colorAux)){
-                    arrayAux.add(posAux);
+                    arrayAux.add(posAux);/*Si no tienen el mismo color,
+                    entonces añadimos la pieza (se puede comer)*/
                 }
                 break;
             }
         }
         
         //Lectura diagonal superior izquierda
-        for(i = pos.getCoordenadax(), j = pos.getCoordenaday(); i >= 1 && j <= 'h'; i--, j++){
+        for(i = (pos.getCoordenadax() - 1), j = (char)(pos.getCoordenaday() + 1); i >= 1 && j <= 'h'; i--, j++){
             Posicion posAux = new Posicion(i, (char)(j) );
             if(!this.PosicionOcupada(posAux)){
                 arrayAux.add(posAux);
@@ -361,7 +367,7 @@ public class Tablero {
         }
         
         //Lectura diagonal inferior izquierda
-        for(i = pos.getCoordenadax(), j = pos.getCoordenaday(); i >= 1 && j >= 'a'; i--, j--){
+        for(i = (pos.getCoordenadax() - 1), j = (char)(pos.getCoordenaday() - 1); i >= 1 && j >= 'a'; i--, j--){
             Posicion posAux = new Posicion(i, (char)(j) );
             if(!this.PosicionOcupada(posAux)){
                 arrayAux.add(posAux);
@@ -375,7 +381,7 @@ public class Tablero {
         }
         
         //Lectura diagonal inferior derecha
-        for(i = pos.getCoordenadax(), j = pos.getCoordenaday(); i <= 8 && j >= 'a'; i++, j--){
+        for(i = (pos.getCoordenadax() + 1), j = (char)(pos.getCoordenaday() - 1); i <= 8 && j >= 'a'; i++, j--){
             Posicion posAux = new Posicion(i, (char)(j) );
             if(!this.PosicionOcupada(posAux)){
                 arrayAux.add(posAux);
@@ -401,7 +407,7 @@ public class Tablero {
         */
         ArrayList<Posicion> arrayAux = new ArrayList<>();
         //Lectura hacia la derecha
-        for(int j = pos.getCoordenaday(); j <= 'h'; j++){
+        for(int j = (char)(pos.getCoordenaday() + 1); j <= 'h'; j++){
             Posicion posAux = new Posicion(pos.getCoordenadax(), (char)j);
             if(!this.PosicionOcupada(posAux)){
                arrayAux.add(posAux);
@@ -415,7 +421,7 @@ public class Tablero {
         }
         
         //Lectura hacia la izquierda
-        for(int j = pos.getCoordenaday(); j >= 'a'; j--){
+        for(int j = (char)(pos.getCoordenaday() - 1); j >= 'a'; j--){
             Posicion posAux = new Posicion(pos.getCoordenadax(), (char)j);
             if(!this.PosicionOcupada(posAux)){
                arrayAux.add(posAux);
@@ -429,7 +435,7 @@ public class Tablero {
         }
         
         //Lectura hacia arriba
-        for(int i = pos.getCoordenadax(); i <= 8; i++){
+        for(int i = (pos.getCoordenadax() + 1); i <= 8; i++){
             Posicion posAux = new Posicion(i, pos.getCoordenaday());
             if(!this.PosicionOcupada(posAux)){
                arrayAux.add(posAux);
@@ -443,7 +449,7 @@ public class Tablero {
         }
         
         //Lectura hacia abajo
-        for(int i = pos.getCoordenadax(); i >= 1; i--){
+        for(int i = (pos.getCoordenadax() - 1); i >= 1; i--){
             Posicion posAux = new Posicion(i, pos.getCoordenaday());
             if(!this.PosicionOcupada(posAux)){
                arrayAux.add(posAux);
@@ -457,6 +463,14 @@ public class Tablero {
         }
         arrayAux.remove(pos);
         return arrayAux;
+    }
+    
+    public void limpiarTablero(){
+        for(int i=0; i<=7; i++){
+            for(int j=0;j<=7;j++){
+                Marcador[i][j] = null;
+            }
+        }
     }
 }
 

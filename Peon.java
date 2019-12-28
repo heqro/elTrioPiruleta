@@ -23,10 +23,10 @@ public class Peon extends Pieza{
                 Posicion posSiguiente2 = new Posicion(x+2, y);
                 //Crear posiciones diagonales
                 char yDiagonalIzq = (char)(y-1);
-                Posicion posDiagonalIzq = new Posicion(x, yDiagonalIzq);
+                Posicion posDiagonalIzq = new Posicion(x+1, yDiagonalIzq);
                 
                 char yDiagonalDcha = (char)(y+1);
-                Posicion posDiagonalDcha = new Posicion(x, yDiagonalDcha);
+                Posicion posDiagonalDcha = new Posicion(x+1, yDiagonalDcha);
                 
                 if((x==2)&&
                         (!t.PosicionOcupada(posSiguiente2))&&
@@ -81,10 +81,10 @@ public class Peon extends Pieza{
                 Posicion posSiguiente2 = new Posicion(x-2, y);
                 //Crear posiciones diagonales
                 char yDiagonalIzq = (char)(y-1);
-                Posicion posDiagonalIzq = new Posicion(x, yDiagonalIzq);
+                Posicion posDiagonalIzq = new Posicion(x-1, yDiagonalIzq);
                 
                 char yDiagonalDcha = (char)(y+1);
-                Posicion posDiagonalDcha = new Posicion(x, yDiagonalDcha);
+                Posicion posDiagonalDcha = new Posicion(x-1, yDiagonalDcha);
                 
                 if((x==7)&&
                         (!t.PosicionOcupada(posSiguiente2))&&

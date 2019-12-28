@@ -47,7 +47,7 @@ public class Tablero {
         boolean legalReyes = contReyNegro == 1 && contReyBlanco == 1;
         //boolean legalPeones = contPeonNegro <= 8 && contPeonBlanco <= 8;
         int piezasExtrasNegra =0;
-        int piezasExtrasBlancas = 0;
+        int piezasExtrasBlanca = 0;
         
         if (contDamaBlanca > 1){
             piezasExtrasBlanca += contDamaBlanca -1;
@@ -58,11 +58,11 @@ public class Tablero {
         if (contCaballoBlanco >2){
             piezasExtrasBlanca += contCaballoBlanco -2;
         }
-        if (contAlfilBlancoCasillasBlancas > 1)
-            piezasExtrasblanco +=contAlfilBlancoCasillasBlancas -1;
+        if (contAlfilBlancoCasillasBlancas > 1){
+            piezasExtrasBlanca +=contAlfilBlancoCasillasBlancas -1;
         }
-        if(contAlfilBlancoCasillasNegas > 1){
-            piezasExtrasBlanco += contAlfilBlancoCasillasNegas - 1;
+        if(contAlfilBlancoCasillasNegras > 1){
+            piezasExtrasBlanca += contAlfilBlancoCasillasNegras - 1;
             
         }
         if (contDamaNegra > 1){
@@ -81,7 +81,7 @@ public class Tablero {
             piezasExtrasNegra += contAlfilNegroCasillasNegras -1;
             
         }
-        return(legalReyes && ((piezasExtrasNegra + contPeonNegro) <= 8) && ((piezasExtrasBlanca + contPeonBlanco)<= 8)
+       tableroIlegal = (legalReyes && ((piezasExtrasNegra + contPeonNegro) <= 8) && ((piezasExtrasBlanca + contPeonBlanco)<= 8));
         
        // boolean legalDamas = contDamaNegra <= 1 && contDamaBlanca <= 1;
        // boolean legalTorres = contTorreNegra <= 2 && contTorreBlanca <= 2;
@@ -458,4 +458,3 @@ public class Tablero {
         return arrayAux;
     }
 }
-

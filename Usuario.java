@@ -29,7 +29,6 @@ public class Usuario {
     public void leerEjemplo(String archivo)throws FileNotFoundException, IOException{ //esta cadena es la ruta donde esta el txt
       String cadena;
       int cfila=1; //contador fila
-      char c;
       int ccolumna=0;// contador columna
       
       
@@ -38,7 +37,7 @@ public class Usuario {
       FileReader f = new FileReader(archivo);
       BufferedReader b = new BufferedReader(f);
       while((cadena = b.readLine())!=null) {
-          
+          //System.out.println(cadena);
           // b es la cadena que tiene la primera linea del tablero empezando por arriba
           for(int i=0; i<cadena.length();i++){
               if(cadena.charAt(i) != ','){
@@ -46,6 +45,8 @@ public class Usuario {
                   
                   
                   Posicion pos = new Posicion(cfila, (char)(ccolumna+97));
+                 // System.out.println(pos.toString());
+                 // System.out.println(cadena.charAt(i));
                   switch(cadena.charAt(i)){
                       case 'V': String cadenauso = cadena.charAt(i)+" ";//añadimos espacio para solucionar un error que daba en inserpieza que luego arreglaremos
                                 tablero.insertarPieza(cadenauso, pos);
@@ -80,13 +81,17 @@ public class Usuario {
               }
           
           }
-          cfila=cfila+1;
           ccolumna=0;
+          cfila=cfila+1;
+          
       }
       b.close();
       //Ahora crearemos el modelo correspondiente teniendo ya el tablero
       //La jugada ganadora sera siempre el ultimo string que sacamos de b
+      cadena= "";
       Modelo modelo = new Modelo(tablero, cadena); //nuestro modelo
+      
+        
       
       this.ModelosUsuario.add(new ModeloUsuario(modelo,false,0,0)); //ya lo hemos añadido al almacen incializado
       

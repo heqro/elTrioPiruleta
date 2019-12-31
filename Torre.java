@@ -3,9 +3,6 @@ package p_final;
 import java.util.ArrayList;
 
 public class Torre extends Pieza{
-//    public Torre (char color, Tablero t){
-//        super(new Color(color), 'T', t);
-//    }
     public Torre (char color, Tablero t, Posicion pos){
         super(new Color(color), 'T', t, pos);
     }

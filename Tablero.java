@@ -261,7 +261,7 @@ public class Tablero {
             /* actualizamos la pieza p con la nueva posición pos */
             this.actualizarTablero();/*Actualizamos el tablero.*/
         try {
-            this.JugadaIlegal();//Si la jugada es ilegal, entonces "retrocedemos" todo.
+            this.JugadaIlegal(p.getColor());//Si la jugada es ilegal, entonces "retrocedemos" todo.
         } catch (IllegalMovementException ex) {
             String s = ex.getMessage();
             //System.out.println(s);
@@ -314,12 +314,9 @@ public class Tablero {
         return null;
     }
     
-    public void JugadaIlegal() throws IllegalMovementException{
-        if(Jaque(new Color ('n'))){
-            throw new IllegalMovementException("¡Jugada ilegal! El rey negro está en jaque.");
-        }
-        if(Jaque(new Color ('b'))){
-            throw new IllegalMovementException("¡Jugada ilegal! El rey blanco está en jaque.");
+    public void JugadaIlegal(Color c) throws IllegalMovementException{
+        if(Jaque(c)){
+            throw new IllegalMovementException("¡Jugada ilegal! El rey "+c.toString()+ " está en jaque.");
         }
     }
     

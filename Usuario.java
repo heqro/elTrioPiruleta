@@ -25,25 +25,26 @@ public class Usuario {
         return ModelosUsuario;
     }
     
-    public void leerEjemplo(String archivo)throws FileNotFoundException, IOException{ //esta cadena es la ruta donde esta el txt
+    public void leerEjemplo(String archivo)throws FileNotFoundException, IOException{
+      // archivo es el nombre físico del archivo de texto que vamos a leer
       Pieza Marcador[][] = new Pieza[8][8]; 
-      Tablero tablero = new Tablero(Marcador);// marcador sera nuestro tablero
-      tablero.limpiarTablero();
-      Scanner entrada = new Scanner(new File (archivo));
+      Tablero tablero = new Tablero(Marcador);// tablero será el objeto donde guardemos el problema
+      tablero.limpiarTablero();// inicializamos el tablero con valores nulos
+      Scanner entrada = new Scanner(new File (archivo)); //el nombre lógico del archivo de texto será entrada
       
-      int contadorFila = 0;
+      int contadorFila = 0; //el contador de filas lo utilizaremos para limitar la lectura del fichero
       while(entrada.hasNextLine() && contadorFila <= 8){
-          String[] casillas = entrada.nextLine().split(",");
-          
+          String[] casillas = entrada.nextLine().split(",");//guardamos en un array las piezas de la fila contadorFila
           for(int contadorColumna=0; contadorColumna<=7; contadorColumna++){
               tablero.insertarPieza(casillas[contadorColumna], new Posicion(8 - contadorFila, (char)(contadorColumna+97)));
+              //insertamos la pieza en el tablero
           }
-          contadorFila++;
+          contadorFila++;//incrementamos la fila para poder introducir la siguiente
       }
       //String solucion = entrada.nextLine();
       String solucion = "";
-      Modelo modelo = new Modelo(tablero, solucion);
-      this.ModelosUsuario.add(new ModeloUsuario(modelo,false,0,0)); //ya lo hemos añadido al almacen incializado
+      Modelo modelo = new Modelo(tablero, solucion); //creamos un Modelo con un tablero y una solución posible
+      this.ModelosUsuario.add(new ModeloUsuario(modelo,false,0,0)); //añadimos el Modelo al array de modelos de Usuario
     }
     
     public String getNombre(){

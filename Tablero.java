@@ -26,22 +26,14 @@ public class Tablero {
     public Tablero(Pieza M[][]){
         Marcador = M;
     }
-    public Pieza GetPiezaPos (int x , char y){ //recuperar pieza en una posición dada
-        return(Marcador[x-1][Character.getNumericValue(y)-97]);
-    }
-    
-    public Pieza GetPiezaPos (Posicion pos){ //recuperar pieza en una posición dada
+
+    public Pieza GetPiezaPos (Posicion pos){ //recuperar una pieza en una posición pos
         int x = this.localizarCoordenadaX(pos);
         int y = this.localizarCoordenadaY(pos);
         return(Marcador[x][y]);
     }
     
-//    
-//    public boolean PosicionOcupada(int x, char y){//comprobamos si la posición está ocupada
-//        return (Marcador[x-1][Character.getNumericValue(y)-97] != null);
-//    }
-    
-    public boolean PosicionOcupada(Posicion pos){
+    public boolean PosicionOcupada(Posicion pos){//comprobar si una casilla está ocupada
         int x = localizarCoordenadaX(pos);
         int y = localizarCoordenadaY(pos);
         return (Marcador[x][y] != null);
@@ -96,21 +88,23 @@ public class Tablero {
        // tableroIlegal = legalReyes && legalPeones && legalDamas && legalTorres && legalCaballos && legalAlfiles && !tableroIlegal;
     }
     
-    public void insertarPieza(String pstring, Posicion pos){/*método para inicializar el tablero*/
+    public void insertarPieza(String pstring, Posicion pos){/*método para inicializar una casilla del tablero: recibe una cadena,
+    que puede ser una casilla vacía ("V") o una pieza P de un color C ("PC"), y una posición*/
         int x = localizarCoordenadaX(pos);
         int y = localizarCoordenadaY(pos);
         char colorPieza;
         if(pstring.charAt(0) != 'V'){
             colorPieza = pstring.charAt(1);
         }else{
-            colorPieza = 'x';//Caracter basura que no utilizamos
+            colorPieza = 'x';/*Caracter basura para poder computar las casillas vacías, denotadas
+            sencillamente como 'V', sin ningún caracter detrás, evitando así errores*/
         }
         if (PosicionOcupada(pos)){
             tableroIlegal = true; /*Si intentamos introducir la pieza donde ya hay otra,
             el tablero es ilegal*/
         }
         switch(pstring.charAt(0)){
-            case 'R':
+            case 'R'://rey
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -125,10 +119,11 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Rey(colorPieza, this, pos);
+                Marcador[x][y] = new Rey(colorPieza, this, pos);/*introducimos Rey de color
+                colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'A':
+            case 'A'://alfil
             {
                 switch(colorPieza){
                     case 'B': case 'b':{
@@ -161,9 +156,10 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Alfil(colorPieza, this, pos);
+                Marcador[x][y] = new Alfil(colorPieza, this, pos);/*introducimos Alfil de color
+                colorPieza en el tablero this en la posición pos*/
             }
-            case 'T':
+            case 'T'://torre
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -178,11 +174,12 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Torre(colorPieza, this, pos);
+                Marcador[x][y] = new Torre(colorPieza, this, pos);/*introducimos Torre de color
+                colorPieza en el tablero this en la posición pos*/
                 break;
             }
             
-            case 'D':
+            case 'D'://dama
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -197,10 +194,11 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Dama(colorPieza, this, pos);
+                Marcador[x][y] = new Dama(colorPieza, this, pos);/*introducimos Dama de color
+                colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'P':
+            case 'P'://peón
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -217,10 +215,11 @@ public class Tablero {
                 }
                 if (x == 7 || x == 0) tableroIlegal = true;
                 //Los peones nunca pueden estar en las últimas filas del tablero
-                Marcador[x][y] = new Peon(colorPieza, this, pos);
+                Marcador[x][y] = new Peon(colorPieza, this, pos);/*introducimos Peón de color
+                colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'C':
+            case 'C'://caballo
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -235,10 +234,11 @@ public class Tablero {
                         tableroIlegal = true;
                     }
                 }
-                Marcador[x][y] = new Caballo(colorPieza, this, pos);
+                Marcador[x][y] = new Caballo(colorPieza, this, pos);/*introducimos Caballo de color
+                colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'V':
+            case 'V'://vacío
             {
                 Marcador[x][y] = null;
                 break;
@@ -283,10 +283,12 @@ public class Tablero {
             p.setPosicion(pos);
             /* actualizamos la pieza p con la nueva posición pos */
             if((pos.getCoordenadax() == 1)&&(p.getColor().toString().equals("NEGRO"))&&(p.getNombre() == 'P')){
+                /*Si hemos llevado un peón negro a la fila 1, lo hemos coronado*/
                 coronarPeon(p);
                 coronado = true;
             }
             if((pos.getCoordenadax() == 8)&&(p.getColor().toString().equals("BLANCO"))&&(p.getNombre() == 'P')){
+                /*Si hemos llevado un peón blanco a la fila 8, lo hemos coronado*/
                 coronarPeon(p);
                 coronado = true;
             }
@@ -296,14 +298,17 @@ public class Tablero {
             this.JugadaIlegal(p.getColor());//Si la jugada es ilegal, entonces "retrocedemos" todo.
         } catch (IllegalMovementException ex) {
             String s = ex.getMessage();
-            if(coronado)
-                {descoronarPeon(p);}
-            p.setPosicion(posicionAntigua);
+            if(coronado){
+                descoronarPeon(p);
+                coronado = false;
+            }/*Si habíamos coronado un peón, lo devolvemos donde estaba*/
+            p.setPosicion(posicionAntigua);/*Reasociamos la pieza p a su posición original*/
             Marcador[localizarCoordenadaX(posicionAntigua)][localizarCoordenadaY(posicionAntigua)] = p;
-            this.limpiarPosicion(pos);
+            /*Retrocedemos la pieza a la posición original en el tablero*/
+            this.limpiarPosicion(pos);/*Borramos la pieza de la posición del movimiento propuesto*/
             this.actualizarTablero();/*Actualizamos el tablero.*/
-            throw new IllegalMovementException(s); /*Lanzamos la misma excepción para que pueda ser recogida por un
-            método que utilice a moverPieza*/
+            throw new IllegalMovementException(s); /*Lanzamos la excepción que indica que se ha
+            producido un movimiento ilega para que pueda ser recogida por un método que utilice a moverPieza*/
         }
     }
     
@@ -344,7 +349,7 @@ public class Tablero {
                 }
             }
         }
-        return null;
+        return null;//Si el tablero está bien introducido, nunca devolveremos null
     }
     
     public void JugadaIlegal(Color c) throws IllegalMovementException{

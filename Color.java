@@ -53,7 +53,7 @@ public boolean equals(Object o){
     if(this == o){ return true; }
     if(this.getClass() != o.getClass()){ return false; }
     Color c = (Color)o;
-    return c.toString() == this.toString();
+    return c.toString().equals(this.toString());
 }
 
 }

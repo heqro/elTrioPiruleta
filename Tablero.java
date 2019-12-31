@@ -6,6 +6,8 @@
 package p_final;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -244,20 +246,29 @@ public class Tablero {
         
     }
     
-    public void moverPieza(Pieza p, Posicion pos){
+    public void moverPieza(Pieza p, Posicion pos) {
         /* Apuntes sobre el objeto pos:
-            - Sabemos que es una posición reglamentaria
-            - No sabemos si está ocupada*/
-        Posicion posicionAntigua = p.getPosicion();
-        this.limpiarPosicion(posicionAntigua);/*vaciamos la posición desde la que se movió la pieza*/
-        
-        Marcador[localizarCoordenadaX(pos)][localizarCoordenadaY(pos)] = p;
-        /* actualizamos el tablero con la pieza movida*/
-        
-        p.setPosicion(pos);
-        /* actualizamos la pieza con la nueva posición */
-        
-        this.actualizarTablero();
+            - Sabemos que es una posición a la que puede acceder una pieza
+            de forma reglamentaria
+            - No sabemos si estará ocupada por otra pieza o no
+            - No sabemos si puede ser una jugada ilegal*/
+            
+            Posicion posicionAntigua = p.getPosicion();
+            this.limpiarPosicion(posicionAntigua);/*vaciamos la posición desde la que se movió la pieza*/
+            Marcador[localizarCoordenadaX(pos)][localizarCoordenadaY(pos)] = p;
+            /* actualizamos el tablero con la pieza movida*/
+            p.setPosicion(pos);
+            /* actualizamos la pieza p con la nueva posición pos */
+            this.actualizarTablero();/*Actualizamos el tablero.*/
+        try {
+            this.JugadaIlegal();//Si la jugada es ilegal, entonces retrocedemos todo y lo devolvemos como estaba.
+        } catch (IllegalMovementException ex) {
+            ex.getMessage();
+            this.limpiarPosicion(pos);
+            p.setPosicion(posicionAntigua);
+            Marcador[localizarCoordenadaX(posicionAntigua)][localizarCoordenadaY(posicionAntigua)] = p;
+            this.actualizarTablero();/*Actualizamos el tablero.*/
+        }
     }
     
     public void actualizarTablero(){
@@ -271,40 +282,57 @@ public class Tablero {
         }
     }
     
-    public boolean jugadaIlegalRey(Pieza p, Posicion pos){
-        /*En este método vamos a comprobar si la posición introducida 
-        forma parte de las posiciones posibles de una pieza contraria,
-        para saber si la posición posible a la que se puede mover el rey es
-        legal o no, de la siguiente forma:
-        
-            1. Guardamos la posición en la que se encuentra el rey
-            2. Movemos el rey
-            3. Tras mover el rey, se actualiza el array de posibles movimientos
-        de todas las piezas
-            4. Si alguna pieza del color contrario se puede comer al rey,
-        entonces la jugada era ilegal. En ese caso, movemos el rey a la 
-        posición original y devolvemos true.
-            5. Si ninguna pieza del color contrario se puede comer al rey,
-        entonces la jugada era legal. En ese caso, movemos el rey a la 
-        posición original y devolvemos false.
-        */
-        Posicion posAntigua = p.getPosicion();
-        ArrayList<Posicion> arrayAuxiliar = new ArrayList<>();
-        moverPieza(p,pos);
+    public void actualizarTableroColor(Color c){//No me sirve para nada
         for(int i = 0; i <= 7; i++){
             for(int j = 0; j <= 7; j++){
                 if(Marcador[i][j] != null){
-                    arrayAuxiliar.addAll(Marcador[i][j].getPosiblesMovimientos());
-                    if(arrayAuxiliar.contains(pos)){
-                        moverPieza(p, posAntigua);
-                        return true;
+                    Color colorAux = Marcador[i][j].getColor();
+                    if(!colorAux.equals(c)){
+                        Marcador[i][j].calcularMovimientos();
+                    }
+                    /*calculamos los posibles movimientos de las piezas CONTRARIAS a un color*/
+                }
+            }
+        }
+    }
+    
+    Pieza localizarRey(Color colorRey){ /*Este método auxiliar nos permite localizar fácilmente al rey*/
+        Pieza piezaAux;
+        for(int i = 0; i <= 7; i++){
+            for(int j = 0; j <= 7; j++){
+                if(Marcador[i][j] != null){
+                     piezaAux = Marcador[i][j];
+                    if(piezaAux.getColor().equals(colorRey) && piezaAux.getNombre() == 'R'){
+                        return piezaAux;
                     }
                 }
             }
         }
-        moverPieza(p, posAntigua);
-        return false; /*Si se devuelve false, entonces el rey puede moverse
-        a la posición introducida*/
+        return null;
+    }
+    
+    public void JugadaIlegal() throws IllegalMovementException{
+        if(Jaque(new Color ('n'))){
+            throw new IllegalMovementException("¡Jugada ilegal! El rey negro está en jaque.");
+        }
+        if(Jaque(new Color ('b'))){
+            throw new IllegalMovementException("¡Jugada ilegal! El rey blanco está en jaque.");
+        }
+    }
+    
+    public boolean Jaque(Color colorRey){
+        Pieza rey = localizarRey(colorRey);
+        Posicion pos = rey.getPosicion();
+        for(int i = 0; i <= 7; i++){
+            for(int j = 0; j <= 7; j++){
+                if(Marcador[i][j] != null){//Si hay una pieza en la posición i,j-ésima del array
+                    if(Marcador[i][j].getPosiblesMovimientos().contains(pos)){//Si dicha pieza puede comerse al rey
+                        return true;//Entonces, el rey esta en jaque
+                    }
+                }
+            }
+        }//Si ninguna pieza puede acceder a la posición donde está el rey, entonces el rey no está en jaque
+        return false;
     }
     
     private int localizarCoordenadaX(Posicion pos){
@@ -469,58 +497,58 @@ public class Tablero {
         return arrayAux;
     }
     // EN ESTANBAI
-    ArrayList<Posicion> lecturaRey(Color c, Posicion p){
-        ArrayList<Posicion> aposiciones = new ArrayList<>();
-        int x = p.getCoordenadax();
-        char y = p.getCoordenaday();
-        //Horizontales
-        aposiciones.add(new Posicion(x+1, y));
-        aposiciones.add(new Posicion(x-1, y));
-        //Verticales
-        aposiciones.add(new Posicion(x, (char)(y+1) ));
-        aposiciones.add(new Posicion(x, (char)(y-1) ));
-        //Diagonales
-        aposiciones.add(new Posicion(x+1, (char)(y+1) ));
-        aposiciones.add(new Posicion(x+1, (char)(y-1) ));
-        aposiciones.add(new Posicion(x-1, (char)(y+1) ));
-        aposiciones.add(new Posicion(x-1, (char)(y-1) ));
-        
-        Pieza piezaRey = this.GetPiezaPos(p);
-        
-        for(Posicion pos: aposiciones){
-            if(!pos.posicionLegal()){
-                aposiciones.remove(pos);
-            }else{
-                if(PosicionOcupada(pos)){
-                    //Recoger el color de la pieza que ocupa la posición
-                    Color piezaOcupante = GetPiezaPos(pos).getColor();
-                    if(piezaOcupante.equals(c)){
-                        //Si tienen el mismo color, este movimiento no se puede
-                        aposiciones.remove(pos);
-                    }
-                }
-                /* Llegados a este punto del código, sabemos que la posición que
-                estamos estudiando es legal, y que no estará ocupada por una
-                pieza del mismo color que el rey.
-                
-                Por tanto, en este punto lo único que nos queda preguntarnos es
-                si, una vez hecho el movimiento, se provoca jaque sobre el rey.
-                
-                Si lo hay, entonces el movimiento es ilegal y hay que eliminarlo
-                de la lista.
-                
-                Si no lo hay, entonces el movimiento es legal y, además,
-                la solución propuesta no era jaque mate.
-                
-                Lo vamos a comprobar con un método auxiliar de tablero: jugadaIlegalRey.
-                */
-                if (jugadaIlegalRey(piezaRey, pos)){
-                    aposiciones.remove(pos);
-                }
-            }
-        }
-        return aposiciones;
-    }
+//    ArrayList<Posicion> lecturaRey(Color c, Posicion p){
+//        ArrayList<Posicion> aposiciones = new ArrayList<>();
+//        int x = p.getCoordenadax();
+//        char y = p.getCoordenaday();
+//        //Horizontales
+//        aposiciones.add(new Posicion(x+1, y));
+//        aposiciones.add(new Posicion(x-1, y));
+//        //Verticales
+//        aposiciones.add(new Posicion(x, (char)(y+1) ));
+//        aposiciones.add(new Posicion(x, (char)(y-1) ));
+//        //Diagonales
+//        aposiciones.add(new Posicion(x+1, (char)(y+1) ));
+//        aposiciones.add(new Posicion(x+1, (char)(y-1) ));
+//        aposiciones.add(new Posicion(x-1, (char)(y+1) ));
+//        aposiciones.add(new Posicion(x-1, (char)(y-1) ));
+//        
+//        Pieza piezaRey = this.GetPiezaPos(p);
+//        
+//        for(Posicion pos: aposiciones){
+//            if(!pos.posicionLegal()){
+//                aposiciones.remove(pos);
+//            }else{
+//                if(PosicionOcupada(pos)){
+//                    //Recoger el color de la pieza que ocupa la posición
+//                    Color piezaOcupante = GetPiezaPos(pos).getColor();
+//                    if(piezaOcupante.equals(c)){
+//                        //Si tienen el mismo color, este movimiento no se puede
+//                        aposiciones.remove(pos);
+//                    }
+//                }
+//                /* Llegados a este punto del código, sabemos que la posición que
+//                estamos estudiando es legal, y que no estará ocupada por una
+//                pieza del mismo color que el rey.
+//                
+//                Por tanto, en este punto lo único que nos queda preguntarnos es
+//                si, una vez hecho el movimiento, se provoca jaque sobre el rey.
+//                
+//                Si lo hay, entonces el movimiento es ilegal y hay que eliminarlo
+//                de la lista.
+//                
+//                Si no lo hay, entonces el movimiento es legal y, además,
+//                la solución propuesta no era jaque mate.
+//                
+//                Lo vamos a comprobar con un método auxiliar de tablero: jugadaIlegalRey.
+//                */
+////                if (jugadaIlegalRey(piezaRey, pos)){
+////                    aposiciones.remove(pos);
+////                }
+//            }
+//        }
+//        return aposiciones;
+//    }
     
     public void limpiarTablero(){
         for(int i=0; i<=7; i++){

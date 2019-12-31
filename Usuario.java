@@ -18,7 +18,9 @@ public class Usuario {
     private String nombre,password;
     private ArrayList<ModeloUsuario> ModelosUsuario  = new ArrayList<ModeloUsuario>();
     
-    
+    public ArrayList<ModeloUsuario> getModelosUsuario (){
+        return ModelosUsuario;
+    }
     public Usuario(String n,String p, ArrayList<ModeloUsuario> m){
         nombre=n;
         password=p;
@@ -26,7 +28,7 @@ public class Usuario {
     }
     public void leerEjemplo(String archivo)throws FileNotFoundException, IOException{ //esta cadena es la ruta donde esta el txt
       String cadena;
-      int cfila=8; //contador fila
+      int cfila=1; //contador fila
       char c;
       int ccolumna=0;// contador columna
       
@@ -40,26 +42,36 @@ public class Usuario {
           // b es la cadena que tiene la primera linea del tablero empezando por arriba
           for(int i=0; i<cadena.length();i++){
               if(cadena.charAt(i) != ','){
+                  
+                  
+                  
                   Posicion pos = new Posicion(cfila, (char)(ccolumna+97));
                   switch(cadena.charAt(i)){
-                      case 'V': tablero.insertarPieza(cadena, pos);
+                      case 'V': String cadenauso = cadena.charAt(i)+" ";//añadimos espacio para solucionar un error que daba en inserpieza que luego arreglaremos
+                                tablero.insertarPieza(cadenauso, pos);
                                 break;
-                      case 'R': tablero.insertarPieza(cadena, pos);
+                      case 'R': cadenauso = cadena.charAt(i) + cadena.charAt(i+1)+"";
+                                tablero.insertarPieza(cadenauso, pos);
                                 i=i+1; //sabemos que el siguiente caracter a leer es el tipo de pieza asi que lo adelantamos intencionadamente para tener un buen control del contador de columnas
                                 break;
-                      case 'P': tablero.insertarPieza(cadena, pos);
+                      case 'P': cadenauso = cadena.charAt(i) + cadena.charAt(i+1)+"";
+                                tablero.insertarPieza(cadenauso, pos);
                                 i=i+1;
                                 break;
-                      case 'C': tablero.insertarPieza(cadena, pos);
+                      case 'C': cadenauso = cadena.charAt(i) + cadena.charAt(i+1)+"";
+                                tablero.insertarPieza(cadenauso, pos);
                                 i=i+1;
                                 break;
-                      case 'T': tablero.insertarPieza(cadena, pos);
+                      case 'T': cadenauso = cadena.charAt(i) + cadena.charAt(i+1)+"";
+                                tablero.insertarPieza(cadenauso, pos);
                                 i=i+1;
                                 break;    
-                      case 'A': tablero.insertarPieza(cadena, pos);
+                      case 'A': cadenauso = cadena.charAt(i) + cadena.charAt(i+1)+"";
+                                tablero.insertarPieza(cadenauso, pos);
                                 i=i+1;
                                 break;
-                      case 'D': tablero.insertarPieza(cadena, pos);
+                      case 'D': cadenauso = cadena.charAt(i) + cadena.charAt(i+1)+"";
+                                tablero.insertarPieza(cadenauso, pos);
                                 i=i+1;
                                 break;
                                 
@@ -68,13 +80,14 @@ public class Usuario {
               }
           
           }
-          cfila=cfila-1;
+          cfila=cfila+1;
           ccolumna=0;
       }
       b.close();
       //Ahora crearemos el modelo correspondiente teniendo ya el tablero
       //La jugada ganadora sera siempre el ultimo string que sacamos de b
       Modelo modelo = new Modelo(tablero, cadena); //nuestro modelo
+      
       this.ModelosUsuario.add(new ModeloUsuario(modelo,false,0,0)); //ya lo hemos añadido al almacen incializado
       
       

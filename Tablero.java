@@ -538,7 +538,7 @@ public class Tablero {
     
     public void limpiarTablero(){
         for(int i=0; i<=7; i++){
-            for(int j=0;j<=7;j++){
+            for(int j=0;j<=7; j++){
                 Marcador[i][j] = null;
             }
         }
@@ -550,9 +550,12 @@ public class Tablero {
                 if(Marcador[i][j] == null){
                     System.out.print("V,");
                 }else{
-                    Posicion pos = new Posicion(8-i, (char)(97+j));
-                    Pieza p = this.GetPiezaPos(pos);
-                    System.out.print(p.toString() + ",");
+                    Posicion pos = new Posicion(8-i, (char)(97+j));//creamos una posición con i y j
+                    Pieza p = this.GetPiezaPos(pos);//recogemos la pieza asociada a la posición pos
+                    if(j != 7){
+                        System.out.print(p.toString() + ",");
+                    }
+                    
                 }
             }
             System.out.println(" ");
@@ -594,49 +597,5 @@ public class Tablero {
         }
         return mate;
     }
-//  public boolean JaqueMate(){
-//      if(!this.Jaque(new Color('n'))){
-//          return(false);
-//      }
-//      else{
-//          Pieza rey = this.localizarRey(new Color('n'));
-//          boolean sePuedeMover = false;
-//          for (Posicion r : rey.getPosiblesMovimientos()){
-//               try{
-//                  this.moverPieza(rey, r);
-//              }catch(IllegalMovementException e){}
-//                      finally{
-//                          if (!r.equals(rey.getPosicion())){
-//                              sePuedeMover = true;
-//                          }
-//                      }
-//          }
-//          if (sePuedeMover){
-//              return(false);
-//         }
-//          else{
-//             boolean tapar = false;
-//              ArrayList<Pieza> PiezasNegras = this.ObtenerPiezasColor(new Color('n'));
-//              for(Pieza n : PiezasNegras){
-//                  for(Posicion p : n.getPosiblesMovimientos() ){
-//                      
-//                      try{
-//                          this.moverPieza(n, p);
-//                      }catch(IllegalMovementException e){}
-//                      finally{
-//                          if (!p.equals(n.getPosicion())){
-//                              tapar = true;
-//                          }
-//                          
-//                      }
-//                      
-//                  }
-//              } 
-//              return(!tapar);
-//          }
-//           
-//      }
-//     
-//  }
 }
 

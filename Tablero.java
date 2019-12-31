@@ -99,7 +99,12 @@ public class Tablero {
     public void insertarPieza(String pstring, Posicion pos){/*método para inicializar el tablero*/
         int x = localizarCoordenadaX(pos);
         int y = localizarCoordenadaY(pos);
-        char colorPieza = pstring.charAt(1);
+        char colorPieza;
+        if(pstring.charAt(0) != 'V'){
+            colorPieza = pstring.charAt(1);
+        }else{
+            colorPieza = 'x';//Caracter basura que no utilizamos
+        }
         if (PosicionOcupada(pos)){
             tableroIlegal = true; /*Si intentamos introducir la pieza donde ya hay otra,
             el tablero es ilegal*/
@@ -247,7 +252,7 @@ public class Tablero {
     }
     
     public void coronarPeon(Pieza p){
-        Scanner sc = new Scanner(System.in);
+ //       Scanner sc = new Scanner(System.in);
 //        System.out.println("Introduzca la primera letra de la pieza que desee coronar");
 //        String texto = sc.next();
 //        char letraCoronar = texto.charAt(0);
@@ -532,6 +537,22 @@ public class Tablero {
             }
         }
     }
+    
+    void imprimirTablero(){
+        for(int i=0; i<=7; i++){
+            for(int j=0;j<=7;j++){
+                if(Marcador[i][j] == null){
+                    System.out.print("V,");
+                }else{
+                    Posicion pos = new Posicion(8-i, (char)(97+j));
+                    Pieza p = this.GetPiezaPos(pos);
+                    System.out.print(p.toString() + ",");
+                }
+            }
+            System.out.println(" ");
+        }
+    }
+    
 //  private ArrayList ObtenerPiezasColor (Color c){
 //      ArrayList<Pieza> PiezasColor = new ArrayList<Pieza>();
 //      int i,j =0;

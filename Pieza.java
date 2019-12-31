@@ -56,7 +56,8 @@ public abstract class Pieza {
     
     @Override
     public String toString(){
-        return (getNombre() + getColor().toString() + posPieza.toString());   
+//        return (getNombre() + getColor().toString());   
+            return getNombre() + getColor().toString();   
     }
     
     public abstract void calcularMovimientos();

@@ -34,11 +34,11 @@ public String toString(){
     switch(this.color){
             case BLANCO:
             {
-                return "BLANCO";
+                return "B";
             }
             case NEGRO:
             {
-                return "NEGRO";
+                return "N";
             }
             default:
             {

@@ -24,7 +24,9 @@ public class Usuario {
     public ArrayList<ModeloUsuario> getModelosUsuario (){
         return ModelosUsuario;
     }
-    
+    public double porcentajeExito(){
+        return(this.getNProblemasSol()/this.getNProblemasInt()*100);
+    }
     public void leerEjemplo(String archivo)throws FileNotFoundException, IOException{
       // archivo es el nombre físico del archivo de texto que vamos a leer
       Pieza Marcador[][] = new Pieza[8][8]; 

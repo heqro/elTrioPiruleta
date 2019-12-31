@@ -135,49 +135,4 @@ public class Peon extends Pieza{
         }
         this.setPosiblesMovimientos(aposiciones);
     }
-    
-//    @Override
-//    public ArrayList<Posicion> calcularMovimientos() {
-//        Posicion coordenada = this.getPosicion();
-//        ArrayList<Posicion> aposiciones = new ArrayList();
-//        int x  = coordenada.getCoordenadax();
-//        char y = coordenada.getCoordenaday();
-//        aposiciones.add(coordenada);
-//        
-//        int xaux= x;
-//        xaux=xaux+1;
-//        aposiciones.add(new Posicion (xaux,y));
-//        if (y=='b'){
-//            aposiciones.add(new Posicion (xaux+1,y));
-//        }
-//        
-//        
-//        
-//        
-//        
-//        
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-    
-//    @Override
-//    public ArrayList<Posicion> calcularMovimientos(Posicion coordenada) {
-//        ArrayList<Posicion> aposiciones = new ArrayList();
-//        int x  = coordenada.getCoordenadax();
-//        char y = coordenada.getCoordenaday();
-//        aposiciones.add(coordenada);
-//        
-//        int xaux= x;
-//        xaux=xaux+1;
-//        aposiciones.add(new Posicion (xaux,y));
-//        if (y=='b'){
-//            aposiciones.add(new Posicion (xaux+1,y));
-//        }
-//        
-//        
-//        
-//        
-//        
-//        
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
 }

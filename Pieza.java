@@ -56,11 +56,11 @@ public abstract class Pieza {
     
     @Override
     public String toString(){
-//        return (getNombre() + getColor().toString());   
-            return getNombre() + getColor().toString();   
+        return getNombre() + getColor().toString();   
     }
     
-    public abstract void calcularMovimientos();
+
+    
     public void Mover(Posicion p) throws IllegalMovementException{
         if (!posiblesMovimientos.contains(p)){
             throw (new IllegalMovementException("El movimiento propuesto no se corresponde con un movimiento que pueda realizar la pieza."));
@@ -77,6 +77,6 @@ public abstract class Pieza {
         return (this.nombre == p.nombre) && this.getPosicion().equals(p.getPosicion()) 
                 && this.getColor().equals(p.getColor()) && this.tablero == p.tablero;
     }
-    
+    public abstract void calcularMovimientos();
 }
 

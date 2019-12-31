@@ -557,5 +557,61 @@ public class Tablero {
             }
         }
     }
+//  private ArrayList ObtenerPiezasColor (Color c){
+//      ArrayList<Pieza> PiezasColor = new ArrayList<Pieza>();
+//      int i,j =0;
+//      for(i=0;i<7;i++){
+//          for(j=0;j<7;j++){
+//              if(Marcador[i][j].getColor().equals(c))
+//                  PiezasColor.add(Marcador[i][j]);
+//          }
+//     }
+//      return(PiezasColor);
+//  }
+//  
+//  public boolean JaqueMate(){
+//      if(!this.Jaque(new Color('n'))){
+//          return(false);
+//      }
+//      else{
+//          Pieza rey = this.localizarRey(new Color('n'));
+//          boolean sePuedeMover = false;
+//          for (Posicion r : rey.getPosiblesMovimientos()){
+//               try{
+//                  this.moverPieza(rey, r);
+//              }catch(IllegalMovementException e){}
+//                      finally{
+//                          if (!r.equals(rey.getPosicion())){
+//                              sePuedeMover = true;
+//                          }
+//                      }
+//          }
+//          if (sePuedeMover){
+//              return(false);
+//         }
+//          else{
+//             boolean tapar = false;
+//              ArrayList<Pieza> PiezasNegras = this.ObtenerPiezasColor(new Color('n'));
+//              for(Pieza n : PiezasNegras){
+//                  for(Posicion p : n.getPosiblesMovimientos() ){
+//                      
+//                      try{
+//                          this.moverPieza(n, p);
+//                      }catch(IllegalMovementException e){}
+//                      finally{
+//                          if (!p.equals(n.getPosicion())){
+//                              tapar = true;
+//                          }
+//                          
+//                      }
+//                      
+//                  }
+//              } 
+//              return(!tapar);
+//          }
+//           
+//      }
+//     
+//  }
 }
 

@@ -70,7 +70,7 @@ public abstract class Pieza {
     public void Mover(Posicion p) throws IllegalMovementException{
         if (!posiblesMovimientos.contains(p))
         {
-            throw (new IllegalMovementException());
+            throw (new IllegalMovementException("El movimiento propuesto no se corresponde con un movimiento que pueda realizar la pieza."));
         }
         else
         {

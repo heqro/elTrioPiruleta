@@ -10,7 +10,7 @@ package p_final;
  * @author hr.iglesias.2018
  */
 class IllegalMovementException extends Exception {
-    public IllegalMovementException(){
-        super("Posicion ilegal");
+    public IllegalMovementException(String mensaje){
+        super(mensaje);
     }
 }

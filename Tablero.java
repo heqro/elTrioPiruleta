@@ -552,10 +552,10 @@ public class Tablero {
                 }else{
                     Posicion pos = new Posicion(8-i, (char)(97+j));//creamos una posición con i y j
                     Pieza p = this.GetPiezaPos(pos);//recogemos la pieza asociada a la posición pos
+                    System.out.print(p.toString());
                     if(j != 7){
                         System.out.print(p.toString() + ",");
                     }
-                    
                 }
             }
             System.out.println(" ");
@@ -563,12 +563,15 @@ public class Tablero {
     }
     
     ArrayList<Pieza> ObtenerPiezasColor (Color c){
+        /*Este método nos permite obtener todas las piezas
+        de un color c*/
         ArrayList<Pieza> PiezasColor = new ArrayList<>();
         for(int i=0; i<=7; i++){
             for(int j=0; j<=7; j++){
-                if(Marcador[i][j] != null){
-                    if(Marcador[i][j].getColor().equals(c)){
-                        PiezasColor.add(Marcador[i][j]);
+                if(Marcador[i][j] != null){//Si la posición no está ocupada
+                    if(Marcador[i][j].getColor().equals(c)){/*Si la pieza que ocupa la posición
+                    tiene el mismo color que c*/
+                        PiezasColor.add(Marcador[i][j]);/*Entonces añadimos la pieza al arrayList*/
                     }
                 }
             }

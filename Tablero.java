@@ -246,7 +246,7 @@ public class Tablero {
         
     }
     
-    public void moverPieza(Pieza p, Posicion pos) {
+    public void moverPieza(Pieza p, Posicion pos) throws IllegalMovementException {
         /* Apuntes sobre el objeto pos:
             - Sabemos que es una posición a la que puede acceder una pieza
             de forma reglamentaria
@@ -261,13 +261,16 @@ public class Tablero {
             /* actualizamos la pieza p con la nueva posición pos */
             this.actualizarTablero();/*Actualizamos el tablero.*/
         try {
-            this.JugadaIlegal();//Si la jugada es ilegal, entonces retrocedemos todo y lo devolvemos como estaba.
+            this.JugadaIlegal();//Si la jugada es ilegal, entonces "retrocedemos" todo.
         } catch (IllegalMovementException ex) {
-            ex.getMessage();
+            String s = ex.getMessage();
+            //System.out.println(s);
             this.limpiarPosicion(pos);
             p.setPosicion(posicionAntigua);
             Marcador[localizarCoordenadaX(posicionAntigua)][localizarCoordenadaY(posicionAntigua)] = p;
             this.actualizarTablero();/*Actualizamos el tablero.*/
+            throw new IllegalMovementException(s); /*Lanzamos la misma excepción para que pueda ser recogida por un
+            método que utilice a moverPieza*/
         }
     }
     

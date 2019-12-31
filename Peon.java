@@ -16,7 +16,7 @@ public class Peon extends Pieza{
         char y = coordenada.getCoordenaday();
         Tablero t = this.getTablero();
         switch(this.getColor().toString()){
-            case "BLANCO":{
+            case "B":{
                 //Crear posición siguiente
                 Posicion posSiguiente1 = new Posicion(x+1, y);
                 //Crear posición siguiente siguiente
@@ -24,7 +24,6 @@ public class Peon extends Pieza{
                 //Crear posiciones diagonales
                 char yDiagonalIzq = (char)(y-1);
                 Posicion posDiagonalIzq = new Posicion(x+1, yDiagonalIzq);
-                
                 char yDiagonalDcha = (char)(y+1);
                 Posicion posDiagonalDcha = new Posicion(x+1, yDiagonalDcha);
                 
@@ -74,7 +73,7 @@ public class Peon extends Pieza{
                 
                 break;
             }
-            case "NEGRO":{
+            case "N":{
                 //Crear posición siguiente
                 Posicion posSiguiente1 = new Posicion(x-1, y);
                 //Crear posición siguiente siguiente
@@ -99,7 +98,6 @@ public class Peon extends Pieza{
                     /*Se puede mover una casilla hacia adelante una pieza blanca
                     si no se encuentra la casilla bloqueada*/
                     aposiciones.add(posSiguiente1);
-                    //SIN TRATAR: coronación
                 }
                 
                 

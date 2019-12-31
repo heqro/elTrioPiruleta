@@ -158,6 +158,7 @@ public class Tablero {
                 }
                 Marcador[x][y] = new Alfil(colorPieza, this, pos);/*introducimos Alfil de color
                 colorPieza en el tablero this en la posición pos*/
+                break;
             }
             case 'T'://torre
             {
@@ -545,7 +546,7 @@ public class Tablero {
     
     void imprimirTablero(){
         for(int i=0; i<=7; i++){
-            for(int j=0;j<=7;j++){
+            for(int j=0; j<=7; j++){
                 if(Marcador[i][j] == null){
                     System.out.print("V,");
                 }else{
@@ -558,18 +559,41 @@ public class Tablero {
         }
     }
     
-//  private ArrayList ObtenerPiezasColor (Color c){
-//      ArrayList<Pieza> PiezasColor = new ArrayList<Pieza>();
-//      int i,j =0;
-//      for(i=0;i<7;i++){
-//          for(j=0;j<7;j++){
-//              if(Marcador[i][j].getColor().equals(c))
-//                  PiezasColor.add(Marcador[i][j]);
-//          }
-//     }
-//      return(PiezasColor);
-//  }
-//  
+    ArrayList<Pieza> ObtenerPiezasColor (Color c){
+        ArrayList<Pieza> PiezasColor = new ArrayList<>();
+        for(int i=0; i<=7; i++){
+            for(int j=0; j<=7; j++){
+                if(Marcador[i][j] != null){
+                    if(Marcador[i][j].getColor().equals(c)){
+                        PiezasColor.add(Marcador[i][j]);
+                    }
+                }
+            }
+       }
+        return(PiezasColor);
+    }
+  
+    public boolean JaqueMate(Color c){
+        ArrayList<Pieza> piezasColorC = this.ObtenerPiezasColor(c);
+        ArrayList<Posicion> arrayAux;
+        boolean mate = true;
+        for(Pieza p: piezasColorC){
+            arrayAux = p.getPosiblesMovimientos();
+            for(Posicion pos: arrayAux){
+                try{
+                    this.moverPieza(p, pos);
+                    mate = false;/*Si hemos llegado a esta línea, hemos encontrado una jugada
+                    que no es ilegal, por tanto no es jaque mate.*/
+                }catch(IllegalMovementException e){
+                    /*No queremos hacer nada, porque estamos 
+                    probando jugadas por fuerza bruta.
+                    Si accedemos a este bloque, es porque
+                    la jugada probada era ilegal.*/
+                }
+            }
+        }
+        return mate;
+    }
 //  public boolean JaqueMate(){
 //      if(!this.Jaque(new Color('n'))){
 //          return(false);

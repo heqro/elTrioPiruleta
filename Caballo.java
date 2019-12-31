@@ -9,7 +9,7 @@ public class Caballo extends Pieza{
     }
     @Override
     public void calcularMovimientos(){
-        /*Vamos a calcular todos los movimientos posibles (8) de la siguiente forma:
+        /*Vamos a calcular los movimientos posibles (son en total 8) de la siguiente forma:
             1. Calcularemos todos sin importarnos si son legales o no, y
         los introduciremos en el arraylist de posibles movimientos
             2. Recorreremos con un for el array de posibles movimientos, 

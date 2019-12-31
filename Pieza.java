@@ -15,13 +15,7 @@ public abstract class Pieza {
     private ArrayList<Posicion> posiblesMovimientos;
     private Tablero tablero;
     private Posicion posPieza;
-    
-//    public Pieza(Color c, char nombre, Tablero tablero){
-//        this.color = c;
-//        this.nombre = nombre;
-//        this.tablero = tablero;
-//    }
-    
+
     public Pieza(Color c, char nombre, Tablero tablero, Posicion posPieza){
         this.color = c;
         this.nombre = nombre;
@@ -65,15 +59,11 @@ public abstract class Pieza {
         return (getNombre() + getColor().toString() + posPieza.toString());   
     }
     
-    //public abstract ArrayList<Posicion> calcularMovimientos(Posicion coordenada);
     public abstract void calcularMovimientos();
     public void Mover(Posicion p) throws IllegalMovementException{
-        if (!posiblesMovimientos.contains(p))
-        {
+        if (!posiblesMovimientos.contains(p)){
             throw (new IllegalMovementException("El movimiento propuesto no se corresponde con un movimiento que pueda realizar la pieza."));
-        }
-        else
-        {
+        }else{
             this.getTablero().moverPieza(this, p);
         }
     }

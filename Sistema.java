@@ -25,19 +25,11 @@ public class Sistema {
         usuarios = u;
     }
     public void registrarUsuario(String nombre, String contraseña){
-        boolean control=true;
-        for(Usuario u: usuarios){
-            if (control) 
-                control = !u.getNombre().equals(nombre); // cuando control sea falso es porque hay un nombre igual, luego no podemos registarlo
-        }
-        if (control){
+        if(buscarUsuario(nombre, contraseña)==null){//Usuario no encontrado
             ArrayList<ModeloUsuario> Auser = new ArrayList<>();
             Usuario user = new Usuario(nombre,contraseña, this);
             usuarios.add(user);
-        }else {
-            System.out.println("El usuario ya esta registrado.");
         }
-        
     }
     public Usuario buscarUsuario(String nombre, String contraseña){
         

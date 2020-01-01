@@ -571,7 +571,7 @@ public class Tablero {
                     Pieza p = this.GetPiezaPos(pos);//recogemos la pieza asociada a la posición pos
                     System.out.print(p.toString());
                     if(j != 7){
-                        System.out.print(p.toString() + ",");
+                        System.out.print(",");
                     }
                 }
             }
@@ -622,6 +622,15 @@ public class Tablero {
         this.comprobarTableroLegal();
         if(tableroIlegal == true){
             throw new IllegalTableroException("El tablero es ilegal");
+        }else{
+            if(Jaque(new Color('n'))){
+                throw new IllegalTableroException("El tablero es ilegal"
+                        + " porque el rey negro está en jaque.");
+            }
+            if(Jaque(new Color('b'))){
+                throw new IllegalTableroException("El tablero es ilegal"
+                        + " porque el rey negro está en jaque.");
+            }
         }
     }
 }

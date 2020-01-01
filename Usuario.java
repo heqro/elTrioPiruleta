@@ -92,11 +92,14 @@ public class Usuario {
          }
         
         /*Llegados a este punto, sabemos que el tablero es legal, que las posiciones dadas son válidas, y
-        que la jugada aportada es jaque mate. Por tanto, lo añadimos al arrayList PERSONAL de modelos de usuario
-        que tiene el Usuario.*/
+        que la jugada aportada es jaque mate. Por tanto, lo añadimos al arrayList de modelos de usuario
+        que tiene el Usuario, y actualizamos el sistema para que todo usuario pueda jugar con ese modelo
+        si así lo desea.*/
 
-        this.ModelosUsuario.add(new ModeloUsuario(modelo, false, 0, 0)); /*Si la jugada es jaque mate,
-        añadimos el Modelo al array de modelos de Usuario, y al sistema.*/
+        this.ModelosUsuario.add(new ModeloUsuario(modelo, false, 0, 0)); 
+        /*añadimos el Modelo al array de modelos de Usuario*/
+        sys.actualizarSistemaModelos();
+        /*actualizamos el sistema con el nuevo modelo*/
     }
     
     public String getNombre(){

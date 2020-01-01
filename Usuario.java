@@ -33,8 +33,17 @@ public class Usuario {
     }
     public void leerEjemplo(String archivo)throws FileNotFoundException, IOException, 
             IllegalFormatException, IllegalTableroException, 
-            IllegalSolutionException, IllegalMovementException{
+            IllegalSolutionException, IllegalMovementException, IllegalFileExtension{
         // archivo es el nombre físico del archivo de texto que vamos a leer
+        String extension = "";
+        int i = archivo.lastIndexOf('.');
+        if (i >= 0) {
+            extension = archivo.substring(i+1);
+        }
+        if(!extension.equals("txt")){
+            throw new IllegalFileExtension("Extensión de archivo no válida. Se esperaba"
+                    + " txt, y se obtuvo \""+ extension + "\"" );
+        }
         Pieza Marcador[][] = new Pieza[8][8]; 
         Tablero tablero = new Tablero(Marcador);// tablero será el objeto donde guardemos el problema
         tablero.limpiarTablero();// inicializamos el tablero con valores nulos

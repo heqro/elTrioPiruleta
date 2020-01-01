@@ -81,11 +81,16 @@ public class Usuario {
         Posicion posFinal = sol.getPosFinal();/*No sabemos su situación, pero el método mover de la pieza
         se encargará de saber su situación.*/
         tablero.actualizarTablero();
-        piezaJugada.Mover(posFinal);//este método lanza IllegalMovementException con un mensaje de error.
+        try {
+            piezaJugada.Mover(posFinal);//este método lanza IllegalMovementException con un mensaje de error.
+        } catch (CoronacionException ex) {
+            tablero.coronarPeon(piezaJugada, sol.getLetraCoronacion());
+        }
         if(!tablero.JaqueMate(new Color('n'))){
             throw new IllegalSolutionException("La solución dada no es jaque mate. El tablero NO "
                     + "se añadirá.");
-        }
+         }
+        
         /*Llegados a este punto, sabemos que el tablero es legal, que las posiciones dadas son válidas, y
         que la jugada aportada es jaque mate. Por tanto, lo añadimos al arrayList PERSONAL de modelos de usuario
         que tiene el Usuario.*/
@@ -138,10 +143,21 @@ public class Usuario {
         for(ModeloUsuario m : ModelosUsuario ){
             if(m.getModelo().equals(M)){
                 m.setIntentos(m.getIntentos()+1);
-                if(m.getModelo().proponerMovimiento(sol)){
-                    m.setResuelto(true);
-                }else {
-                    m.setErrores(m.getErrores() + 1);
+                try {
+                    if(m.getModelo().proponerMovimiento(sol)){
+                        m.setResuelto(true);
+                    }else{
+                        m.setErrores(m.getErrores() + 1);
+                    }
+                } catch (CoronacionException ex) {
+                    Tablero t = m.getModelo().getTablero();
+                    Pieza piezaAux = t.GetPiezaPos(sol.getPosInicial());
+                    t.coronarPeon(piezaAux, sol.getLetraCoronacion());
+                    if(t.JaqueMate(new Color('n'))){
+                        m.setResuelto(true);
+                    }else{
+                        m.setErrores(m.getErrores() + 1);
+                    }
                 }
                 
             }

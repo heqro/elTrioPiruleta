@@ -61,9 +61,10 @@ public abstract class Pieza {
     
 
     
-    public void Mover(Posicion p) throws IllegalMovementException{
+    public void Mover(Posicion p) throws IllegalMovementException, CoronacionException{
         if (!posiblesMovimientos.contains(p)){
-            throw (new IllegalMovementException("El movimiento propuesto no se corresponde con un movimiento que pueda realizar la pieza."));
+            throw (new IllegalMovementException("El movimiento propuesto no"
+                    + " se corresponde con un movimiento que pueda realizar la pieza."));
         }else{
             this.getTablero().moverPieza(this, p);
         }

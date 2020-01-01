@@ -25,15 +25,25 @@ public class Modelo {
     public Solucion getSolucion(){
         return jugada_ganadora;
     }
-    public boolean proponerMovimiento(Solucion sol) throws IllegalMovementException{
+    public boolean proponerMovimiento(Solucion sol) throws CoronacionException{
         if(!tablero.PosicionOcupada(sol.getPosInicial())){
             return false;
         }else{
             tablero.actualizarTablero();
             Pieza piezaMover = tablero.GetPiezaPos(sol.getPosInicial());
-            tablero.moverPieza(piezaMover, sol.getPosFinal());/*Si algo va mal, se lanzará la excepción
-            IllegalMovementException*/
-            return tablero.JaqueMate(new Color ('n'));
+            try {
+                tablero.moverPieza(piezaMover, sol.getPosFinal());
+            } catch (IllegalMovementException ex) {
+                return false;/*Si la jugada es ilegal, el método termina aquí: no nos interesa
+                saber si la jugada provocaba una coronación o no del peón.*/
+            } catch (CoronacionException ex){
+                throw new CoronacionException(ex.getMessage());/*Si hemos coronado un peón, la
+                resolución del problema no termina aquí, sino que necesitamos saber en qué pieza
+                quiere coronar el jugador.*/
+            }
+            return tablero.JaqueMate(new Color ('n'));/*Si hemos llegado a este punto del código,
+            solo puede ser debido a una jugada legal de una pieza que no provoque coronación,
+            en cuyo caso comprobamos si es jaque mate.*/
         }
     } 
     @Override

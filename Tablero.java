@@ -252,23 +252,50 @@ public class Tablero {
         
     }
     
-    public void coronarPeon(Pieza p){
- //       Scanner sc = new Scanner(System.in);
-//        System.out.println("Introduzca la primera letra de la pieza que desee coronar");
-//        String texto = sc.next();
-//        char letraCoronar = texto.charAt(0);
-        this.insertarPieza('D'+p.getColor().toString(), p.getPosicion());
-        if(!this.PosicionOcupada(p.getPosicion())){
-            coronarPeon(p);
-        }
-        p = this.GetPiezaPos(p.getPosicion());
+    boolean letraValida(char letra){
+        return letra == 'D' || letra == 'T' ||
+                letra == 'A' || letra == 'C';
     }
-    void descoronarPeon(Pieza p){
+    
+    public void coronarPeon(Pieza p, char letra){
+        //Si no se introduce un valor válido, se coronará por defecto una dama
+        if(letraValida(letra)){
+            this.insertarPieza(letra+p.getColor().toString(), p.getPosicion());
+        }else{
+            this.insertarPieza('D'+p.getColor().toString(), p.getPosicion());
+        }
+        /*Insertamos una pieza del mismo color de la pieza en la posición de la pieza*/
+        p = this.GetPiezaPos(p.getPosicion());//hacemos que p apunte a la nueva pieza
+        p.getTablero().actualizarTablero();
+    }
+    public void descoronarPeon(Pieza p){
         this.insertarPieza("P"+p.getColor().toString(), p.getPosicion());
         p = this.GetPiezaPos(p.getPosicion());
     }
     
-    public void moverPieza(Pieza p, Posicion pos) throws IllegalMovementException {
+    public void peonCoronado(Pieza p) throws CoronacionException{
+        if(p.getNombre() == 'P'){
+            Posicion pos = p.getPosicion();
+            switch(p.getColor().toString()){
+                case "N":
+                {
+                    if(pos.getCoordenadax() == 1){
+                        throw new CoronacionException("¡PEÓN NEGRO CORONADO!");
+                    }
+                    break;
+                }
+                case "B":{
+                    if(pos.getCoordenadax()==8){
+                        throw new CoronacionException("¡PEÓN BLANCO CORONADO!");
+                    }
+                    break;
+                }
+            }
+        }
+        
+    }
+    
+    public void moverPieza(Pieza p, Posicion pos) throws IllegalMovementException, CoronacionException {
         /* Apuntes sobre el objeto pos:
             - Sabemos que es una posición a la que puede acceder una pieza
             de forma reglamentaria
@@ -277,40 +304,30 @@ public class Tablero {
             
             Posicion posicionAntigua = p.getPosicion();
             this.limpiarPosicion(posicionAntigua);/*vaciamos la posición desde la que se movió la pieza*/
-            Marcador[localizarCoordenadaX(pos)][localizarCoordenadaY(pos)] = p;
-            boolean coronado = false;
-            
-            /* actualizamos el tablero con la pieza movida*/
-            p.setPosicion(pos);
-            /* actualizamos la pieza p con la nueva posición pos */
-            if((pos.getCoordenadax() == 1)&&(p.getColor().toString().equals("NEGRO"))&&(p.getNombre() == 'P')){
-                /*Si hemos llevado un peón negro a la fila 1, lo hemos coronado*/
-                coronarPeon(p);
-                coronado = true;
-            }
-            if((pos.getCoordenadax() == 8)&&(p.getColor().toString().equals("BLANCO"))&&(p.getNombre() == 'P')){
-                /*Si hemos llevado un peón blanco a la fila 8, lo hemos coronado*/
-                coronarPeon(p);
-                coronado = true;
-            }
+            Marcador[localizarCoordenadaX(pos)][localizarCoordenadaY(pos)] = p;/*Insertamos la pieza
+            en la posición propuesta*/
+            p.setPosicion(pos);/* actualizamos la posición de la pieza p*/
             this.actualizarTablero();/*Actualizamos el tablero.*/
             
         try {
             this.JugadaIlegal(p.getColor());//Si la jugada es ilegal, entonces "retrocedemos" todo.
         } catch (IllegalMovementException ex) {
             String s = ex.getMessage();
-            if(coronado){
-                descoronarPeon(p);
-                coronado = false;
-            }/*Si habíamos coronado un peón, lo devolvemos donde estaba*/
             p.setPosicion(posicionAntigua);/*Reasociamos la pieza p a su posición original*/
             Marcador[localizarCoordenadaX(posicionAntigua)][localizarCoordenadaY(posicionAntigua)] = p;
             /*Retrocedemos la pieza a la posición original en el tablero*/
             this.limpiarPosicion(pos);/*Borramos la pieza de la posición del movimiento propuesto*/
             this.actualizarTablero();/*Actualizamos el tablero.*/
             throw new IllegalMovementException(s); /*Lanzamos la excepción que indica que se ha
-            producido un movimiento ilega para que pueda ser recogida por un método que utilice a moverPieza*/
+            producido un movimiento ilegal, para que pueda ser recogida por un método que utilice a moverPieza*/
         }
+        /*Si hemos llegado a este punto, entonces no se ha lanzado la excepción
+        IllegalMovementException. Por tanto, el movimiento propuesto es legal.
+        Queda ver si el movimiento ha producido la coronación de uno de los peones.
+        
+        Lo haremos con el método peonCoronado, que lanzará una excepción en caso de haber coronado un peón,
+        para que la pueda capturar un método que utilice a moverPieza.*/
+        peonCoronado(p);
     }
     
     public void actualizarTablero(){
@@ -590,7 +607,7 @@ public class Tablero {
                     this.moverPieza(p, pos);
                     mate = false;/*Si hemos llegado a esta línea, hemos encontrado una jugada
                     que no es ilegal, por tanto no es jaque mate.*/
-                }catch(IllegalMovementException e){
+                }catch(IllegalMovementException | CoronacionException e){
                     /*No queremos hacer nada, porque estamos 
                     probando jugadas por fuerza bruta.
                     Si accedemos a este bloque, es porque

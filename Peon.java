@@ -35,13 +35,14 @@ public class Peon extends Pieza{
                     de adelante ni la siguiente*/
                     aposiciones.add(posSiguiente2);
                 }
-                
-                if(!t.PosicionOcupada(posSiguiente1)){
+                if(posSiguiente1.posicionLegal()){
+                    if(!t.PosicionOcupada(posSiguiente1)){
                     /*Se puede mover una casilla hacia adelante una pieza blanca
                     si no se encuentra la casilla bloqueada*/
                     aposiciones.add(posSiguiente1);
-                    //SIN TRATAR: coronación
+                    }
                 }
+                
                 
                 /*Se puede mover una casilla en diagonal si se encuentra
                 la casilla bloqueada por una pieza del COLOR CONTRARIO*/
@@ -93,14 +94,13 @@ public class Peon extends Pieza{
                     de adelante ni la siguiente*/
                     aposiciones.add(posSiguiente2);
                 }
-                
-                if(!t.PosicionOcupada(posSiguiente1)){
+                if(posSiguiente1.posicionLegal()){
+                    if(!t.PosicionOcupada(posSiguiente1)){
                     /*Se puede mover una casilla hacia adelante una pieza blanca
                     si no se encuentra la casilla bloqueada*/
                     aposiciones.add(posSiguiente1);
+                    }
                 }
-                
-                
                 /*Se puede mover una casilla en diagonal si se encuentra
                 la casilla bloqueada por una pieza del COLOR CONTRARIO*/
                 if(posDiagonalIzq.posicionLegal()){/*comprobación

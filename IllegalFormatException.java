@@ -9,7 +9,7 @@ package p_final;
  *
  * @author Heqro
  */
-class IllegalFormatException extends Exception {
+public class IllegalFormatException extends Exception {
     public IllegalFormatException(String mensaje){
         super(mensaje);
     }

@@ -9,7 +9,7 @@ package p_final;
  *
  * @author hr.iglesias.2018
  */
-class IllegalMovementException extends Exception {
+public class IllegalMovementException extends Exception {
     public IllegalMovementException(String mensaje){
         super(mensaje);
     }

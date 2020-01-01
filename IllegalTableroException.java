@@ -9,7 +9,7 @@ package p_final;
  *
  * @author Heqro
  */
-class IllegalTableroException extends Exception{
+public class IllegalTableroException extends Exception{
     public IllegalTableroException(String mensaje){
         super(mensaje);
     }

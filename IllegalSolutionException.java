@@ -9,7 +9,7 @@ package p_final;
  *
  * @author Heqro
  */
-class IllegalSolutionException extends Exception {
+public class IllegalSolutionException extends Exception {
     public IllegalSolutionException(String mensaje){
         super(mensaje);
     }

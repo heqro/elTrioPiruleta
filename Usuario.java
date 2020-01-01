@@ -15,13 +15,13 @@ import java.util.logging.Logger;
  */
 public class Usuario {
     private String nombre,password;
-    private ArrayList<ModeloUsuario> ModelosUsuario  = new ArrayList<ModeloUsuario>();
+    private ArrayList<ModeloUsuario> ModelosUsuario;
     private Sistema sys;
     
-    public Usuario(String n,String p, ArrayList<ModeloUsuario> m, Sistema sys){
+    public Usuario(String n,String p, Sistema sys){
         nombre=n;
         password=p;
-        ModelosUsuario=m;
+        ModelosUsuario= new ArrayList<>();
         this.sys = sys;
     }
     

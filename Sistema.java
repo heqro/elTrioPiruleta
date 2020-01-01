@@ -32,7 +32,7 @@ public class Sistema {
         }
         if (control){
             ArrayList<ModeloUsuario> Auser = new ArrayList<>();
-            Usuario user = new Usuario(nombre,contraseña,Auser, this);
+            Usuario user = new Usuario(nombre,contraseña, this);
             usuarios.add(user);
         }else {
             System.out.println("El usuario ya esta registrado.");

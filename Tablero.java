@@ -41,7 +41,6 @@ public class Tablero {
     
     void comprobarTableroLegal(){
         boolean legalReyes = contReyNegro == 1 && contReyBlanco == 1;
-        //boolean legalPeones = contPeonNegro <= 8 && contPeonBlanco <= 8;
         int piezasExtrasNegra = 0;
         int piezasExtrasBlanca = 0;
         
@@ -79,13 +78,6 @@ public class Tablero {
         tableroIlegal = !( legalReyes && 
                 (piezasExtrasNegra + contPeonNegro <= 8) &&
                 (piezasExtrasBlanca + contPeonBlanco <= 8) ) && !tableroIlegal;
-        
-       // boolean legalDamas = contDamaNegra <= 1 && contDamaBlanca <= 1;
-       // boolean legalTorres = contTorreNegra <= 2 && contTorreBlanca <= 2;
-       //boolean legalCaballos = contCaballoNegro <= 2 && contCaballoBlanco <= 2;
-       //boolean legalAlfiles = contAlfilBlancoCasillasBlancas <= 1 && contAlfilBlancoCasillasNegras <= 1
-       //       && contAlfilNegroCasillasBlancas <= 1 && contAlfilNegroCasillasNegras <= 1; 
-       // tableroIlegal = legalReyes && legalPeones && legalDamas && legalTorres && legalCaballos && legalAlfiles && !tableroIlegal;
     }
     
     public void insertarPieza(String pstring, Posicion pos){/*método para inicializar una casilla del tablero: recibe una cadena,
@@ -104,7 +96,7 @@ public class Tablero {
             el tablero es ilegal*/
         }
         switch(pstring.charAt(0)){
-            case 'R'://rey
+            case 'R':case'r'://rey
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -123,7 +115,7 @@ public class Tablero {
                 colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'A'://alfil
+            case 'A':case 'a'://alfil
             {
                 switch(colorPieza){
                     case 'B': case 'b':{
@@ -160,7 +152,7 @@ public class Tablero {
                 colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'T'://torre
+            case 'T':case 't'://torre
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -180,7 +172,7 @@ public class Tablero {
                 break;
             }
             
-            case 'D'://dama
+            case 'D':case 'd'://dama
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -199,7 +191,7 @@ public class Tablero {
                 colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'P'://peón
+            case 'P':case'p'://peón
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -220,7 +212,7 @@ public class Tablero {
                 colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'C'://caballo
+            case 'C':case 'c'://caballo
             {
                 switch(colorPieza){
                     case 'B':case 'b':{
@@ -239,7 +231,7 @@ public class Tablero {
                 colorPieza en el tablero this en la posición pos*/
                 break;
             }
-            case 'V'://vacío
+            case 'V':case'v'://vacío
             {
                 Marcador[x][y] = null;
                 break;

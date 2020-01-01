@@ -39,7 +39,7 @@ public class Tablero {
         return (Marcador[x][y] != null);
     }
     
-    public void comprobarTableroLegal(){
+    void comprobarTableroLegal(){
         boolean legalReyes = contReyNegro == 1 && contReyBlanco == 1;
         //boolean legalPeones = contPeonNegro <= 8 && contPeonBlanco <= 8;
         int piezasExtrasNegra = 0;
@@ -599,6 +599,13 @@ public class Tablero {
             }
         }
         return mate;
+    }
+    
+    public void tableroIlegal() throws IllegalTableroException{
+        this.comprobarTableroLegal();
+        if(tableroIlegal == true){
+            throw new IllegalTableroException("El tablero es ilegal");
+        }
     }
 }
 

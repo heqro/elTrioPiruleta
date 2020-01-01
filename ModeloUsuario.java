@@ -11,7 +11,7 @@ package p_final;
  */
 public class ModeloUsuario {
     private Modelo Modelo;
-    private boolean Resuelto ;
+    private boolean Resuelto;
     private int contadorIntentos,contadorErrores;
     
     public ModeloUsuario(Modelo m, boolean res, int conint, int conerr){

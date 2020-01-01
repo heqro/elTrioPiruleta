@@ -27,12 +27,13 @@ public class Sistema {
     public void registrarUsuario(String nombre, String contraseña){
         boolean control=true;
         for(Usuario u: usuarios){
-            if (control) control = !u.getNombre().equals(nombre); // cuando control sea falso es porque hay un nombre igual, luego no podemos registarlo
-            
+            if (control) 
+                control = !u.getNombre().equals(nombre); // cuando control sea falso es porque hay un nombre igual, luego no podemos registarlo
         }
         if (control){
             ArrayList<ModeloUsuario> Auser = new ArrayList<>();
-            Usuario user = new Usuario(nombre,contraseña,Auser);
+            Usuario user = new Usuario(nombre,contraseña,Auser, this);
+            usuarios.add(user);
         }else {
             System.out.println("El usuario ya esta registrado.");
         }
@@ -42,11 +43,23 @@ public class Sistema {
         
         for(Usuario u: usuarios){
             if (u.getNombre().equals(nombre)) return u;
-        
-    }
+        }
         return null; //devolvemos null si no devuelve no
     
     }
+    
+    public ArrayList<Usuario> getUsuarios(){
+        return this.usuarios;
+    }
+    
+    public ArrayList<Modelo> getModelos(){
+        return this.modelos;
+    }
+    
+    public void setModelos(ArrayList<Modelo> modelos){
+        this.modelos = modelos;
+    }
+    
     public int usuariosQueHanResuelto(Modelo p){
         int sum=0;
         for(Usuario u: usuarios){
@@ -84,15 +97,22 @@ public class Sistema {
     
     
     }
-    public void subirProblema(Tablero p,String str){ //haremos un subprograma en los jframe que permita construir problemas
-        Modelo m = new Modelo(p,str);
+    public void subirProblema(Tablero p, Solucion sol){ //haremos un subprograma en los jframe que permita construir problemas
+        /*A este método solo vamos a acceder desde leerEjemplo: así, el problema siempre será válido.*/
+        Modelo m = new Modelo(p, sol);
         modelos.add(m);
     }
     
-
-
-
-
+    public void actualizarSistemaModelos(){
+        ArrayList<Modelo> arrayAuxModelo = new ArrayList<>();
+        for(Usuario u: this.getUsuarios()){//Recoger todos los usuarios de la base de datos
+            ArrayList<ModeloUsuario> arrayAuxModeloUsuario = u.getModelosUsuario();/*Recoger sus modelos subidos*/
+            for(ModeloUsuario m: arrayAuxModeloUsuario){/*Añadir cada modelo encontrado a un array Auxiliar*/
+                arrayAuxModelo.add(m.getModelo());
+            }
+        }
+        this.setModelos(arrayAuxModelo);
+    }
 }
     
 

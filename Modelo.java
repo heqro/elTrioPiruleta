@@ -5,25 +5,36 @@
  */
 package p_final;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author juans
  */
 public class Modelo {
     private Tablero tablero;
-    private String jugada_ganadora;
-    public Modelo(Tablero t, String s){
+    private Solucion jugada_ganadora;
+    public Modelo(Tablero t, Solucion s){
         tablero = t;
         jugada_ganadora = s;
     }    
     public Tablero getTablero(){
         return tablero;
     }
-    public String getSolucion(){
+    public Solucion getSolucion(){
         return jugada_ganadora;
     }
-    public boolean proponerMovimiento(String mov){
-        return (jugada_ganadora.equals(mov));
+    public boolean proponerMovimiento(Solucion sol) throws IllegalMovementException{
+        if(!tablero.PosicionOcupada(sol.getPosInicial())){
+            return false;
+        }else{
+            tablero.actualizarTablero();
+            Pieza piezaMover = tablero.GetPiezaPos(sol.getPosInicial());
+            tablero.moverPieza(piezaMover, sol.getPosFinal());/*Si algo va mal, se lanzará la excepción
+            IllegalMovementException*/
+            return tablero.JaqueMate(new Color ('n'));
+        }
     } 
     @Override
     public boolean equals(Object o){

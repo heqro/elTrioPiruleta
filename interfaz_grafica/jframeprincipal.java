@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.util.ArrayList;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class jframeprincipal extends javax.swing.JFrame {
         initComponents();
         jButtonInsertarTXT.setEnabled(false);
         jTextFieldDireccionTXT.setEnabled(false);
+        
+
     }
 
     /**
@@ -118,6 +121,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabelInformacion = new javax.swing.JLabel();
         jButtonNombrePassword = new javax.swing.JButton();
+        jButtonSubirProblema = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -438,13 +442,22 @@ public class jframeprincipal extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonNombrePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 60, -1, -1));
 
+        jButtonSubirProblema.setText("Subir problema");
+        jButtonSubirProblema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSubirProblemaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonSubirProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 440, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
     Sistema sys = new Sistema();
     String nombre, pass;
     Usuario user;
     ArrayList<ModeloUsuario> AUSER;
-    
+   
+    final JFileChooser selectorArchivos = new JFileChooser(); //Creamos un selector de archivos
     private void habilitarLecturaTXT(){
         jLabelInformacion.setText("Bienvenido, "+ nombre + ", disfruta de esta partida.");
         jButtonNombrePassword.setEnabled(false);
@@ -537,7 +550,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         try {
             T.tableroIlegal();
         } catch (IllegalTableroException ex) {
-            Logger.getLogger(jframeprincipal.class.getName()).log(Level.SEVERE, null, ex);
+            jLabelInformacion.setText(ex.getMessage());
         }
 //        if (T.EsIlegal()) {T.limpiarTablero();
 //                            System.out.println("No es legal. Limpio");}else {
@@ -675,6 +688,18 @@ public class jframeprincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonNombrePasswordActionPerformed
 
+    private void jButtonSubirProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubirProblemaActionPerformed
+        int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
+        de archivos*/
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            /*Obtener el archivo seleccionado*/
+            File archivo = selectorArchivos.getSelectedFile();
+            /*Obtener la ruta del archivo seleccionado*/
+            jLabelInformacion.setText(archivo.getAbsolutePath());
+            
+        }
+    }//GEN-LAST:event_jButtonSubirProblemaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -779,6 +804,7 @@ public class jframeprincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonInsertarTXT;
     private javax.swing.JButton jButtonNombrePassword;
+    private javax.swing.JButton jButtonSubirProblema;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

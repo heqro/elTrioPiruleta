@@ -39,9 +39,9 @@ public class Usuario {
         Tablero tablero = new Tablero(Marcador);// tablero será el objeto donde guardemos el problema
         tablero.limpiarTablero();// inicializamos el tablero con valores nulos
         Scanner entrada = new Scanner(new File (archivo)); //el nombre lógico del archivo de texto será entrada
-        String solucion = "";
+        String solucion;
         int contadorFila = 0; //el contador de filas lo utilizaremos para limitar la lectura del fichero
-        while(entrada.hasNextLine() && contadorFila <= 8){
+        while(contadorFila < 8){
             String[] casillas = entrada.nextLine().split(",");//guardamos en un array las piezas de la fila contadorFila
             for(int contadorColumna=0; contadorColumna<=7; contadorColumna++){
                 tablero.insertarPieza(casillas[contadorColumna], new Posicion(8 - contadorFila, (char)(contadorColumna+97)));
@@ -49,11 +49,8 @@ public class Usuario {
             }
             contadorFila++;//incrementamos la fila para poder introducir la siguiente
         }
-        if(contadorFila == 8){
-            solucion = entrada.nextLine();
-        }
-        Solucion sol;
-        sol = new Solucion(solucion);
+        solucion = entrada.next();
+        Solucion sol = new Solucion(solucion);
         Modelo modelo = new Modelo(tablero, sol); /*Si hemos llegado a esta línea, entonces creamos un Modelo
         con un tablero, que no sabemos si será válido, y una solución posible, que no sabemos si será válida*/
         tablero.tableroIlegal();/*Queremos saber si el tablero es legal*/
@@ -74,9 +71,10 @@ public class Usuario {
         Pieza piezaJugada = tablero.GetPiezaPos(posInicial);// Ya sabemos que es no nulo
         Posicion posFinal = sol.getPosFinal();/*No sabemos su situación, pero el método mover de la pieza
         se encargará de saber su situación.*/
+        tablero.actualizarTablero();
         piezaJugada.Mover(posFinal);//este método lanza IllegalMovementException con un mensaje de error.
         if(!tablero.JaqueMate(new Color('n'))){
-            throw new IllegalSolutionException("La solución dada no es jaque mate. El tablero NO"
+            throw new IllegalSolutionException("La solución dada no es jaque mate. El tablero NO "
                     + "se añadirá.");
         }
         /*Llegados a este punto, sabemos que el tablero es legal, que las posiciones dadas son válidas, y

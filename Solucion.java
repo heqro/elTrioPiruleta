@@ -14,11 +14,11 @@ public class Solucion {
     private Posicion posFinal;
     public Solucion(String cadenaSolucion) throws IllegalFormatException{
         if(cadenaSolucion.length() == 4){
-            int posInicialX = Integer.parseInt(cadenaSolucion.substring(0, 0));
+            int posInicialX = Character.getNumericValue(cadenaSolucion.charAt(0));
             char posInicialY = cadenaSolucion.charAt(1);
             posInicial = new Posicion(posInicialX, posInicialY);
-            int posFinalX = Integer.parseInt(cadenaSolucion.substring(3, 3));
-            char posFinalY = cadenaSolucion.charAt(4);
+            int posFinalX = Character.getNumericValue(cadenaSolucion.charAt(2));
+            char posFinalY = cadenaSolucion.charAt(3);
             posFinal = new Posicion(posFinalX, posFinalY);
         }else{
             throw new IllegalFormatException("Formato de solución incorrecto: se esperaba"

@@ -6,4 +6,4 @@ V,V,V,V,V,V,RN,V
 V,V,V,V,V,V,V,V
 V,V,V,V,V,V,V,V
 V,V,V,V,V,V,RB,V
-c6g2
+6c2g

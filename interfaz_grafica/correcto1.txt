@@ -1,0 +1,8 @@
+V,V,V,V,V,V,V,V
+V,V,V,V,V,V,PB,PN	
+V,V,V,V,V,V,V,RN
+V,V,V,V,V,V,V,TN
+V,V,V,V,V,V,V,V
+V,V,V,V,V,V,TB,V
+V,V,V,V,V,V,V,RB
+7g8gC

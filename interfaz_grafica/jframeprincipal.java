@@ -32,10 +32,7 @@ public class jframeprincipal extends javax.swing.JFrame {
      */
     public jframeprincipal() {
         initComponents();
-        jButtonInsertarTXT.setEnabled(false);
-        jTextFieldDireccionTXT.setEnabled(false);
-        
-
+        deshabilitarUI();
     }
 
     /**
@@ -112,16 +109,17 @@ public class jframeprincipal extends javax.swing.JFrame {
         jButton85 = new javax.swing.JButton();
         jButton86 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButtonInsertarTXT = new javax.swing.JButton();
-        jTextFieldDireccionTXT = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jTextNombre = new javax.swing.JTextField();
         jTextPassword = new javax.swing.JPasswordField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelInsertarNombre = new javax.swing.JLabel();
+        jLabelInsertarPass = new javax.swing.JLabel();
         jLabelInformacion = new javax.swing.JLabel();
         jButtonNombrePassword = new javax.swing.JButton();
         jButtonSubirProblema = new javax.swing.JButton();
+        jButtonResolverProblema = new javax.swing.JButton();
+        jButtonEstadisticasPersonales = new javax.swing.JButton();
+        jButtonEstadisticasProblemas = new javax.swing.JButton();
+        jButtonVerClasificacion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -390,49 +388,22 @@ public class jframeprincipal extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/p_final/interfaz_grafica/tablero_final.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        jButtonInsertarTXT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jButtonInsertarTXT.setText("Inserta direccion del txt y click");
-        jButtonInsertarTXT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonInsertarTXTActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButtonInsertarTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 590, 280, 60));
-
-        jTextFieldDireccionTXT.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
-        jTextFieldDireccionTXT.setText("Inserta la dirección del txt");
-        jTextFieldDireccionTXT.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextFieldDireccionTXTMouseClicked(evt);
-            }
-        });
-        jTextFieldDireccionTXT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDireccionTXTActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextFieldDireccionTXT, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 540, 280, 40));
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
-        jLabel2.setText("Elige la partida: ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 520, -1, -1));
-
         jTextNombre.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         getContentPane().add(jTextNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 30, 110, -1));
 
         jTextPassword.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         getContentPane().add(jTextPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 30, 120, -1));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
-        jLabel3.setText("Inserta tu nombre");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 10, -1, -1));
+        jLabelInsertarNombre.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
+        jLabelInsertarNombre.setText("Inserta tu nombre");
+        getContentPane().add(jLabelInsertarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 10, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
-        jLabel4.setText("Inserta tu contraseña");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 10, -1, -1));
+        jLabelInsertarPass.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
+        jLabelInsertarPass.setText("Inserta tu contraseña");
+        getContentPane().add(jLabelInsertarPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 10, -1, -1));
 
         jLabelInformacion.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
-        getContentPane().add(jLabelInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, 260, 40));
+        getContentPane().add(jLabelInformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 460, 280, 310));
 
         jButtonNombrePassword.setText("OK");
         jButtonNombrePassword.addActionListener(new java.awt.event.ActionListener() {
@@ -448,7 +419,24 @@ public class jframeprincipal extends javax.swing.JFrame {
                 jButtonSubirProblemaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonSubirProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 440, -1, -1));
+        getContentPane().add(jButtonSubirProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 160, 260, 20));
+
+        jButtonResolverProblema.setText("Resolver problema");
+        jButtonResolverProblema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResolverProblemaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonResolverProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 35, 260, 20));
+
+        jButtonEstadisticasPersonales.setText("Estadísticas personales");
+        getContentPane().add(jButtonEstadisticasPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 70, 260, 20));
+
+        jButtonEstadisticasProblemas.setText("Estadísticas de los problemas");
+        getContentPane().add(jButtonEstadisticasProblemas, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, 260, 20));
+
+        jButtonVerClasificacion.setText("Ver clasificación");
+        getContentPane().add(jButtonVerClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 130, 260, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -458,207 +446,34 @@ public class jframeprincipal extends javax.swing.JFrame {
     ArrayList<ModeloUsuario> AUSER;
    
     final JFileChooser selectorArchivos = new JFileChooser(); //Creamos un selector de archivos
-    private void habilitarLecturaTXT(){
-        jLabelInformacion.setText("Bienvenido, "+ nombre + ", disfruta de esta partida.");
-        jButtonNombrePassword.setEnabled(false);
-        jTextFieldDireccionTXT.setEnabled(true);
-        jButtonInsertarTXT.setEnabled(true);
+    private void habilitarUI(){
+        jButtonNombrePassword.setVisible(false);//Esconder botón "OK"
+        jTextNombre.setVisible(false);//Esconder cuadro de texto para leer nombre
+        jTextPassword.setVisible(false);//Esconder cuadro de texto para leer password
+        jLabelInsertarNombre.setVisible(false);//Esconder etiqueta de insertar nombre
+        jLabelInsertarPass.setVisible(false);//Esconder etiqueta de insertar password
+        jLabelInformacion.setText("Bienvenido, "+ nombre + ", disfruta de esta partida.");/*Sacar
+        mensaje por nuestra terminal de información*/
+        jButtonSubirProblema.setVisible(true);/*Posibilitamos subir problema ahora
+        que tenemos un usuario que ha hecho log-in*/
+        jButtonResolverProblema.setVisible(true);
+        jButtonEstadisticasPersonales.setVisible(true);
+        jButtonVerClasificacion.setVisible(true);
+        jButtonEstadisticasProblemas.setVisible(true);
     }
     
-    private void jButtonInsertarTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertarTXTActionPerformed
-        String url = jTextFieldDireccionTXT.getText();
-        try {
-           user.leerEjemplo(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-            }
-        
-        ArrayList<ModeloUsuario> aux = user.getModelosUsuario();
-        Modelo modelo = aux.get(aux.size()-1).getModelo();
-        
-        
-        
-        Tablero T = modelo.getTablero();
-        
-        ArrayList<JButton> listaBotones = new ArrayList<>();
-        listaBotones.add(0,jButton1);
-        listaBotones.add(1,jButton2);
-        listaBotones.add(2,jButton3);
-        listaBotones.add(3,jButton4);
-        listaBotones.add(4,jButton5);
-        listaBotones.add(5,jButton6);
-        listaBotones.add(6,jButton7);
-        listaBotones.add(7,jButton8);
-        listaBotones.add(8,jButton9);
-        listaBotones.add(9,jButton10);
-        listaBotones.add(10,jButton11);
-        listaBotones.add(11,jButton12);
-        listaBotones.add(12,jButton13);
-        listaBotones.add(13,jButton14);
-        listaBotones.add(14,jButton15);
-        listaBotones.add(15,jButton16);
-        listaBotones.add(16,jButton17);
-        listaBotones.add(17,jButton18);
-        listaBotones.add(18,jButton19);
-        listaBotones.add(19,jButton20);
-        listaBotones.add(20,jButton21);
-        listaBotones.add(21,jButton22);
-        listaBotones.add(22,jButton23);
-        listaBotones.add(23,jButton24);
-        listaBotones.add(24,jButton25);
-        listaBotones.add(25,jButton26);
-        listaBotones.add(26,jButton27);
-        listaBotones.add(27,jButton28);
-        listaBotones.add(28,jButton29);
-        listaBotones.add(29,jButton30);
-        listaBotones.add(30,jButton31);
-        listaBotones.add(31,jButton32);
-        listaBotones.add(32,jButton33);
-        listaBotones.add(33,jButton34);
-        listaBotones.add(34,jButton35);
-        listaBotones.add(35,jButton36);
-        listaBotones.add(36,jButton37);
-        listaBotones.add(37,jButton38);
-        listaBotones.add(38,jButton39);
-        listaBotones.add(39,jButton44);
-        listaBotones.add(40,jButton46);
-        listaBotones.add(41,jButton47);
-        listaBotones.add(42,jButton48);
-        
-        listaBotones.add(43,jButton66);
-        listaBotones.add(44,jButton67);
-        listaBotones.add(45,jButton68);
-        listaBotones.add(46,jButton69);
-        
-        listaBotones.add(47,jButton70);
-        listaBotones.add(48,jButton71);
-        listaBotones.add(49,jButton72);
-        listaBotones.add(50,jButton73);
-        listaBotones.add(51,jButton74);
-        listaBotones.add(52,jButton75);
-        listaBotones.add(53,jButton76);
-        listaBotones.add(54,jButton77);
-        listaBotones.add(55,jButton78);
-        listaBotones.add(56,jButton79);
-        listaBotones.add(57,jButton80);
-        listaBotones.add(58,jButton81);
-        listaBotones.add(59,jButton82);
-        listaBotones.add(60,jButton83);
-        listaBotones.add(61,jButton84);
-        listaBotones.add(62,jButton85);
-        listaBotones.add(63,jButton86);
-        try {
-            T.tableroIlegal();
-        } catch (IllegalTableroException ex) {
-            jLabelInformacion.setText(ex.getMessage());
-        }
-//        if (T.EsIlegal()) {T.limpiarTablero();
-//                            System.out.println("No es legal. Limpio");}else {
-//            System.out.println("Es legal");
-//        }
-            
-        
-            //System.out.println("prueba");
-            int seleccionboton;
-            for (int i=1; i<9; i++){ //con el array de botones, le vamos a asignar a cada uno un icono dependiendo de su figura src/interfaz_grafica/jugada.txt
-                //System.out.println("prueba");
-                for(int j=0; j<8; j++){
-                    char jc = (char) j;
-                    jc += 97; //para añadirlo en tipo posicion que luego lo que hace es restar 97
-                    int y=9-i;
-                    Posicion pos = new Posicion(y,(char)jc);
-                    //System.out.println(pos.toString());
-                    //System.out.println("i" + i);
-                    //System.out.println("j "+ j);
-                    //System.out.println("prueba");
-                    
-                    if(null==T.GetPiezaPos(pos)){                } else {
-                        //leemos que figura es
-                        
-                        Pieza p = T.GetPiezaPos(pos);
-                        seleccionboton= (i-1)*8 + j;
-                        //System.out.println(p.getColor().toString());                               //haremos un switch para saber que foto meter en el icon
-                        //System.out.println(p.getNombre());
-                        
-                        switch (p.getNombre()){
-                            case 'R': switch(p.getColor().toString()){
-                                case "N": ImageIcon icon = new ImageIcon(getClass().getResource("bk.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                
-                                break;
-                                case "B": icon = new ImageIcon(getClass().getResource("wk.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                
-                                break;
-                            }break;
-                            case 'T': switch(p.getColor().toString()){
-                                case "N": ImageIcon icon = new ImageIcon(getClass().getResource("br.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                                case "B":icon = new ImageIcon(getClass().getResource("wr.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                            }break;
-                            case 'A': switch(p.getColor().toString()){
-                                case "N": ImageIcon icon = new ImageIcon(getClass().getResource("bb.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                                case "B":icon = new ImageIcon(getClass().getResource("wb.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                            }break;
-                            case 'C': switch(p.getColor().toString()){
-                                case "N": ImageIcon icon = new ImageIcon(getClass().getResource("bn.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                                case "B":icon = new ImageIcon(getClass().getResource("wn.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                            }break;
-                            case 'P': switch(p.getColor().toString()){
-                                case "N": ImageIcon icon = new ImageIcon(getClass().getResource("bp.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                                case "B":icon = new ImageIcon(getClass().getResource("wp.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                            }break;
-                            case 'D': switch(p.getColor().toString()){
-                                case "N": ImageIcon icon = new ImageIcon(getClass().getResource("bq.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                                case "B":icon = new ImageIcon(getClass().getResource("wq.png"));
-                                listaBotones.get(seleccionboton).setIcon(icon);
-                                break;
-                            }break;
-                        }
-                    }
-                    
-                }
-            }
-        
-        
-        
-        
-        
-        /*ImageIcon icon = new ImageIcon(getClass().getResource("wb.png"));
-        jButton1.setIcon(icon);*/
-// TODO add your handling code here:
-    }//GEN-LAST:event_jButtonInsertarTXTActionPerformed
-
+    private void deshabilitarUI(){
+        jButtonSubirProblema.setVisible(false);/*Posibilitamos subir problema ahora
+        que tenemos un usuario que ha hecho log-in*/
+        jButtonResolverProblema.setVisible(false);
+        jButtonEstadisticasPersonales.setVisible(false);
+        jButtonVerClasificacion.setVisible(false);
+        jButtonEstadisticasProblemas.setVisible(false);
+    }
+    
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton28ActionPerformed
-
-    private void jTextFieldDireccionTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDireccionTXTActionPerformed
-
-// TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDireccionTXTActionPerformed
-
-    private void jTextFieldDireccionTXTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldDireccionTXTMouseClicked
-        jTextFieldDireccionTXT.setText("");
-// TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDireccionTXTMouseClicked
 
     
     
@@ -679,11 +494,11 @@ public class jframeprincipal extends javax.swing.JFrame {
                         options,//array con las elecciones posibles
                         options[0]);
             }else{
-                habilitarLecturaTXT();
+                habilitarUI();
             }
             if(respuesta==0){
                 sys.registrarUsuario(nombre, nombre);
-                habilitarLecturaTXT();
+                habilitarUI();
             }
         }
     }//GEN-LAST:event_jButtonNombrePasswordActionPerformed
@@ -699,6 +514,10 @@ public class jframeprincipal extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jButtonSubirProblemaActionPerformed
+
+    private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolverProblemaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonResolverProblemaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -802,15 +621,16 @@ public class jframeprincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton85;
     private javax.swing.JButton jButton86;
     private javax.swing.JButton jButton9;
-    private javax.swing.JButton jButtonInsertarTXT;
+    private javax.swing.JButton jButtonEstadisticasPersonales;
+    private javax.swing.JButton jButtonEstadisticasProblemas;
     private javax.swing.JButton jButtonNombrePassword;
+    private javax.swing.JButton jButtonResolverProblema;
     private javax.swing.JButton jButtonSubirProblema;
+    private javax.swing.JButton jButtonVerClasificacion;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelInformacion;
-    private javax.swing.JTextField jTextFieldDireccionTXT;
+    private javax.swing.JLabel jLabelInsertarNombre;
+    private javax.swing.JLabel jLabelInsertarPass;
     private javax.swing.JTextField jTextNombre;
     private javax.swing.JPasswordField jTextPassword;
     // End of variables declaration//GEN-END:variables

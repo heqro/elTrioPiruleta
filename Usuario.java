@@ -52,6 +52,9 @@ public class Usuario {
         int contadorFila = 0; //el contador de filas lo utilizaremos para limitar la lectura del fichero
         while(contadorFila < 8){
             String[] casillas = entrada.nextLine().split(",");//guardamos en un array las piezas de la fila contadorFila
+            if(casillas.length != 8){
+                throw new IllegalTableroException("Formato de tablero no válido.");
+            }
             for(int contadorColumna=0; contadorColumna<=7; contadorColumna++){
                 tablero.insertarPieza(casillas[contadorColumna], new Posicion(8 - contadorFila, (char)(contadorColumna+97)));
                 //insertamos la pieza en el tablero
@@ -62,6 +65,7 @@ public class Usuario {
         Solucion sol = new Solucion(solucion);
         Modelo modelo = new Modelo(tablero, sol); /*Si hemos llegado a esta línea, entonces creamos un Modelo
         con un tablero, que no sabemos si será válido, y una solución posible, que no sabemos si será válida*/
+        tablero.actualizarTablero();
         tablero.tableroIlegal();/*Queremos saber si el tablero es legal*/
         /*Si hemos llegado a esta línea, entonces hemos creado un modelo con un tablero que es legal,
         y ahora queremos ver si la solución lo es.*/

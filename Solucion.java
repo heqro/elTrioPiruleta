@@ -48,4 +48,11 @@ public class Solucion {
     public char getLetraCoronacion(){
         return letraCoronacion;
     }
+    public boolean equals(Object o){
+        if (o == null){return false;}
+        if (o==this){return true;}
+        if (getClass()!=o.getClass()){return false;}
+        Solucion s = (Solucion) o;
+        return(posFinal.equals(s.posFinal)&& posInicial.equals(s.posInicial));
+    }
 }

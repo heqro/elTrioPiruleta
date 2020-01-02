@@ -39,11 +39,17 @@ public class Tablero {
         return (Marcador[x][y] != null);
     }
     
-    void comprobarTableroLegal(){
+     public void comprobarTableroLegal(){
         boolean legalReyes = contReyNegro == 1 && contReyBlanco == 1;
         int piezasExtrasNegra = 0;
         int piezasExtrasBlanca = 0;
-        
+        int contPiezasblancas,contPiezasNegras ;
+        contPiezasblancas = contDamaBlanca+ contTorreBlanca+ contAlfilBlancoCasillasNegras +contAlfilBlancoCasillasBlancas +contPeonBlanco +contReyBlanco +contCaballoBlanco;
+        contPiezasNegras = contDamaNegra+ contTorreNegra+ contAlfilNegroCasillasNegras +contAlfilNegroCasillasBlancas +contPeonNegro +contReyNegro +contCaballoNegro;
+        boolean buendDesarrolloBlancas,buenDesarrolloNegras;
+        buendDesarrolloBlancas = true;
+        buenDesarrolloNegras = true;
+        /*Los siguientes ifs de lo que se cercionan es de que el tablero introducido no tenga mas piezas extras(obtenidas de una coronacion) que número de peones reglamentario */
         if (contDamaBlanca > 1){
             piezasExtrasBlanca += contDamaBlanca -1;
         }
@@ -75,9 +81,21 @@ public class Tablero {
             piezasExtrasNegra += contAlfilNegroCasillasNegras -1;
             
         }
+        /*La siguiente comprobación es algo mas especifica y tambien tiene relación con la coronación. Como la distinción entre los alfiles 
+        de un color que se mueven por casillas blancas y los que se mueven por casillas negras es necesaria, tambien debemos hacer la distincion con los 
+        peones que en principio solo podrían coronar a solo una de estas, lo que implicaria que el numero maximo de alfiles de un tipo seria cinco. No obstante, cabe 
+        la posibilidad de que los peones durante el transcurso de la partida, se coman una pieza y con ello consigan coronar al otro tipo de
+        alfil; como no tenemos forma de comprobar el historial de la partida y por tanto no podemos ver si se ha dessarrollado correctamente 
+        todo, lo que vamos a hacer es ver que si hay un mayor número de alfiles de un tipo de casillas se ha tenido que producir alguna baja 
+        en el lado contrario. Que es lo que tomaremos como referencia para ver si el desarrollo a sido correcto.
+        Notese que entre alfiles de un mismo color, esta situacion no puede darse en los dos tipos de alfiles a la vez ya que entonces se estaria superando el numero de piezas extras.*/
+        if(contAlfilBlancoCasillasNegras>5 && contPiezasNegras > (32 - (contAlfilBlancoCasillasNegras-5))){buendDesarrolloBlancas = false;}
+        if(contAlfilBlancoCasillasBlancas>5 && contPiezasNegras > (32 - (contAlfilBlancoCasillasBlancas-5))){buendDesarrolloBlancas = false;}
+        if(contAlfilNegroCasillasNegras>5 && contPiezasblancas > (32 - (contAlfilNegroCasillasNegras-5))){buenDesarrolloNegras = false;}
+        if(contAlfilNegroCasillasBlancas>5 && contPiezasblancas > (32 - (contAlfilNegroCasillasBlancas-5))){buenDesarrolloNegras = false;}
         tableroIlegal = !( legalReyes && 
                 (piezasExtrasNegra + contPeonNegro <= 8) &&
-                (piezasExtrasBlanca + contPeonBlanco <= 8) ) && !tableroIlegal;
+                (piezasExtrasBlanca + contPeonBlanco <= 8) ) && !tableroIlegal && buenDesarrolloNegras && buendDesarrolloBlancas;
     }
     
     public void insertarPieza(String pstring, Posicion pos) throws IllegalTableroException{/*método para inicializar una casilla del tablero: recibe una cadena,

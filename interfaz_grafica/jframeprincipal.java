@@ -519,19 +519,19 @@ public class jframeprincipal extends javax.swing.JFrame {
                 pintarTablero();
             } catch (FileNotFoundException ex) {
                 codigoError = "Archivo no encontrado.";
-            } catch (p_final.IllegalFormatException | IllegalTableroException | 
+            } catch (p_final.IllegalFormatException | IllegalTableroException| 
                     IllegalSolutionException | IllegalMovementException | 
                     IllegalFileExtension ex) {
                 codigoError = ex.getMessage();
                 
             } catch (IOException ex) {
                 codigoError = "Excepción de I/O";
-            }
+            } 
             jLabelInformacion.setText(codigoError);
     }//GEN-LAST:event_jButtonSubirProblemaActionPerformed
     }
     
-    private void pintarTablero(){
+    private void pintarTablero() throws IllegalTableroException{
         ArrayList<ModeloUsuario> aux = user.getModelosUsuario();
         Modelo modelo = aux.get(aux.size()-1).getModelo();
         Tablero T = modelo.getTablero();
@@ -600,123 +600,120 @@ public class jframeprincipal extends javax.swing.JFrame {
         listaBotones.add(61,jButton84);
         listaBotones.add(62,jButton85);
         listaBotones.add(63,jButton86);
-        try {
-            System.out.println("Nos mega perdimos");
-            T.tableroIlegal();
-            System.out.println("Nos perdimos");
-            int seleccionboton;
-            for (int i=1; i<9; i++){ //con el array de botones, le vamos a asignar a cada uno un icono dependiendo de su figura src/interfaz_grafica/jugada.txt
-                //System.out.println("prueba");
-                for(int j=0; j<8; j++){
-                    char jc = (char) j;
-                    jc += 97; //para añadirlo en tipo posicion que luego lo que hace es restar 97
-                    int y= 9-i;
-                    Posicion pos = new Posicion(y,(char)jc);
-                    System.out.println(pos.toString());
-                    System.out.println("i" + i);
-                    System.out.println("j "+ j);
-                    System.out.println("prueba");
-                    ImageIcon icon;
-                    if(T.GetPiezaPos(pos)!=null){
-                        //leemos qué figura es
-                        Pieza p = T.GetPiezaPos(pos);
-                        seleccionboton= (i-1)*8 + j;
-                        //haremos un switch para saber qué foto meter en el icon
-                        switch (p.getNombre()){
-                            case 'R': 
-                                switch(p.getColor().toString()){
-                                    case "N": {
-                                        icon = new ImageIcon(getClass().getResource("bk.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    } 
-                                    case "B":{
-                                        icon = new ImageIcon(getClass().getResource("wk.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
+        
+        System.out.println("Nos mega perdimos");
+        T.tableroIlegal();
+        System.out.println("Nos perdimos");
+        int seleccionboton;
+        for (int i=1; i<9; i++){ //con el array de botones, le vamos a asignar a cada uno un icono dependiendo de su figura src/interfaz_grafica/jugada.txt
+            //System.out.println("prueba");
+            for(int j=0; j<8; j++){
+                char jc = (char) j;
+                jc += 97; //para añadirlo en tipo posicion que luego lo que hace es restar 97
+                int y= 9-i;
+                Posicion pos = new Posicion(y,(char)jc);
+                System.out.println(pos.toString());
+                System.out.println("i" + i);
+                System.out.println("j "+ j);
+                System.out.println("prueba");
+                ImageIcon icon;
+                if(T.GetPiezaPos(pos)!=null){
+                    //leemos qué figura es
+                    Pieza p = T.GetPiezaPos(pos);
+                    seleccionboton= (i-1)*8 + j;
+                    //haremos un switch para saber qué foto meter en el icon
+                    switch (p.getNombre()){
+                        case 'R': 
+                            switch(p.getColor().toString()){
+                                case "N": {
+                                    icon = new ImageIcon(getClass().getResource("bk.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
+                                } 
+                                case "B":{
+                                    icon = new ImageIcon(getClass().getResource("wk.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
                                 }
-                                System.out.println("cargamos rey");
-                                break;
-                            case 'T': 
-                                switch(p.getColor().toString()){
-                                    case "N": {
-                                        icon = new ImageIcon(getClass().getResource("br.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
-                                    case "B":{
-                                        icon = new ImageIcon(getClass().getResource("wr.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
+                            }
+                            System.out.println("cargamos rey");
+                            break;
+                        case 'T': 
+                            switch(p.getColor().toString()){
+                                case "N": {
+                                    icon = new ImageIcon(getClass().getResource("br.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
                                 }
-                                break;
-                            case 'A': 
-                                switch(p.getColor().toString()){
-                                    case "N":  {
-                                        icon = new ImageIcon(getClass().getResource("bb.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
-                                    case "B":{
-                                        icon = new ImageIcon(getClass().getResource("wb.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
+                                case "B":{
+                                    icon = new ImageIcon(getClass().getResource("wr.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
                                 }
-                                break;
-                            case 'C': 
-                                switch(p.getColor().toString()){
-                                    case "N":{
-                                        icon = new ImageIcon(getClass().getResource("bn.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
-                                    case "B":{
-                                        icon = new ImageIcon(getClass().getResource("wn.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
+                            }
+                            break;
+                        case 'A': 
+                            switch(p.getColor().toString()){
+                                case "N":  {
+                                    icon = new ImageIcon(getClass().getResource("bb.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
                                 }
-                                break;
-                            case 'P': 
-                                switch(p.getColor().toString()){
-                                    case "N": {
-                                        icon = new ImageIcon(getClass().getResource("bp.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
-                                    case "B":{
-                                        icon = new ImageIcon(getClass().getResource("wp.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
+                                case "B":{
+                                    icon = new ImageIcon(getClass().getResource("wb.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
                                 }
-                                break;
-                            case 'D': 
-                                switch(p.getColor().toString()){
-                                    case "N": {
-                                        icon = new ImageIcon(getClass().getResource("bq.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
-                                    case "B": {
-                                        icon = new ImageIcon(getClass().getResource("wq.png"));
-                                        listaBotones.get(seleccionboton).setIcon(icon);
-                                        break;
-                                    }
+                            }
+                            break;
+                        case 'C': 
+                            switch(p.getColor().toString()){
+                                case "N":{
+                                    icon = new ImageIcon(getClass().getResource("bn.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
                                 }
-                                break;
-                        }//end switch de getNombre de pieza
-                    }//end comprobación pieza no nula
-                }//end for variable j
-            }//end for variable i
-                    
-        } catch (IllegalTableroException ex) {
-            this.jLabelInformacion.setText(ex.getMessage());
-            System.out.println(ex.getMessage());
-        }
+                                case "B":{
+                                    icon = new ImageIcon(getClass().getResource("wn.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
+                                }
+                            }
+                            break;
+                        case 'P': 
+                            switch(p.getColor().toString()){
+                                case "N": {
+                                    icon = new ImageIcon(getClass().getResource("bp.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
+                                }
+                                case "B":{
+                                    icon = new ImageIcon(getClass().getResource("wp.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
+                                }
+                            }
+                            break;
+                        case 'D': 
+                            switch(p.getColor().toString()){
+                                case "N": {
+                                    icon = new ImageIcon(getClass().getResource("bq.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
+                                }
+                                case "B": {
+                                    icon = new ImageIcon(getClass().getResource("wq.png"));
+                                    listaBotones.get(seleccionboton).setIcon(icon);
+                                    break;
+                                }
+                            }
+                            break;
+                    }//end switch de getNombre de pieza
+                }//end comprobación pieza no nula
+            }//end for variable j
+        }//end for variable i
+
+
     }
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolverProblemaActionPerformed

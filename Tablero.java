@@ -267,7 +267,7 @@ public class Tablero {
                 letra == 'A' || letra == 'C';
     }
     
-    public void coronarPeon(Pieza p, char letra){
+    public void coronarPeon(Pieza p, char letra) throws IllegalTableroException{
         //Si no se introduce un valor válido, se coronará por defecto una dama
         if(letraValida(letra)){
             this.insertarPieza(letra+p.getColor().toString(), p.getPosicion());
@@ -278,10 +278,10 @@ public class Tablero {
         p = this.GetPiezaPos(p.getPosicion());//hacemos que p apunte a la nueva pieza
         p.getTablero().actualizarTablero();
     }
-    public void descoronarPeon(Pieza p){
-        this.insertarPieza("P"+p.getColor().toString(), p.getPosicion());
-        p = this.GetPiezaPos(p.getPosicion());
-    }
+//    public void descoronarPeon(Pieza p){
+//        this.insertarPieza("P"+p.getColor().toString(), p.getPosicion());
+//        p = this.GetPiezaPos(p.getPosicion());
+//    }
     
     public void peonCoronado(Pieza p) throws CoronacionException{
         if(p.getNombre() == 'P'){

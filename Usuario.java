@@ -64,9 +64,10 @@ public class Usuario {
         }
         solucion = entrada.next();
         Solucion sol = new Solucion(solucion);
-        Modelo modeloAux =new Modelo(tablero2, sol);
+        Modelo modeloAux = new Modelo(tablero2, sol);
         /*Si hemos llegado a esta línea, entonces creamos un Modelo
         con un tablero, que no sabemos si será válido, y una solución posible, que no sabemos si será válida*/
+        tablero.actualizarTablero();
         tablero.tableroIlegal();/*Queremos saber si el tablero es legal*/
         /*Si hemos llegado a esta línea, entonces hemos creado un modelo con un tablero que es legal,
         y ahora queremos ver si la solución lo es.*/
@@ -85,7 +86,7 @@ public class Usuario {
         Pieza piezaJugada = tablero.GetPiezaPos(posInicial);// Ya sabemos que es no nulo
         Posicion posFinal = sol.getPosFinal();/*No sabemos su situación, pero el método mover de la pieza
         se encargará de saber su situación.*/
-        tablero.actualizarTablero();
+        
         try {
             piezaJugada.Mover(posFinal);//este método lanza IllegalMovementException con un mensaje de error.
         } catch (CoronacionException ex) {
@@ -100,13 +101,12 @@ public class Usuario {
         que la jugada aportada es jaque mate. Por tanto, lo añadimos al arrayList de modelos de usuario
         que tiene el Usuario, y actualizamos el sistema para que todo usuario pueda jugar con ese modelo
         si así lo desea.*/
-
+        tablero2.actualizarTablero();
         this.ModelosUsuario.add(new ModeloUsuario(modeloAux, false, 0, 0)); 
         /*añadimos el Modelo al array de modelos de Usuario*/
         sys.actualizarSistemaModelos();
         /*actualizamos el sistema con el nuevo modelo*/
     }
-    
     public String getNombre(){
         return nombre;
     }
@@ -147,7 +147,7 @@ public class Usuario {
         }
         return false;
     }
-    public void jugar(Modelo M, Solucion sol) throws IllegalMovementException{
+    public void jugar(Modelo M, Solucion sol) throws IllegalMovementException, IllegalTableroException{
         for(ModeloUsuario m : ModelosUsuario ){
             if(m.getModelo().equals(M)){
                 m.setIntentos(m.getIntentos()+1);

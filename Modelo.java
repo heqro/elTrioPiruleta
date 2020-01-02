@@ -59,8 +59,8 @@ public class Modelo {
         if (getClass() != o.getClass()){
             return false;
         }
-        Modelo pos = (Modelo) o;
-        return (tablero.equals(pos.getTablero()) && jugada_ganadora.equals(pos.getSolucion()));
+        Modelo m = (Modelo) o;
+        return tablero.equals(m.getTablero());
     }
     
     

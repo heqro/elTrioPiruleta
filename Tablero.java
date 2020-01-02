@@ -625,5 +625,27 @@ public class Tablero {
             }
         }
     }
+     public boolean equals (Object o){
+        if (o == null){
+            return (false);
+        }
+        if( this == o){
+            return (true);
+        }
+        if (getClass() != o.getClass()){
+            return (false);
+        }
+        Tablero t = (Tablero) o;
+        boolean igual = true;
+        int i,j;
+        for(i=0;i<7;i++){
+            for (j=0;j<7;j++){
+             if  (!(this.Marcador[i][j].equals(t.Marcador[i][j]))){
+                 igual = false;
+             }
+            }
+        }
+        return(igual);
+    }
 }
 

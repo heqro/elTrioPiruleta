@@ -80,7 +80,7 @@ public class Tablero {
                 (piezasExtrasBlanca + contPeonBlanco <= 8) ) && !tableroIlegal;
     }
     
-    public void insertarPieza(String pstring, Posicion pos){/*método para inicializar una casilla del tablero: recibe una cadena,
+    public void insertarPieza(String pstring, Posicion pos) throws IllegalTableroException{/*método para inicializar una casilla del tablero: recibe una cadena,
     que puede ser una casilla vacía ("V") o una pieza P de un color C ("PC"), y una posición*/
         int x = localizarCoordenadaX(pos);
         int y = localizarCoordenadaY(pos);
@@ -239,9 +239,9 @@ public class Tablero {
             default: //nombre de pieza ilegal
             {
                 tableroIlegal = true;
+                throw new IllegalTableroException("Formato de texto de tablero no válido.");
             }
         }
-        
     }
     
     boolean letraValida(char letra){

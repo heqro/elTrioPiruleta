@@ -31,7 +31,7 @@ public class Usuario {
     public double porcentajeExito(){
         return(this.getNProblemasSol()/this.getNProblemasInt()*100);
     }
-    public void leerEjemplo(String archivo)throws FileNotFoundException, IOException, 
+   public void leerEjemplo(String archivo)throws FileNotFoundException, IOException, 
             IllegalFormatException, IllegalTableroException, 
             IllegalSolutionException, IllegalMovementException, IllegalFileExtension{
         // archivo es el nombre físico del archivo de texto que vamos a leer
@@ -47,25 +47,26 @@ public class Usuario {
         Pieza Marcador[][] = new Pieza[8][8]; 
         Tablero tablero = new Tablero(Marcador);// tablero será el objeto donde guardemos el problema
         tablero.limpiarTablero();// inicializamos el tablero con valores nulos
+        Pieza Marcador2[][] = new Pieza[8][8];
+        Tablero tablero2 = new Tablero(Marcador2);
+        tablero2.limpiarTablero();
         Scanner entrada = new Scanner(new File (archivo)); //el nombre lógico del archivo de texto será entrada
         String solucion;
         int contadorFila = 0; //el contador de filas lo utilizaremos para limitar la lectura del fichero
         while(contadorFila < 8){
             String[] casillas = entrada.nextLine().split(",");//guardamos en un array las piezas de la fila contadorFila
-            if(casillas.length != 8){
-                throw new IllegalTableroException("Formato de tablero no válido.");
-            }
             for(int contadorColumna=0; contadorColumna<=7; contadorColumna++){
                 tablero.insertarPieza(casillas[contadorColumna], new Posicion(8 - contadorFila, (char)(contadorColumna+97)));
+                tablero2.insertarPieza(casillas[contadorColumna], new Posicion(8 - contadorFila, (char)(contadorColumna+97)));
                 //insertamos la pieza en el tablero
             }
             contadorFila++;//incrementamos la fila para poder introducir la siguiente
         }
         solucion = entrada.next();
         Solucion sol = new Solucion(solucion);
-        Modelo modelo = new Modelo(tablero, sol); /*Si hemos llegado a esta línea, entonces creamos un Modelo
+        Modelo modeloAux =new Modelo(tablero2, sol);
+        /*Si hemos llegado a esta línea, entonces creamos un Modelo
         con un tablero, que no sabemos si será válido, y una solución posible, que no sabemos si será válida*/
-        tablero.actualizarTablero();
         tablero.tableroIlegal();/*Queremos saber si el tablero es legal*/
         /*Si hemos llegado a esta línea, entonces hemos creado un modelo con un tablero que es legal,
         y ahora queremos ver si la solución lo es.*/
@@ -100,7 +101,7 @@ public class Usuario {
         que tiene el Usuario, y actualizamos el sistema para que todo usuario pueda jugar con ese modelo
         si así lo desea.*/
 
-        this.ModelosUsuario.add(new ModeloUsuario(modelo, false, 0, 0)); 
+        this.ModelosUsuario.add(new ModeloUsuario(modeloAux, false, 0, 0)); 
         /*añadimos el Modelo al array de modelos de Usuario*/
         sys.actualizarSistemaModelos();
         /*actualizamos el sistema con el nuevo modelo*/

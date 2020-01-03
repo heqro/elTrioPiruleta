@@ -42,7 +42,7 @@ public class Sistema {
         
         for(int j=1; j<10; j++){
             
-            String archivo = "src/interfaz_grafica/partidaobligatoria/" + j + ".txt";
+            String archivo = "src/p_final/1interfaz_grafica/partidaobligatoria/" + j + ".txt";
         // archivo es el nombre físico del archivo de texto que vamos a leer
         String extension = "";
         int i = archivo.lastIndexOf('.');
@@ -188,7 +188,10 @@ public class Sistema {
         for(Usuario u: this.getUsuarios()){//Recoger todos los usuarios de la base de datos
             ArrayList<ModeloUsuario> arrayAuxModeloUsuario = u.getModelosUsuario();/*Recoger sus modelos subidos*/
             for(ModeloUsuario m: arrayAuxModeloUsuario){/*Añadir cada modelo encontrado a un array Auxiliar*/
-                arrayAuxModelo.add(m.getModelo());
+                if(arrayAuxModelo.contains(m.getModelo())){}else{
+                    arrayAuxModelo.add(m.getModelo());
+                }
+                
             }
         }
         this.setModelos(arrayAuxModelo);
@@ -211,7 +214,7 @@ public class Sistema {
            FileInputStream fileInput = new FileInputStream(dir);
            ObjectInputStream oos = new ObjectInputStream(fileInput);
            
-           ArrayList<Usuario> auser = (ArrayList<Usuario>)oos.readObject();
+           ArrayList<Usuario> auser = (ArrayList<Usuario>) oos.readObject();
            
            for(Usuario u : auser){
                for(int i =0 ; i<usuarios.size();i++){
@@ -224,8 +227,33 @@ public class Sistema {
            
 
             
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+        } catch (FileNotFoundException e) {                                         //"src/p_final/interfaz_grafica/binmodelos.dat"
+            try{System.out.println(e.getMessage());
+            FileInputStream fileInput = new FileInputStream("src/p_final/interfaz_grafica/binmodelos.bin");
+            ObjectInputStream oos = new ObjectInputStream(fileInput);
+           
+           ArrayList<Usuario> auser = (ArrayList<Usuario>)oos.readObject();
+           
+           for(Usuario u : auser){
+               for(int i =0 ; i<usuarios.size();i++){
+                   if(usuarios.get(i).getNombre().equals(u.getNombre())){}else
+                   {
+                       usuarios.add(u);
+                   }
+               }
+           }
+            } catch(Exception ex){}finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                if (entrada != null) {
+                    entrada.close();
+                }
+            } catch (IOException ex) {
+                System.out.println(e.getMessage());
+            }
+        }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -273,13 +301,33 @@ public void LeerBinarioModelos(String dir){
             
         } catch (FileNotFoundException e) {
             try{//asignamos direccion por defecto si la direccion que ha metido no sirve
-               FileOutputStream fileInput = new FileOutputStream("src/interfaz_grafica/binmodelos.dat");
-               ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-               this.LeerBinarioUsuarios(dir); 
-               oos.writeObject(usuarios);
+               FileInputStream fileInput = new FileInputStream("src/p_final/interfaz_grafica/binmodelos.bin");
+           ObjectInputStream oos = new ObjectInputStream(fileInput);
+           
+           ArrayList<Modelo> am = (ArrayList<Modelo>)oos.readObject();
+           
+           for(Modelo m : am){
+               for(Modelo maux: modelos){
+                   if(maux.equals(maux)){}else
+                   {
+                       modelos.add(m);
+                   }
+               }
+           }
            }catch(Exception ex){
                
-           }
+           }finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                if (entrada != null) {
+                    entrada.close();
+                }
+            } catch (IOException ex) {
+                System.out.println(e.getMessage());
+            }
+        }
             
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -314,9 +362,9 @@ public void LeerBinarioModelos(String dir){
             
         } catch (FileNotFoundException e) {
            try{//asignamos direccion por defecto si la direccion que ha metido no sirve
-               FileOutputStream fileInput = new FileOutputStream("src/interfaz_grafica/binusuarios.dat");
+               FileOutputStream fileInput = new FileOutputStream("src/p_final/interfaz_grafica/binusuarios.bin");
                ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-               this.LeerBinarioUsuarios(dir); 
+               this.LeerBinarioUsuarios("src/p_final/interfaz_grafica/binmodelos.dat"); 
                oos.writeObject(usuarios);
            }catch(Exception ex){
                
@@ -355,6 +403,28 @@ public void LeerBinarioModelos(String dir){
             
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
+            try{
+            FileOutputStream fileInput = new FileOutputStream("src/p_final/interfaz_grafica/binusuarios.bin");
+           ObjectOutputStream oos = new ObjectOutputStream(fileInput);
+           this.LeerBinarioModelos("src/p_final/interfaz_grafica/binusuarios.dat"); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario
+           oos.writeObject(modelos);
+           
+            
+            }
+            catch(Exception ex){
+                
+            }finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                if (entrada != null) {
+                    entrada.close();
+                }
+            } catch (IOException ex) {
+                System.out.println(e.getMessage());
+            }
+        }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -371,10 +441,10 @@ public void LeerBinarioModelos(String dir){
         }
     }
     
-    public void crearBinarioUsuarios(){
+    /*public void crearBinarioUsuarios(){
         try{ //asignamos esta direccion por defecto
             
-            FileInputStream fileInput = new FileInputStream("src/interfaz_grafica/binusuarios.dat");
+            FileInputStream fileInput = new FileInputStream("src/p_final/interfaz_grafica/binusuarios.dat");
         
         }catch(FileNotFoundException e){
             System.out.println(e.getMessage());
@@ -383,12 +453,13 @@ public void LeerBinarioModelos(String dir){
     public void crearBinarioModelos(){
         try{ //asignamos esta direccion por defecto
             
-            FileInputStream fileInput = new FileInputStream("src/interfaz_grafica/binmodelos.dat");
+            FileInputStream fileInput = new FileInputStream("src/p_final/interfaz_grafica/binmodelos.dat");
         
         }catch(FileNotFoundException e){
             System.out.println(e.getMessage());
         }
     }
+    */}
     
     
     
@@ -402,7 +473,6 @@ public void LeerBinarioModelos(String dir){
     
     
     
-    }
 
         
 

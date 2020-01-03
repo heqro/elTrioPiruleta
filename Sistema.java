@@ -7,7 +7,7 @@ package p_final;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.ObjectOutputStream;
-
+import java.io.Serializable;
 import java.io.ObjectInputStream;
 import java.io.DataInputStream;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.io.FileInputStream;
  *
  * @author Juan
  */
-public class Sistema {
+public class Sistema implements Serializable{
     
     private ArrayList<Modelo> modelos;
     private ArrayList<Usuario> usuarios;
@@ -215,15 +215,7 @@ public class Sistema {
            ObjectInputStream oos = new ObjectInputStream(fileInput);
            
            ArrayList<Usuario> auser = (ArrayList<Usuario>) oos.readObject();
-           
-           for(Usuario u : auser){
-               for(int i =0 ; i<usuarios.size();i++){
-                   if(usuarios.get(i).getNombre().equals(u.getNombre())){}else
-                   {
-                       usuarios.add(u);
-                   }
-               }
-           }
+           usuarios=auser;
            
 
             
@@ -234,14 +226,7 @@ public class Sistema {
            
            ArrayList<Usuario> auser = (ArrayList<Usuario>)oos.readObject();
            
-           for(Usuario u : auser){
-               for(int i =0 ; i<usuarios.size();i++){
-                   if(usuarios.get(i).getNombre().equals(u.getNombre())){}else
-                   {
-                       usuarios.add(u);
-                   }
-               }
-           }
+           usuarios=auser;
             } catch(Exception ex){}finally {
             try {
                 if (fis != null) {

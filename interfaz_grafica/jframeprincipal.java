@@ -777,7 +777,7 @@ public class jframeprincipal extends javax.swing.JFrame {
             try {
                 /*Obtener la ruta del archivo seleccionado*/
                 jLabelInformacion.setText(archivo.getCanonicalPath());
-                sys.EscribirBinarioUsuarios(jLabelInformacion.getText());
+                sys.LeerBinarioUsuarios(jLabelInformacion.getText());
                 
             } catch (FileNotFoundException ex) {
                 codigoError = "Archivo no encontrado.";

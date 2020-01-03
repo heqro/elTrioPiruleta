@@ -1,8 +1,8 @@
 V,V,V,V,RN,V,V,V
 V,V,V,CN,CN,V,V,V
-V,V,V,V,V,CB,V,V
+V,V,V,V,CB,V,V,V
 V,CB,V,V,V,V,V,V
-V,V,V,CB,V,V,V,V
+V,V,V,RB,V,V,V,V
 V,V,V,V,V,V,V,V
 V,V,V,V,V,V,V,V
 V,V,V,V,V,V,V,V

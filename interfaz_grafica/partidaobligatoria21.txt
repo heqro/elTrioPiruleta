@@ -1,0 +1,9 @@
+V,V,V,V,V,RN,V,V
+V,V,V,V,CN,PN,V,V
+V,V,V,V,v,CB,V,V
+V,V,AB,V,V,V,V,V
+V,V,V,V,V,V,V,V
+V,V,V,V,V,V,V,V
+V,V,V,V,V,V,V,V
+V,V,V,V,V,V,TB,RB
+1g8g

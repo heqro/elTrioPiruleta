@@ -120,6 +120,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         jButtonEstadisticasPersonales = new javax.swing.JButton();
         jButtonEstadisticasProblemas = new javax.swing.JButton();
         jButtonVerClasificacion = new javax.swing.JButton();
+        jButton41 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -438,6 +439,14 @@ public class jframeprincipal extends javax.swing.JFrame {
         jButtonVerClasificacion.setText("Ver clasificación");
         getContentPane().add(jButtonVerClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 130, 260, 20));
 
+        jButton41.setText("Guardar o leer datos de la partida");
+        jButton41.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton41ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton41, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 760, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
     Sistema sys = new Sistema();
@@ -445,6 +454,7 @@ public class jframeprincipal extends javax.swing.JFrame {
     Usuario user;
     ArrayList<ModeloUsuario> AUSER;
     ArrayList<JButton> listaBotones;
+    
     final JFileChooser selectorArchivos = new JFileChooser(); //Creamos un selector de archivos
     private void habilitarUI(){
         jButtonNombrePassword.setVisible(false);//Esconder botón "OK"
@@ -483,6 +493,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         int respuesta = 0;
         if(!nombre.equalsIgnoreCase("") && !pass.equalsIgnoreCase("")){
             if(sys.buscarUsuario(nombre, pass) == null){
+                
                 Object[] options = { "Sí", "No" };
                 respuesta = JOptionPane.showOptionDialog(
                         this, //Ventana padre
@@ -528,6 +539,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                 codigoError = "Excepción de I/O";
             } 
             jLabelInformacion.setText(codigoError);
+            sys.actualizarSistemaModelos();
     }//GEN-LAST:event_jButtonSubirProblemaActionPerformed
     }
     
@@ -621,6 +633,8 @@ public class jframeprincipal extends javax.swing.JFrame {
                     //leemos qué figura es
                     Pieza p = T.GetPiezaPos(pos);
                     seleccionboton= (i-1)*8 + j;
+                    
+                    
                     //haremos un switch para saber qué foto meter en el icon
                     switch (p.getNombre()){
                         case 'R': 
@@ -720,6 +734,67 @@ public class jframeprincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonResolverProblemaActionPerformed
 
+    private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
+        
+            int respuesta;
+            Object[] options = { "Guardar", "Leer" };
+                respuesta = JOptionPane.showOptionDialog(
+                        this, //Ventana padre
+                        "Escoge si quieres guardar los datos o leer los datos ",//Mensaje del cuerpo
+                        "Atención",//Texto de encabezado
+                        JOptionPane.YES_NO_OPTION, //Tipo de opciones a mostrar
+                        JOptionPane.QUESTION_MESSAGE, //Tipo del mensaje a mostrar
+                        null,//Icono a mostrar
+                        options,//array con las elecciones posibles
+                        options[0]);
+                if(respuesta==0){
+                    int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
+                        de archivos*/
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            /*Obtener el archivo seleccionado*/
+            File archivo = selectorArchivos.getSelectedFile();
+            String codigoError = "";
+            try {
+                /*Obtener la ruta del archivo seleccionado*/
+                jLabelInformacion.setText(archivo.getCanonicalPath());
+                sys.EscribirBinarioUsuarios(jLabelInformacion.getText());
+                
+            } catch (FileNotFoundException ex) {
+                codigoError = "Archivo no encontrado.";
+            } catch (Exception ex) {
+                codigoError = ex.getMessage();
+                
+            } }}
+                
+                
+              if(respuesta==1){
+                    int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
+                        de archivos*/
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            /*Obtener el archivo seleccionado*/
+            File archivo = selectorArchivos.getSelectedFile();
+            String codigoError = "";
+            try {
+                /*Obtener la ruta del archivo seleccionado*/
+                jLabelInformacion.setText(archivo.getCanonicalPath());
+                sys.EscribirBinarioUsuarios(jLabelInformacion.getText());
+                
+            } catch (FileNotFoundException ex) {
+                codigoError = "Archivo no encontrado.";
+            } catch (Exception ex) {
+                codigoError = ex.getMessage();
+                
+            } }}
+                
+                 
+            
+
+
+
+sys.actualizarSistemaModelos();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton41ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -748,7 +823,8 @@ public class jframeprincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(jframeprincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -792,6 +868,7 @@ public class jframeprincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton38;
     private javax.swing.JButton jButton39;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton41;
     private javax.swing.JButton jButton44;
     private javax.swing.JButton jButton46;
     private javax.swing.JButton jButton47;

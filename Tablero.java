@@ -103,7 +103,7 @@ public class Tablero {
         int x = localizarCoordenadaX(pos);
         int y = localizarCoordenadaY(pos);
         char colorPieza;
-        if(pstring.charAt(0) != 'V'){
+        if(pstring.charAt(0) != 'V' && pstring.charAt(0) != 'v'){
             colorPieza = pstring.charAt(1);
         }else{
             colorPieza = 'x';/*Caracter basura para poder computar las casillas vacías, denotadas
@@ -276,7 +276,7 @@ public class Tablero {
         }
         /*Insertamos una pieza del mismo color de la pieza en la posición de la pieza*/
         p = this.GetPiezaPos(p.getPosicion());//hacemos que p apunte a la nueva pieza
-        p.getTablero().actualizarTablero();
+        actualizarTablero();
     }
 //    public void descoronarPeon(Pieza p){
 //        this.insertarPieza("P"+p.getColor().toString(), p.getPosicion());
@@ -311,24 +311,28 @@ public class Tablero {
             de forma reglamentaria
             - No sabemos si estará ocupada por otra pieza o no
             - No sabemos si puede ser una jugada ilegal*/
-            
             Posicion posicionAntigua = p.getPosicion();
             this.limpiarPosicion(posicionAntigua);/*vaciamos la posición desde la que se movió la pieza*/
+            Pieza piezaComida = null;
+            if(Marcador[localizarCoordenadaX(pos)][localizarCoordenadaY(pos)] != null){
+                piezaComida = this.GetPiezaPos(pos);
+            }
             Marcador[localizarCoordenadaX(pos)][localizarCoordenadaY(pos)] = p;/*Insertamos la pieza
             en la posición propuesta*/
             p.setPosicion(pos);/* actualizamos la posición de la pieza p*/
-            this.actualizarTablero();/*Actualizamos el tablero.*/
-            
+            actualizarTablero();/*Actualizamos el tablero.*/
         try {
-            this.JugadaIlegal(p.getColor());//Si la jugada es ilegal, entonces "retrocedemos" todo.
+            JugadaIlegal(p.getColor());//Si la jugada es ilegal, entonces "retrocedemos" todo.
         } catch (IllegalMovementException ex) {
-            String s = ex.getMessage();
+            //String s = ex.getMessage();
             p.setPosicion(posicionAntigua);/*Reasociamos la pieza p a su posición original*/
             Marcador[localizarCoordenadaX(posicionAntigua)][localizarCoordenadaY(posicionAntigua)] = p;
+            /*Recuperamos la pieza comida de la posición del movimiento propuesto*/
+            Marcador[localizarCoordenadaX(pos)][localizarCoordenadaY(pos)] = piezaComida;
             /*Retrocedemos la pieza a la posición original en el tablero*/
-            this.limpiarPosicion(pos);/*Borramos la pieza de la posición del movimiento propuesto*/
-            this.actualizarTablero();/*Actualizamos el tablero.*/
-            throw new IllegalMovementException(s); /*Lanzamos la excepción que indica que se ha
+            //limpiarPosicion(pos);
+            actualizarTablero();/*Actualizamos el tablero.*/
+            throw new IllegalMovementException(ex.getMessage()); /*Lanzamos la excepción que indica que se ha
             producido un movimiento ilegal, para que pueda ser recogida por un método que utilice a moverPieza*/
         }
         /*Si hemos llegado a este punto, entonces no se ha lanzado la excepción
@@ -388,6 +392,7 @@ public class Tablero {
     
     public boolean Jaque(Color colorRey){
         Pieza rey = localizarRey(colorRey);
+        actualizarTablero();
         Posicion pos = rey.getPosicion();
         for(int i = 0; i <= 7; i++){
             for(int j = 0; j <= 7; j++){
@@ -614,10 +619,10 @@ public class Tablero {
             arrayAux = p.getPosiblesMovimientos();
             for(Posicion pos: arrayAux){
                 try{
-                    this.moverPieza(p, pos);
+                    p.Mover(pos);
                     mate = false;/*Si hemos llegado a esta línea, hemos encontrado una jugada
                     que no es ilegal, por tanto no es jaque mate.*/
-                }catch(IllegalMovementException | CoronacionException e){
+                }catch (IllegalMovementException  | CoronacionException e){
                     /*No queremos hacer nada, porque estamos 
                     probando jugadas por fuerza bruta.
                     Si accedemos a este bloque, es porque

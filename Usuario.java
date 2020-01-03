@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.Serializable;
 
 /**
  *
  * @author juans
  */
-public class Usuario {
+public class Usuario implements Serializable{
     private String nombre,password;
     private ArrayList<ModeloUsuario> ModelosUsuario;
     private Sistema sys;
@@ -31,6 +32,7 @@ public class Usuario {
     public double porcentajeExito(){
         return(this.getNProblemasSol()/this.getNProblemasInt()*100);
     }
+   
    public void leerEjemplo(String archivo)throws FileNotFoundException, IOException, 
             IllegalFormatException, IllegalTableroException, 
             IllegalSolutionException, IllegalMovementException, IllegalFileExtension{

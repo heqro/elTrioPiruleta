@@ -7,12 +7,13 @@ package p_final;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.Serializable;
 
 /**
  *
  * @author juans
  */
-public class Modelo {
+public class Modelo implements Serializable{
     private Tablero tablero;
     private Solucion jugada_ganadora;
     public Modelo(Tablero t, Solucion s){

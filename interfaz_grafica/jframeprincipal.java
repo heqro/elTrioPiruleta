@@ -831,7 +831,13 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
     }
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolverProblemaActionPerformed
-        // TODO add your handling code here:
+        try{
+        this.pintarTablero();
+       }
+       catch(IllegalTableroException e1){ 
+       }
+       deshabilitarUI();
+       
     }//GEN-LAST:event_jButtonResolverProblemaActionPerformed
 
     private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed

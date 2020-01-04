@@ -406,13 +406,13 @@ public class Tablero {
         return false;
     }
     
-    private int localizarCoordenadaX(Posicion pos){
+    public int localizarCoordenadaX(Posicion pos){
         return 8 - pos.getCoordenadax();
         /* Este método nos va a devolver la fila del array Marcador
         en el que se encuentra la coordenada X de la posición */
     }
     
-    private int localizarCoordenadaY(Posicion pos){
+    public int localizarCoordenadaY(Posicion pos){
         return pos.getCoordenaday()-97;
         /* Este método nos va a devolver la columna del array Marcador
         en el que se encuentra la coordenada Y de la posición */

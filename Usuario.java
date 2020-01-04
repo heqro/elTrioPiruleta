@@ -30,7 +30,10 @@ public class Usuario implements Serializable{
         return ModelosUsuario;
     }
     public double porcentajeExito(){
-        return(this.getNProblemasSol()/this.getNProblemasInt()*100);
+        if(this.getNProblemasInt()==0){
+        return 0;}
+        else{return(this.getNProblemasSol()/this.getNProblemasInt()*100);
+        }
     }
    
    public void leerEjemplo(String archivo)throws FileNotFoundException, IOException, 

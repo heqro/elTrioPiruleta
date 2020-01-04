@@ -505,12 +505,22 @@ public class jframeprincipal extends javax.swing.JFrame {
         getContentPane().add(jButtonResolverProblema, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 35, 260, 20));
 
         jButtonEstadisticasPersonales.setText("Estadísticas personales");
+        jButtonEstadisticasPersonales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEstadisticasPersonalesActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButtonEstadisticasPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 70, 260, 20));
 
         jButtonEstadisticasProblemas.setText("Estadísticas de los problemas");
         getContentPane().add(jButtonEstadisticasProblemas, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, 260, 20));
 
         jButtonVerClasificacion.setText("Ver clasificación");
+        jButtonVerClasificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerClasificacionActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButtonVerClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 130, 260, 20));
 
         jButtonGuardarLeerDatos.setText("Guardar o leer datos de la partida");
@@ -1060,6 +1070,95 @@ public class jframeprincipal extends javax.swing.JFrame {
         }
         sys.actualizarSistemaModelos();
     }//GEN-LAST:event_jButtonGuardarLeerDatosActionPerformed
+
+    private void jButtonVerClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerClasificacionActionPerformed
+    int respuesta;
+            Object[] options = { "Porcentaje de éxito", "Problemas resueltos" };
+                respuesta = JOptionPane.showOptionDialog(
+                        this, //Ventana padre
+                        "Escoge si quieres a los usuarios ordenados por porcentaje de éxito o por número de problemas resueltos",//Mensaje del cuerpo
+                        "Clasificación global",//Texto de encabezado
+                        JOptionPane.YES_NO_OPTION, //Tipo de opciones a mostrar
+                        JOptionPane.QUESTION_MESSAGE, //Tipo del mensaje a mostrar
+                        null,//Icono a mostrar
+                        options,//array con las elecciones posibles
+                        options[0]);
+                if (respuesta==0){
+                    ArrayList<Usuario> auser = sys.ordenarPExito();
+                    String str = "Nombre     Porcentaje exito     Nº Problemas intentados    Nº Problemas solucionados  \n";
+                    System.out.println(str);
+                    for(Usuario u: auser){
+                        String str1 = u.getNombre().replaceAll(" ", "") + "                                     ";
+                        str1= str1.substring(0,20);
+                        str = str + str1;
+                        String str2 = u.porcentajeExito() + "                                                            ";
+                        str2 = str2.substring(0,41);
+                        str = str + str2;
+                        String str3 = u.getNProblemasInt() + "                                                           ";
+                        str3 = str3.substring(0,41);
+                        str = str + str3;
+                        String str4 = u.getNProblemasSol() + "";
+                        str = str + str4 + "\n";
+                        System.out.println(str);
+                    }
+                    JOptionPane.showMessageDialog(this,str,"Clasficación global: Porcentaje de éxito", JOptionPane.PLAIN_MESSAGE);
+                }else{
+                    if(respuesta==1){
+                        ArrayList<Usuario> auser = sys.ordenarPExito();
+                        String str = "Nombre     Porcentaje exito     Nº Problemas intentados    Nº Problemas solucionados\n";
+                    
+                    for(Usuario u: auser){
+                        String str1 = u.getNombre() + "                                     ";
+                        str1= str1.substring(0,20);
+                        str = str + str1;
+                        String str2 = u.porcentajeExito() + "                               ";
+                        str2 = str2.substring(0,41);
+                        str = str + str2;
+                        String str3 = u.getNProblemasInt() + "                              ";
+                        str3 = str3.substring(0,47);
+                        str = str + str3;
+                        String str4 = u.getNProblemasSol() + "";
+                        str = str + str4 + "\n";
+                        System.out.println(str);
+                    }
+                    JOptionPane.showMessageDialog(this,str,"Clasficación global: Porcentaje de éxito", JOptionPane.PLAIN_MESSAGE);
+                        
+                    }
+                }
+        
+
+
+
+
+
+
+
+// TODO add your handling code here:
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButtonVerClasificacionActionPerformed
+
+    private void jButtonEstadisticasPersonalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadisticasPersonalesActionPerformed
+    
+ArrayList<Usuario> auser = sys.getUsuarios();
+        Usuario user = auser.get(auser.size()-1); //siempre sera el ultimo que se ha logeado
+        double pr = user.porcentajeExito();
+        int in = user.getNProblemasInt();
+        int in1 = user.getNProblemasSol();
+        int in2 = user.getNErrores();
+        String nombre1 = user.getNombre();
+        JOptionPane.showMessageDialog(this,"           Clasificación personal de " + nombre1+"\n"+"Porcentaje de éxito: "+pr+" \n"+ "Problemas intentados: " + in + " \n" + "Problemas solucionados: " + in1 + " \n" + "Errores: " + in2,"Clasificación personal",JOptionPane.PLAIN_MESSAGE,null );
+        
+
+
+
+
+
+
+
+// TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEstadisticasPersonalesActionPerformed
 private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
        int nUsuarios = 0;
        int intentos=0;

@@ -27,22 +27,13 @@ import java.util.logging.Logger;
  *
  * @author Juan
  */
-public class jframeprincipal extends javax.swing.JFrame implements ActionListener {
+public class jframeprincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form jframeprincipal
      */
     public jframeprincipal() {
         initComponents();
-        try{
-        sys.añadir10Problemas();}
-        catch(FileNotFoundException e1){}
-        catch(IOException e2){}
-        catch (p_final.IllegalFormatException e3){}         
-        catch(IllegalTableroException e4){}
-        catch(IllegalSolutionException e5){}
-        catch(IllegalMovementException e6){}
-        catch(IllegalFileExtension e7){}
         deshabilitarUI();
         cargarListaBotones();
         desactivarBotones();
@@ -136,7 +127,7 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
         jButtonEstadisticasPersonales = new javax.swing.JButton();
         jButtonEstadisticasProblemas = new javax.swing.JButton();
         jButtonVerClasificacion = new javax.swing.JButton();
-        jButton41 = new javax.swing.JButton();
+        jButtonGuardarLeerDatos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -514,18 +505,16 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
         jButtonVerClasificacion.setText("Ver clasificación");
         getContentPane().add(jButtonVerClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 130, 260, 20));
 
-        jButton41.setText("Guardar o leer datos de la partida");
-        jButton41.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGuardarLeerDatos.setText("Guardar o leer datos de la partida");
+        jButtonGuardarLeerDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton41ActionPerformed(evt);
+                jButtonGuardarLeerDatosActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton41, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 790, 280, 50));
+        getContentPane().add(jButtonGuardarLeerDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 790, 280, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    
     Sistema sys = new Sistema();
     String nombre, pass;
     Usuario user;
@@ -535,6 +524,7 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
     Tablero T;
     ManejadorDeBotones botonero;
     
+    /*Métodos para gestionar jframe desde ManejadorDeBotones*/
     public Tablero getTablero(){
         return T;
     }
@@ -612,11 +602,24 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
         }
     }//GEN-LAST:event_jButtonNombrePasswordActionPerformed
 
-    private void sacarError(String codigoError){
+    public void sacarError(String codigoError){
         JOptionPane.showMessageDialog(this, //ventana padre
                     codigoError, //objeto a mostrar
                     "Error", //
                     JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void sacarVictoria(){
+        Object[] options = {"¡Genial!"};
+        JOptionPane.showOptionDialog(
+            this, //ventana padre
+            "¡Ganaste!", //objeto a mostrar
+            "Victoria",
+            JOptionPane.OK_OPTION,
+            JOptionPane.INFORMATION_MESSAGE,
+            null,
+            options,
+            options[0]);
     }
     
     private void jButtonSubirProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubirProblemaActionPerformed
@@ -715,7 +718,6 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
     public void desopacarBotones(){
         for(JButton btn: listaBotones){
             btn.setContentAreaFilled(false);
-            
         }
     }
     
@@ -737,7 +739,7 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
         }
     }
     
-    private void desactivarBotones(){
+    public void desactivarBotones(){
         java.awt.Color amarilloNuestro = java.awt.Color.getHSBColor(114, 76, 100);
         for(JButton btn: listaBotones){
             btn.setEnabled(false);
@@ -881,8 +883,7 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
                     //leemos qué figura es
                     Pieza p = T.GetPiezaPos(pos);
                     seleccionboton= (i-1)*8 + j;
-                    listaBotones.get(seleccionboton).setEnabled(true);/*Habilitamos el botón
-                    cuya posición asociada esté ocupada por una pieza*/
+                    
                     
                     //haremos un switch para saber qué foto meter en el icon
                     switch (p.getNombre()){
@@ -896,6 +897,8 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
                                 case "B":{
                                     icon = new ImageIcon(getClass().getResource("wk.png"));
                                     listaBotones.get(seleccionboton).setIcon(icon);
+                                    listaBotones.get(seleccionboton).setEnabled(true);/*Habilitamos el botón
+                                    cuya posición asociada esté ocupada por una pieza blanca*/
                                     break;
                                 }
                             }
@@ -911,6 +914,8 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
                                 case "B":{
                                     icon = new ImageIcon(getClass().getResource("wr.png"));
                                     listaBotones.get(seleccionboton).setIcon(icon);
+                                    listaBotones.get(seleccionboton).setEnabled(true);/*Habilitamos el botón
+                                    cuya posición asociada esté ocupada por una pieza blanca*/
                                     break;
                                 }
                             }
@@ -925,6 +930,8 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
                                 case "B":{
                                     icon = new ImageIcon(getClass().getResource("wb.png"));
                                     listaBotones.get(seleccionboton).setIcon(icon);
+                                    listaBotones.get(seleccionboton).setEnabled(true);/*Habilitamos el botón
+                                    cuya posición asociada esté ocupada por una pieza blanca*/
                                     break;
                                 }
                             }
@@ -939,6 +946,8 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
                                 case "B":{
                                     icon = new ImageIcon(getClass().getResource("wn.png"));
                                     listaBotones.get(seleccionboton).setIcon(icon);
+                                    listaBotones.get(seleccionboton).setEnabled(true);/*Habilitamos el botón
+                                    cuya posición asociada esté ocupada por una pieza blanca*/
                                     break;
                                 }
                             }
@@ -953,6 +962,8 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
                                 case "B":{
                                     icon = new ImageIcon(getClass().getResource("wp.png"));
                                     listaBotones.get(seleccionboton).setIcon(icon);
+                                    listaBotones.get(seleccionboton).setEnabled(true);/*Habilitamos el botón
+                                    cuya posición asociada esté ocupada por una pieza blanca*/
                                     break;
                                 }
                             }
@@ -967,6 +978,8 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
                                 case "B": {
                                     icon = new ImageIcon(getClass().getResource("wq.png"));
                                     listaBotones.get(seleccionboton).setIcon(icon);
+                                    listaBotones.get(seleccionboton).setEnabled(true);/*Habilitamos el botón
+                                    cuya posición asociada esté ocupada por una pieza blanca*/
                                     break;
                                 }
                             }
@@ -980,126 +993,62 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
     }
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolverProblemaActionPerformed
-        try{
-        this.pintarTablero();
-       }
-       catch(IllegalTableroException e1){ 
-       }
-       deshabilitarUI();
-       
-    }//GEN-LAST:event_jButtonResolverProblemaActionPerformed
-    private void jButtonEstadisticasPersonalesActionPerformed(java.awt.event.ActionEvent evt) {                                                              
-        ArrayList<Usuario> auser = sys.getUsuarios();
-        Usuario user = auser.get(auser.size()-1); //siempre sera el ultimo que se ha logeado
-        double pr = user.porcentajeExito();
-        int in = user.getNProblemasInt();
-        int in1 = user.getNProblemasSol();
-        int in2 = user.getNErrores();
-        String nombre1 = user.getNombre();
-        JOptionPane.showMessageDialog(this,"           Clasificación personal de " + nombre1+"\n"+"Porcentaje de éxito: "+pr+" \n"+ "Problemas intentados: " + in + " \n" + "Problemas solucionados: " + in1 + " \n" + "Errores: " + in2,"Clasificación personal",JOptionPane.PLAIN_MESSAGE,null );
-        
-
-
-
-
-
-
-
-// TODO add your handling code here:
-    }  
-    private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
-        
-            int respuesta;
-            Object[] options = { "Guardar", "Leer" };
-                respuesta = JOptionPane.showOptionDialog(
-                        this, //Ventana padre
-                        "Escoge si quieres guardar los datos o leer los datos ",//Mensaje del cuerpo
-                        "Atención",//Texto de encabezado
-                        JOptionPane.YES_NO_OPTION, //Tipo de opciones a mostrar
-                        JOptionPane.QUESTION_MESSAGE, //Tipo del mensaje a mostrar
-                        null,//Icono a mostrar
-                        options,//array con las elecciones posibles
-                        options[0]);
-                if(respuesta==0){
-                    int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
-                        de archivos*/
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            /*Obtener el archivo seleccionado*/
-            File archivo = selectorArchivos.getSelectedFile();
-            String codigoError = "";
-            try {
-                /*Obtener la ruta del archivo seleccionado*/
-                jLabelInformacion.setText(archivo.getCanonicalPath());
-                sys.EscribirBinarioUsuarios(jLabelInformacion.getText());
-                
-            } catch (FileNotFoundException ex) {
-                codigoError = "Archivo no encontrado.";
-            } catch (Exception ex) {
-                codigoError = ex.getMessage();
-                
-            } }}
-                
-                
-              if(respuesta==1){
-                    int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
-                        de archivos*/
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            /*Obtener el archivo seleccionado*/
-            File archivo = selectorArchivos.getSelectedFile();
-            String codigoError = "";
-            try {
-                /*Obtener la ruta del archivo seleccionado*/
-                jLabelInformacion.setText(archivo.getCanonicalPath());
-                sys.LeerBinarioUsuarios(jLabelInformacion.getText());
-                
-            } catch (FileNotFoundException ex) {
-                codigoError = "Archivo no encontrado.";
-            } catch (Exception ex) {
-                codigoError = ex.getMessage();
-                
-            } }}
-                
-                 
-            
-
-
-
-sys.actualizarSistemaModelos();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton41ActionPerformed
-private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
-       int nUsuarios = 0;
-       int intentos=0;
-       int fallos =0;
-       int indice1;
-       int indice2 = 0;
-       jLabelInformacion.setText("");
-        for(Modelo m : sys.getModelos() ){
-            for (Usuario u: sys.getUsuarios()){
-                if(u.getModelosResueltos().contains(m)){
-                   indice1 = u.getModelosUsuario().indexOf(m);
-                   intentos += u.getModelosUsuario().get(indice1).getIntentos();
-                   fallos += u.getModelosUsuario().get(indice1).getErrores();
-                   nUsuarios +=1;
-                }
-              indice2 +=1;
-              if (nUsuarios>0){
-              jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 + " tiene  una media de errores de "+fallos/nUsuarios+"(con un total de " +fallos+" fallos) ,una media de intentos de "+ intentos/nUsuarios + "(con un total de "+intentos+" intentos).\n " ) ;
-              }else{jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 +" No se ha intentado todavia");}
-              intentos = 0;
-              fallos = 0;
-              nUsuarios = 0;
+    }//GEN-LAST:event_jButtonResolverProblemaActionPerformed
+
+    private void jButtonGuardarLeerDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarLeerDatosActionPerformed
+        
+        int respuesta;
+        Object[] options = { "Guardar", "Leer" };
+        respuesta = JOptionPane.showOptionDialog(
+                this, //Ventana padre
+                "Escoge si quieres guardar los datos o leer los datos ",//Mensaje del cuerpo
+                "Atención",//Texto de encabezado
+                JOptionPane.YES_NO_OPTION, //Tipo de opciones a mostrar
+                JOptionPane.QUESTION_MESSAGE, //Tipo del mensaje a mostrar
+                null,//Icono a mostrar
+                options,//array con las elecciones posibles
+                options[0]);
+
+        if(respuesta==0){
+            int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
+                de archivos*/
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                /*Obtener el archivo seleccionado*/
+                File archivo = selectorArchivos.getSelectedFile();
+                String codigoError = "";
+                try {
+                    /*Obtener la ruta del archivo seleccionado*/
+                    jLabelInformacion.setText(archivo.getCanonicalPath());
+                    sys.EscribirBinarioUsuarios(jLabelInformacion.getText());
+                } catch (FileNotFoundException ex) {
+                    codigoError = "Archivo no encontrado.";
+                } catch (Exception ex) {
+                    codigoError = ex.getMessage();
+                } 
             }
         }
-        
-    }
+        if(respuesta==1){
+            int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
+            de archivos*/
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                /*Obtener el archivo seleccionado*/
+                File archivo = selectorArchivos.getSelectedFile();
+                String codigoError = "";
+                try {
+                    /*Obtener la ruta del archivo seleccionado*/
+                    jLabelInformacion.setText(archivo.getCanonicalPath());
+                    sys.LeerBinarioUsuarios(jLabelInformacion.getText());
+                } catch (FileNotFoundException ex) {
+                    codigoError = "Archivo no encontrado.";
+                } catch (Exception ex) {
+                    codigoError = ex.getMessage();
+                } 
+            }
+        }
+        sys.actualizarSistemaModelos();
+    }//GEN-LAST:event_jButtonGuardarLeerDatosActionPerformed
 
-    
-    private Posicion getPosicionBoton(JButton b){
-        int coordX = Character.getNumericValue(b.getName().charAt(3));
-        char coordY = b.getName().charAt(4);
-        return new Posicion(coordX, coordY);
-    }
     
     /**
      * @param args the command line arguments
@@ -1204,9 +1153,9 @@ private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEv
     private javax.swing.JButton btn8f;
     private javax.swing.JButton btn8g;
     private javax.swing.JButton btn8h;
-    private javax.swing.JButton jButton41;
     private javax.swing.JButton jButtonEstadisticasPersonales;
     private javax.swing.JButton jButtonEstadisticasProblemas;
+    private javax.swing.JButton jButtonGuardarLeerDatos;
     private javax.swing.JButton jButtonNombrePassword;
     private javax.swing.JButton jButtonResolverProblema;
     private javax.swing.JButton jButtonSubirProblema;
@@ -1219,8 +1168,4 @@ private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEv
     private javax.swing.JPasswordField jTextPassword;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        System.out.println("Me pulsó");; //To change body of generated methods, choose Tools | Templates.
-    }
 }

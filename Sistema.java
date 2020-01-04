@@ -425,7 +425,22 @@ public void LeerBinarioModelos(String dir){
             }
         }
     }
-    
+    public ArrayList<Usuario> ordenarPExito(){
+        ArrayList<Usuario> auser = (ArrayList<Usuario>)usuarios.clone();
+        Collections.sort(auser, new compararUsuarios());
+        /*for(Usuario aux: auser){
+            System.out.println(aux.toString());
+        }*/
+        return auser;
+    }
+    public ArrayList<Usuario> ordenarProblemasResueltos(){
+        ArrayList<Usuario> auser = (ArrayList<Usuario>)usuarios.clone();
+        Collections.sort(auser, new compararUsuarios2());
+        /* for(Usuario aux: auser){
+            System.out.println(aux.toString());
+        }*/
+        return auser;
+    }
     /*public void crearBinarioUsuarios(){
         try{ //asignamos esta direccion por defecto
             

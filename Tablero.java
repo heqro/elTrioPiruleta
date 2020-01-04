@@ -26,7 +26,9 @@ public class Tablero {
     public Tablero(Pieza M[][]){
         Marcador = M;
     }
-
+    public boolean getTableroIlegal(){
+        return tableroIlegal;
+    }
     public Tablero (Tablero t) throws IllegalTableroException{
         Pieza[][] MarcadorOriginal = t.Marcador;
         this.limpiarTablero();

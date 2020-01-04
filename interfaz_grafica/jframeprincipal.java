@@ -896,10 +896,13 @@ public class jframeprincipal extends javax.swing.JFrame {
                 System.out.println("j "+ j);
                 System.out.println("prueba");
                 ImageIcon icon;
+                seleccionboton= (i-1)*8 + j;
+                
                 if(T.GetPiezaPos(pos)!=null){
                     //leemos qué figura es
                     Pieza p = T.GetPiezaPos(pos);
                     seleccionboton= (i-1)*8 + j;
+                    
                     
                     
                     //haremos un switch para saber qué foto meter en el icon
@@ -1002,7 +1005,9 @@ public class jframeprincipal extends javax.swing.JFrame {
                             }
                             break;
                     }//end switch de getNombre de pieza
-                }//end comprobación pieza no nula
+                }else{System.out.println(seleccionboton);
+                        listaBotones.get(seleccionboton).setIcon(null);
+                    }//end comprobación pieza no nula
             }//end for variable j
         }//end for variable i
 
@@ -1011,9 +1016,13 @@ public class jframeprincipal extends javax.swing.JFrame {
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {
         try{
+            
             this.pintarTablero(sys.elegirModeloAleatorio());
         }
        catch(IllegalTableroException e1){ 
+           System.out.println(sys.getModelos().size());
+          // System.out.println(sys.getModelos().get(0).toString());
+          // System.out.println("aaa");
            deshabilitarUI();
        }
     }

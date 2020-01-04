@@ -47,7 +47,7 @@ public class Sistema implements Serializable{
             IllegalFormatException, IllegalTableroException, 
             IllegalSolutionException, IllegalMovementException, IllegalFileExtension{
         
-        for(int j=1; j<10; j++){
+        for(int j=1; j<11; j++){
             String archivo = "src/p_final/interfaz_grafica/partidaobligatoria" + j + ".txt";
             // archivo es el nombre físico del archivo de texto que vamos a leer
             String extension = "";
@@ -73,13 +73,18 @@ public class Sistema implements Serializable{
                 }
                 contadorFila++;//incrementamos la fila para poder introducir la siguiente
             }
+            //System.out.println(j);
+            //System.out.println(tablero.toString());
             solucion = entrada.next();
             Solucion sol = new Solucion(solucion);
+            
             Modelo modelo = new Modelo(tablero, sol); /*Si hemos llegado a esta línea, entonces creamos un Modelo
             con un tablero, que no sabemos si será válido, y una solución posible, que no sabemos si será válida*/
+            
             tablero.tableroIlegal();/*Queremos saber si el tablero es legal*/
             /*Si hemos llegado a esta línea, entonces hemos creado un modelo con un tablero que es legal,
             y ahora queremos ver si la solución lo es.*/
+            
             Posicion posInicial = sol.getPosInicial();
             if(!tablero.PosicionOcupada(posInicial)){
                 throw new IllegalSolutionException("La posición inicial dada está vacía.");
@@ -106,8 +111,11 @@ public class Sistema implements Serializable{
                         + "se añadirá.");
             }
             if (!modelos.contains(modelo)){
+                
                 modelos.add(modelo);
             }
+            
+            System.out.println(tablero.getTableroIlegal());
         }
     }
     public Sistema(ArrayList<Modelo> m, ArrayList<Usuario> u){
@@ -431,9 +439,11 @@ public void LeerBinarioModelos(String dir){
     }
     
     public Modelo elegirModeloAleatorio (){
-        int indiceProblemas = modelos.size();
+        int indiceProblemas = modelos.size()-1;
         double j =  Math.random()*(indiceProblemas) + 1;
+        //System.out.println(j);
         indiceProblemas = (int)(j);
+        //System.out.println(indiceProblemas);
         return(modelos.get(indiceProblemas));
     }
     public ArrayList<Usuario> ordenarPExito(){

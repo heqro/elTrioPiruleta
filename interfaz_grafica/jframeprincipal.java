@@ -633,7 +633,9 @@ public class jframeprincipal extends javax.swing.JFrame {
                 /*Obtener la ruta del archivo seleccionado*/
                 jLabelInformacion.setText(archivo.getCanonicalPath());
                 user.leerEjemplo(jLabelInformacion.getText());
-                pintarTablero();
+                ArrayList<ModeloUsuario> aux = user.getModelosUsuario();
+                Modelo modelo = aux.get(aux.size()-1).getModelo();
+                pintarTablero(modelo);
             } catch (FileNotFoundException ex) {
                 sacarError(ex.getMessage());
             } catch (p_final.IllegalFormatException | IllegalTableroException| 
@@ -861,9 +863,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         }//end for variable j
     }
     
-    public void pintarTablero() throws IllegalTableroException{
-        ArrayList<ModeloUsuario> aux = user.getModelosUsuario();
-        Modelo modelo = aux.get(aux.size()-1).getModelo();
+    public void pintarTablero(Modelo modelo) throws IllegalTableroException{
         T = modelo.getTablero();
         T.tableroIlegal();
         int seleccionboton;
@@ -994,7 +994,7 @@ public class jframeprincipal extends javax.swing.JFrame {
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolverProblemaActionPerformed
         try{
-        this.pintarTablero();
+        this.pintarTablero(sys.elegirModeloAleatorio());
        }
        catch(IllegalTableroException e1){ 
        }
@@ -1054,11 +1054,37 @@ public class jframeprincipal extends javax.swing.JFrame {
         }
         sys.actualizarSistemaModelos();
     }//GEN-LAST:event_jButtonGuardarLeerDatosActionPerformed
-
+private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
+       int nUsuarios = 0;
+       int intentos=0;
+       int fallos =0;
+       int indice1;
+       int indice2 = 0;
+       double porcentajeExito;
+       jLabelInformacion.setText("");
+        for(Modelo m : sys.getModelos() ){
+            for (Usuario u: sys.getUsuarios()){
+                if(u.getModelosResueltos().contains(m)){
+                   indice1 = u.getModelosUsuario().indexOf(m)-1;
+                   intentos += u.getModelosUsuario().get(indice1).getIntentos();
+                   fallos += u.getModelosUsuario().get(indice1).getErrores();
+                   nUsuarios +=1;
+                }
+               indice2 +=1;
+               porcentajeExito = (intentos-fallos)/intentos*100; 
+              if (nUsuarios>0){
+              jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 + " tiene  una media de errores de "+fallos/nUsuarios+"(con un total de " +fallos+" fallos) ,una media de intentos de "+ intentos/nUsuarios + "(con un total de "+intentos+" intentos). El porcentje de exito de este ejercicio es de "+porcentajeExito+"% \n " ) ;
+              }else{jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 +" No se ha intentado todavia");}
+              intentos = 0;
+              fallos = 0;
+              nUsuarios = 0;
+              porcentajeExito = 0;
+            }
+        }
+        
+    }
     
-    /**
-     * @param args the command line arguments
-     */
+   
         
     
     public static void main(String args[]) {

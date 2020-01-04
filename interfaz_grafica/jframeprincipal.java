@@ -562,7 +562,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         jButtonEstadisticasProblemas.setVisible(true);
     }
     
-    private void deshabilitarUI(){
+    deshabilitarUI(){
         jButtonSubirProblema.setVisible(false);/*Posibilitamos subir problema ahora
         que tenemos un usuario que ha hecho log-in*/
         jButtonResolverProblema.setVisible(false);
@@ -993,8 +993,14 @@ public class jframeprincipal extends javax.swing.JFrame {
     }
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolverProblemaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonResolverProblemaActionPerformed
+        try{
+        this.pintarTablero();
+       }
+       catch(IllegalTableroException e1){ 
+       }
+       deshabilitarUI();
+       
+    }
 
     private void jButtonGuardarLeerDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarLeerDatosActionPerformed
         

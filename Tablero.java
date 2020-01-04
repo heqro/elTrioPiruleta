@@ -27,6 +27,20 @@ public class Tablero {
         Marcador = M;
     }
 
+    public Tablero (Tablero t) throws IllegalTableroException{
+        Pieza[][] MarcadorOriginal = t.Marcador;
+        this.limpiarTablero();
+        Pieza pAux = null;
+        for(int i = 0; i <= 7; i++){
+            for(int j = 0; j <= 7; j++){
+                if(MarcadorOriginal[i][j] != null){
+                    pAux = MarcadorOriginal[i][j];
+                    this.insertarPieza(pAux.toString(), pAux.getPosicion());
+                }
+            }
+        }
+    }
+    
     public Pieza GetPiezaPos (Posicion pos){ //recuperar una pieza en una posición pos
         int x = this.localizarCoordenadaX(pos);
         int y = this.localizarCoordenadaY(pos);

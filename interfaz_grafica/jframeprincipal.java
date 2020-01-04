@@ -839,7 +839,25 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
        deshabilitarUI();
        
     }//GEN-LAST:event_jButtonResolverProblemaActionPerformed
+    private void jButtonEstadisticasPersonalesActionPerformed(java.awt.event.ActionEvent evt) {                                                              
+        ArrayList<Usuario> auser = sys.getUsuarios();
+        Usuario user = auser.get(auser.size()-1); //siempre sera el ultimo que se ha logeado
+        double pr = user.porcentajeExito();
+        int in = user.getNProblemasInt();
+        int in1 = user.getNProblemasSol();
+        int in2 = user.getNErrores();
+        String nombre1 = user.getNombre();
+        JOptionPane.showMessageDialog(this,"           Clasificación personal de " + nombre1+"\n"+"Porcentaje de éxito: "+pr+" \n"+ "Problemas intentados: " + in + " \n" + "Problemas solucionados: " + in1 + " \n" + "Errores: " + in2,"Clasificación personal",JOptionPane.PLAIN_MESSAGE,null );
+        
 
+
+
+
+
+
+
+// TODO add your handling code here:
+    }  
     private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
         
             int respuesta;

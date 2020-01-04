@@ -40,6 +40,14 @@ public class jframeprincipal extends javax.swing.JFrame {
         for(JButton btn: listaBotones){
             btn.addActionListener(new ManejadorDeBotones(btn, this));
         }
+        try {
+            sys = new Sistema();
+        } catch (IOException | IllegalTableroException | 
+                IllegalSolutionException | IllegalMovementException | 
+                IllegalFileExtension | p_final.IllegalFormatException ex) {
+            this.sacarError(ex.getMessage());
+            System.exit(0);
+        }
     }
 
     /**
@@ -515,7 +523,7 @@ public class jframeprincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    Sistema sys = new Sistema();
+    Sistema sys;
     String nombre, pass;
     Usuario user;
     ArrayList<ModeloUsuario> AUSER;
@@ -636,18 +644,17 @@ public class jframeprincipal extends javax.swing.JFrame {
                 ArrayList<ModeloUsuario> aux = user.getModelosUsuario();
                 Modelo modelo = aux.get(aux.size()-1).getModelo();
                 pintarTablero(modelo);
+                sys.actualizarSistemaModelos();
             } catch (FileNotFoundException ex) {
                 sacarError(ex.getMessage());
             } catch (p_final.IllegalFormatException | IllegalTableroException| 
                     IllegalSolutionException | IllegalMovementException | 
                     IllegalFileExtension | IOException ex) {
                 sacarError(ex.getMessage());
-            } 
-            
-            jLabelInformacion.setText(codigoError);
-            sys.actualizarSistemaModelos();
+            }
+        }
     }//GEN-LAST:event_jButtonSubirProblemaActionPerformed
-    }
+       
     
     private void cargarListaBotones(){
         listaBotones = new ArrayList<>();
@@ -864,7 +871,7 @@ public class jframeprincipal extends javax.swing.JFrame {
     }
     
     public void pintarTablero(Modelo modelo) throws IllegalTableroException{
-        T = modelo.getTablero();
+        T = new Tablero(modelo.getTablero());
         T.tableroIlegal();
         int seleccionboton;
         for (int i=1; i<9; i++){ //con el array de botones, le vamos a asignar a cada uno un icono dependiendo de su figura src/interfaz_grafica/jugada.txt
@@ -992,14 +999,13 @@ public class jframeprincipal extends javax.swing.JFrame {
 
     }
     
-    private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolverProblemaActionPerformed
+    private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {
         try{
-        this.pintarTablero(sys.elegirModeloAleatorio());
-       }
+            this.pintarTablero(sys.elegirModeloAleatorio());
+        }
        catch(IllegalTableroException e1){ 
+           deshabilitarUI();
        }
-       deshabilitarUI();
-       
     }
 
     private void jButtonGuardarLeerDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarLeerDatosActionPerformed

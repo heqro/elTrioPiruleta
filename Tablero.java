@@ -662,7 +662,8 @@ public class Tablero {
             }
         }
     }
-     public boolean equals (Object o){
+    
+    public boolean equals (Object o){
         if (o == null){
             return (false);
         }
@@ -677,9 +678,15 @@ public class Tablero {
         int i,j;
         for(i=0;i<7;i++){
             for (j=0;j<7;j++){
-             if  (!(this.Marcador[i][j].equals(t.Marcador[i][j]))){
-                 igual = false;
-             }
+                if(Marcador[i][j] == null){
+                    igual = igual && (t.Marcador[i][j] == null);
+                }else{
+                    if(t.Marcador[i][j] == null){
+                        return false;
+                    }else{
+                        igual = igual && (t.Marcador[i][j].equals(Marcador[i][j]));
+                    }
+                }
             }
         }
         return(igual);

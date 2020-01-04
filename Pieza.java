@@ -76,7 +76,7 @@ public abstract class Pieza {
         if(this.getClass() != o.getClass()){ return false; }
         Pieza p = (Pieza) o;
         return (this.nombre == p.nombre) && this.getPosicion().equals(p.getPosicion()) 
-                && this.getColor().equals(p.getColor()) && this.tablero == p.tablero;
+                && this.getColor().equals(p.getColor());
     }
     public abstract void calcularMovimientos();
 }

@@ -38,86 +38,32 @@ public class Sistema implements Serializable{
         modelos = new ArrayList<>();
         usuarios = new ArrayList<>();
         añadirAdmin();
-        añadir10Problemas();
+        subirProblemas();
     }
     public void añadirAdmin(){
         this.registrarUsuario("admin","admin");
     }
-    public void añadir10Problemas()throws FileNotFoundException, IOException, 
-            IllegalFormatException, IllegalTableroException, 
-            IllegalSolutionException, IllegalMovementException, IllegalFileExtension{
-        
-        for(int j=1; j<11; j++){
-            String archivo = "src/p_final/interfaz_grafica/partidaobligatoria" + j + ".txt";
-            // archivo es el nombre físico del archivo de texto que vamos a leer
-            String extension = "";
-            int i = archivo.lastIndexOf('.');
-            if (i >= 0) {
-                extension = archivo.substring(i+1);
+    
+    public void subirProblemas() throws IllegalFileExtension, IOException, 
+            FileNotFoundException, IllegalFormatException, IllegalTableroException, 
+            IllegalSolutionException, IllegalMovementException{
+        String rutaArchivo;
+        String extension = "";
+        Usuario admin = this.buscarUsuario("admin", "admin");
+        for(int i = 1; i < 11; i++){
+            rutaArchivo = "src/p_final/interfaz_grafica/partidaobligatoria" + i + ".txt";
+            int j = rutaArchivo.lastIndexOf('.');
+            if (j >= 0) {
+                extension = rutaArchivo.substring(j+1);
             }
             if(!extension.equals("txt")){
                 throw new IllegalFileExtension("Extensión de archivo no válida. Se esperaba"
                         + " txt, y se obtuvo \""+ extension + "\"" );
             }
-            Pieza Marcador[][] = new Pieza[8][8]; 
-            Tablero tablero = new Tablero(Marcador);// tablero será el objeto donde guardemos el problema
-            tablero.limpiarTablero();// inicializamos el tablero con valores nulos
-            Scanner entrada = new Scanner(new File (archivo)); //el nombre lógico del archivo de texto será entrada
-            String solucion;
-            int contadorFila = 0; //el contador de filas lo utilizaremos para limitar la lectura del fichero
-            while(contadorFila < 8){
-                String[] casillas = entrada.nextLine().split(",");//guardamos en un array las piezas de la fila contadorFila
-                for(int contadorColumna=0; contadorColumna<=7; contadorColumna++){
-                    tablero.insertarPieza(casillas[contadorColumna], new Posicion(8 - contadorFila, (char)(contadorColumna+97)));
-                    //insertamos la pieza en el tablero
-                }
-                contadorFila++;//incrementamos la fila para poder introducir la siguiente
-            }
-            //System.out.println(j);
-            //System.out.println(tablero.toString());
-            solucion = entrada.next();
-            Solucion sol = new Solucion(solucion);
-            
-            Modelo modelo = new Modelo(tablero, sol); /*Si hemos llegado a esta línea, entonces creamos un Modelo
-            con un tablero, que no sabemos si será válido, y una solución posible, que no sabemos si será válida*/
-            
-            tablero.tableroIlegal();/*Queremos saber si el tablero es legal*/
-            /*Si hemos llegado a esta línea, entonces hemos creado un modelo con un tablero que es legal,
-            y ahora queremos ver si la solución lo es.*/
-            
-            Posicion posInicial = sol.getPosInicial();
-            if(!tablero.PosicionOcupada(posInicial)){
-                throw new IllegalSolutionException("La posición inicial dada está vacía.");
-            }
-            /*Ya sabemos que en posInicial hay una pieza. Queremos saber si es del color que nos interesa (BLANCO)*/
-            if(tablero.GetPiezaPos(posInicial).getColor().equals(new Color('n'))){
-                throw new IllegalSolutionException("La posición inicial dada está ocupada"
-                        + "por una pieza negra.");
-            }
-            /*Si hemos llegado hasta aquí, queremos saber si el movimiento se puede hacer.
-            Para ello, actualizaremos el tablero para obtener los posibles movimientos de todas las piezas
-            y moveremos la pieza de posInicial a la posición posFinal.*/
-            Pieza piezaJugada = tablero.GetPiezaPos(posInicial);// Ya sabemos que es no nulo
-            Posicion posFinal = sol.getPosFinal();/*No sabemos su situación, pero el método mover de la pieza
-            se encargará de saber su situación.*/
-            tablero.actualizarTablero();
-            try {
-                piezaJugada.Mover(posFinal);//este método lanza IllegalMovementException con un mensaje de error.
-            } catch (CoronacionException ex) {
-                tablero.coronarPeon(piezaJugada, sol.getLetraCoronacion());
-            }
-            if(!tablero.JaqueMate(new Color('n'))){
-                throw new IllegalSolutionException("La solución dada no es jaque mate. El tablero NO "
-                        + "se añadirá.");
-            }
-            if (!modelos.contains(modelo)){
-                
-                modelos.add(modelo);
-            }
-            
-            System.out.println(tablero.getTableroIlegal());
+            admin.leerEjemplo(rutaArchivo);
         }
     }
+
     public Sistema(ArrayList<Modelo> m, ArrayList<Usuario> u){
         
         modelos = m;
@@ -125,15 +71,14 @@ public class Sistema implements Serializable{
     }
     public void registrarUsuario(String nombre, String contraseña){
         if(buscarUsuario(nombre, contraseña)==null){//Usuario no encontrado
-            ArrayList<ModeloUsuario> Auser = new ArrayList<>();
             Usuario user = new Usuario(nombre,contraseña, this);
             usuarios.add(user);
         }
     }
     public Usuario buscarUsuario(String nombre, String contraseña){
-        
         for(Usuario u: usuarios){
-            if (u.getNombre().equals(nombre)) return u;
+            if (u.getNombre().equals(nombre)) 
+                return u;
         }
         return null; //devolvemos null si no devuelve no
     
@@ -157,13 +102,13 @@ public class Sistema implements Serializable{
             boolean control = u.getModelosResueltos().contains(p);
             if(control)
                 sum=+1;
-    }
+        }
             return sum;
     }
-     public double porcentajeExito(Modelo p){
-         int resuelto=0;
-         int intentos=0;
-         for(Usuario u: usuarios){
+    public double porcentajeExito(Modelo p){
+        int resuelto=0;
+        int intentos=0;
+        for(Usuario u: usuarios){
             ArrayList<ModeloUsuario> amu = u.getModelosUsuario();
             for(int i=0; i<amu.size();i++){
                 Modelo m = amu.get(i).getModelo();
@@ -171,22 +116,17 @@ public class Sistema implements Serializable{
                    intentos =+ amu.get(i).getIntentos();
                     if(amu.get(i).getResuelto()) resuelto=+1;
                 }
-        }
-    } 
+            }
+        } 
             return (resuelto/intentos*100);
-     }
+    }
     public ArrayList<Usuario> usuariosNoResolvieron(Modelo p){
-        
         ArrayList<Usuario> auser = new ArrayList<>();
-        
         for(Usuario u: usuarios){
             if(!u.getModelosResueltos().contains(p))
                 auser.add(u);
-    }
+        }
         return auser;
-    
-    
-    
     }
     public void subirProblema(Tablero p, Solucion sol){ //haremos un subprograma en los jframe que permita construir problemas
         /*A este método solo vamos a acceder desde leerEjemplo: así, el problema siempre será válido.*/

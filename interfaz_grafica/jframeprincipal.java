@@ -34,6 +34,15 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
      */
     public jframeprincipal() {
         initComponents();
+        try{
+        sys.añadir10Problemas();}
+        catch(FileNotFoundException e1){}
+        catch(IOException e2){}
+        catch (p_final.IllegalFormatException e3){}         
+        catch(IllegalTableroException e4){}
+        catch(IllegalSolutionException e5){}
+        catch(IllegalMovementException e6){}
+        catch(IllegalFileExtension e7){}
         deshabilitarUI();
         cargarListaBotones();
         desactivarBotones();

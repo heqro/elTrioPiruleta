@@ -928,7 +928,7 @@ private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEv
         for(Modelo m : sys.getModelos() ){
             for (Usuario u: sys.getUsuarios()){
                 if(u.getModelosResueltos().contains(m)){
-                   indice1 = u.getModelosResueltos().indexOf(m);
+                   indice1 = u.getModelosUsuario().indexOf(m);
                    intentos += u.getModelosUsuario().get(indice1).getIntentos();
                    fallos += u.getModelosUsuario().get(indice1).getErrores();
                    nUsuarios +=1;

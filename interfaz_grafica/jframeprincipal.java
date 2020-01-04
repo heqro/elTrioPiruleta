@@ -918,7 +918,32 @@ public class jframeprincipal extends javax.swing.JFrame implements ActionListene
 sys.actualizarSistemaModelos();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton41ActionPerformed
-
+private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
+       int nUsuarios = 0;
+       int intentos=0;
+       int fallos =0;
+       int indice1;
+       int indice2 = 0;
+       jLabelInformacion.setText("");
+        for(Modelo m : sys.getModelos() ){
+            for (Usuario u: sys.getUsuarios()){
+                if(u.getModelosResueltos().contains(m)){
+                   indice1 = u.getModelosResueltos().indexOf(m);
+                   intentos += u.getModelosUsuario().get(indice1).getIntentos();
+                   fallos += u.getModelosUsuario().get(indice1).getErrores();
+                   nUsuarios +=1;
+                }
+              indice2 +=1;
+              if (nUsuarios>0){
+              jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 + " tiene  una media de errores de "+fallos/nUsuarios+"(con un total de " +fallos+" fallos) ,una media de intentos de "+ intentos/nUsuarios + "(con un total de "+intentos+" intentos).\n " ) ;
+              }else{jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 +" No se ha intentado todavia");}
+              intentos = 0;
+              fallos = 0;
+              nUsuarios = 0;
+            }
+        }
+        
+    }
 
     
     private Posicion getPosicionBoton(JButton b){

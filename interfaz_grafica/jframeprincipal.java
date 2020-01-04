@@ -562,7 +562,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         jButtonEstadisticasProblemas.setVisible(true);
     }
     
-    deshabilitarUI(){
+    private void deshabilitarUI(){
         jButtonSubirProblema.setVisible(false);/*Posibilitamos subir problema ahora
         que tenemos un usuario que ha hecho log-in*/
         jButtonResolverProblema.setVisible(false);

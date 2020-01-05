@@ -33,6 +33,12 @@ public class Solucion implements Serializable{
                     + "con la que se realice la coronación)");
         }
     }
+    
+    public Solucion(Solucion s){
+        posInicial = new Posicion(s.getPosInicial());
+        posFinal = new Posicion(s.getPosFinal());
+        letraCoronacion = s.getLetraCoronacion();
+    }
     @Override
     public String toString(){
         return ("Posición inicial: "+posInicial.toString() +"\n"

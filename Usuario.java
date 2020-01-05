@@ -152,48 +152,37 @@ public class Usuario implements Serializable{
         }
         return false;
     }
-    public boolean jugar(Modelo M) {
-        if(ModelosUsuario.contains(M)){
-            int posicion = ModelosUsuario.indexOf(M);
-            ModeloUsuario modeloAux = ModelosUsuario.get(posicion);
-            if(!modeloAux.getResuelto()){
-                modeloAux.setIntentos(modeloAux.getIntentos()+1);
+    
+    public boolean comprobarContenido(Modelo m){
+        for(ModeloUsuario modelo: ModelosUsuario ){
+            if(modelo.getModelo().equals(m)) 
                 return true;
-            }else{
-                return false;
-            }
-        }else{
-            ModelosUsuario.add(new ModeloUsuario(M, false, 0, 0));
-            return true;
         }
-//        for(ModeloUsuario m: ModelosUsuario ){
-//            
-//            
-//            if(m.getModelo().equals(M)){
-//                m.setIntentos(m.getIntentos()+1);
-//                try {
-//                    
-//                    if(m.getModelo().proponerMovimiento(sol)){
-//                        m.setResuelto(true);
-//                    }else{
-//                        m.setErrores(m.getErrores() + 1);
-//                    }
-//                } catch (CoronacionException ex) {
-//                    Tablero t = m.getModelo().getTablero();
-//                    Pieza piezaAux = t.GetPiezaPos(sol.getPosInicial());
-//                    t.coronarPeon(piezaAux, sol.getLetraCoronacion());
-//                    if(t.JaqueMate(new Color('n'))){
-//                        m.setResuelto(true);
-//                    }else{
-//                        m.setErrores(m.getErrores() + 1);
-//                    }
-//                }
-//            }else{
-//                
-//            }
-//        }
+        return false;
     }
     
+    public int recogerIndiceModelo(Modelo m){
+        int contador = 0;
+        for(ModeloUsuario modelo: ModelosUsuario ){
+            if(modelo.getModelo().equals(m)) 
+                return contador;
+            contador++;
+        }
+        return -1;
+    }
     
+    public boolean jugar(Modelo M) {
+        if(!comprobarContenido(M)){
+            ModelosUsuario.add(new ModeloUsuario(M, false, 0, 0));
+            if(comprobarContenido(M)){
+                System.out.println("añadido correctamente");//esto sucede
+            }
+            System.out.println("Su posicion es el "+this.recogerIndiceModelo(M));
+            return true;    
+        }else{
+            System.out.println("Su posicion es el "+this.recogerIndiceModelo(M));
+            return !comprobarResuelto(M);
+        }
+    }
     
 }

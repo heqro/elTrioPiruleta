@@ -32,7 +32,7 @@ public class ManejadorDeBotones implements ActionListener {
         interfazGrafica.desopacarBotones();
         String nombreBoton = ((JButton) ae.getSource()).getName();
         interfazGrafica.deshabilitarBotonesVaciosONegros();
-        
+        ModeloUsuario modelo = interfazGrafica.getModeloUsuario();
         int x = Character.getNumericValue(nombreBoton.charAt(0));
         char y = nombreBoton.charAt(1);
         Posicion pos = new Posicion(x, y);
@@ -47,14 +47,17 @@ public class ManejadorDeBotones implements ActionListener {
                 indicada por el botón pulsado en este caso*/
                 if(t.JaqueMate(new Color ('n'))){
                         interfazGrafica.sacarVictoria();
+                        modelo.setResuelto(true);
                 }else{
                     interfazGrafica.sacarError("La jugada introducida no es jaque mate.\n"
                                 + "Pulsa \"Aceptar\" para ver el movimiento que evita el jaque mate.");
+                    modelo.setErrores(modelo.getErrores() + 1);
                 }
                 interfazGrafica.actualizarFotoTablero(t);
             } catch (IllegalMovementException ex) {
                 interfazGrafica.sacarError(ex.getMessage());/*Si la jugada es ilegal, lanzaremos
                 un mensaje de error*/
+                modelo.setErrores(modelo.getErrores() + 1);
             } catch (CoronacionException ex) {/*Si se produce una coronación, lanzaremos un mensaje
                 con opciones de coronación.*/
                 String[] opciones = {"Dama", "Caballo", "Torre", "Alfil"};
@@ -90,9 +93,11 @@ public class ManejadorDeBotones implements ActionListener {
                     t.coronarPeon(pAux, letra);
                     if(t.JaqueMate(new Color ('n'))){
                         interfazGrafica.sacarVictoria();
+                        modelo.setResuelto(true);
                     }else{
                         interfazGrafica.sacarError("La jugada introducida no es jaque mate.\n"
                                 + "Pulsa \"Aceptar\" para ver el movimiento que evita el jaque mate.");
+                        modelo.setErrores(modelo.getErrores() + 1);
                     }
                     interfazGrafica.actualizarFotoTablero(t);
                 } catch (IllegalTableroException ex1) {//Nunca llegamos a este caso

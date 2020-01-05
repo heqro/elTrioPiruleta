@@ -19,7 +19,16 @@ public class Modelo implements Serializable{
     public Modelo(Tablero t, Solucion s){
         tablero = t;
         jugada_ganadora = s;
-    }    
+    }
+    public Modelo (Modelo M){
+        try {
+            tablero = new Tablero(M.getTablero());
+            jugada_ganadora = new Solucion(M.getSolucion());
+        } catch (IllegalTableroException ex) {
+            System.out.println("fallo al copiar modelo");
+        }
+    }
+    
     public Tablero getTablero(){
         return tablero;
     }

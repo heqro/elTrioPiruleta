@@ -65,7 +65,6 @@ public class Sistema implements Serializable{
     }
 
     public Sistema(ArrayList<Modelo> m, ArrayList<Usuario> u){
-        
         modelos = m;
         usuarios = u;
     }
@@ -140,7 +139,7 @@ public class Sistema implements Serializable{
         for(Usuario u: this.getUsuarios()){//Recoger todos los usuarios de la base de datos
             ArrayList<ModeloUsuario> arrayAuxModeloUsuario = u.getModelosUsuario();/*Recoger sus modelos subidos*/
             for(ModeloUsuario m: arrayAuxModeloUsuario){/*Añadir cada modelo encontrado a un array Auxiliar*/
-                if(arrayAuxModelo.contains(m.getModelo())){}else{
+                if(!arrayAuxModelo.contains(m.getModelo())){
                     arrayAuxModelo.add(m.getModelo());
                 }
                 
@@ -402,6 +401,11 @@ public void LeerBinarioModelos(String dir){
         }*/
         return auser;
     }
+    
+    public int cardinalidadProblemas(){
+        return this.getModelos().size();
+    }
+    
     /*public void crearBinarioUsuarios(){
         try{ //asignamos esta direccion por defecto
             

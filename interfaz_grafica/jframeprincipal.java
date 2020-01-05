@@ -513,6 +513,11 @@ public class jframeprincipal extends javax.swing.JFrame {
         getContentPane().add(jButtonEstadisticasPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 70, 260, 20));
 
         jButtonEstadisticasProblemas.setText("Estadísticas de los problemas");
+        jButtonEstadisticasProblemas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEstadisticasProblemasActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButtonEstadisticasProblemas, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, 260, 20));
 
         jButtonVerClasificacion.setText("Ver clasificación");
@@ -533,10 +538,13 @@ public class jframeprincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    //VARIABLES
     Sistema sys;
     String nombre, pass;
     Usuario user;
     ArrayList<ModeloUsuario> AUSER;
+    ModeloUsuario modeloActual;
     ArrayList<JButton> listaBotones;
     Pieza piezaSeleccionada;
     Tablero T;
@@ -561,6 +569,10 @@ public class jframeprincipal extends javax.swing.JFrame {
     
     public Usuario getUsuario(){
         return user;
+    }
+    
+    public ModeloUsuario getModeloUsuario(){
+        return modeloActual;
     }
     
     final JFileChooser selectorArchivos = new JFileChooser(); //Creamos un selector de archivos
@@ -648,9 +660,9 @@ public class jframeprincipal extends javax.swing.JFrame {
                 jLabelInformacion.setText(archivo.getCanonicalPath());
                 user.leerEjemplo(jLabelInformacion.getText());
                 ArrayList<ModeloUsuario> aux = user.getModelosUsuario();
-                ModeloUsuario modelo = aux.get(aux.size()-1);
+                modeloActual = aux.get(aux.size()-1);
                 //Modelo modelo = aux.get(aux.size()-1).getModelo();
-                pintarTablero(modelo);
+                pintarTablero(modeloActual);
                 sys.actualizarSistemaModelos();
             } catch (FileNotFoundException ex) {
                 sacarError(ex.getMessage());
@@ -1013,11 +1025,30 @@ public class jframeprincipal extends javax.swing.JFrame {
     }
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {
-        Modelo modeloAux = sys.elegirModeloAleatorio();
-        
-        while(!user.jugar(modeloAux)){
+        Modelo modeloAux = null;
+        boolean jugable = false;
+        int intentos = 1;
+        int indice = 0;
+        while(!jugable && intentos <= sys.cardinalidadProblemas()){
             modeloAux = sys.elegirModeloAleatorio();
-            user.jugar(modeloAux);
+            jugable = user.jugar(modeloAux);
+            intentos++;
+            /*No saldremos nunca del bucle sin tener un modelo aleatorio válido
+            con el que jugar.*/
+        }
+        if(intentos <= sys.cardinalidadProblemas()){
+            System.out.println("s puede jugar");
+            System.out.println(user.recogerIndiceModelo(modeloAux));
+            indice = user.recogerIndiceModelo(modeloAux);
+        }else{
+            JOptionPane.showMessageDialog(this, "Enhorabuena. Has resuelto todos los problemas.");
+        }
+        try{
+            modeloActual = user.getModelosUsuario().get(indice);
+            modeloActual.setIntentos(modeloActual.getIntentos() + 1);
+            this.pintarTablero(modeloActual);
+        } catch (IllegalTableroException ex) {
+            sacarError(ex.getMessage());
         }
     }
 
@@ -1142,58 +1173,56 @@ public class jframeprincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVerClasificacionActionPerformed
 
     private void jButtonEstadisticasPersonalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadisticasPersonalesActionPerformed
-    
-ArrayList<Usuario> auser = sys.getUsuarios();
-        Usuario user = auser.get(auser.size()-1); //siempre sera el ultimo que se ha logeado
+        ArrayList<Usuario> auser = sys.getUsuarios();
+        user = auser.get(auser.size()-1); //siempre sera el ultimo que se ha logeado
         double pr = user.porcentajeExito();
         int in = user.getNProblemasInt();
         int in1 = user.getNProblemasSol();
         int in2 = user.getNErrores();
         String nombre1 = user.getNombre();
-        JOptionPane.showMessageDialog(this,"           Clasificación personal de " + nombre1+"\n"+"Porcentaje de éxito: "+pr+" \n"+ "Problemas intentados: " + in + " \n" + "Problemas solucionados: " + in1 + " \n" + "Errores: " + in2,"Clasificación personal",JOptionPane.PLAIN_MESSAGE,null );
-        
-
-
-
-
-
-
-
-// TODO add your handling code here:
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this,
+                "Clasificación personal de " + nombre1+
+                        "\n Porcentaje" + " de éxito: "+pr+"% "
+                        + "\n Problemas intentados: " + in + 
+                        "\n Problemas solucionados: " + in1 + 
+                        "\n Errores: " + in2,
+                "Clasificación personal",
+                JOptionPane.PLAIN_MESSAGE,
+                null);
     }//GEN-LAST:event_jButtonEstadisticasPersonalesActionPerformed
-private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
+
+    private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadisticasProblemasActionPerformed
        int nUsuarios = 0;
        int intentos=0;
        int fallos =0;
        int indice1;
        int indice2 = 0;
-       double mediaErrores;
        double porcentajeExito;
        jLabelInformacion.setText("");
         for(Modelo m : sys.getModelos() ){
             for (Usuario u: sys.getUsuarios()){
                 if(u.getModelosResueltos().contains(m)){
-                   indice1 = u.getModelosUsuario().indexOf(m);
+                   indice1 = u.getModelosUsuario().indexOf(m)-1;
                    intentos += u.getModelosUsuario().get(indice1).getIntentos();
                    fallos += u.getModelosUsuario().get(indice1).getErrores();
                    nUsuarios +=1;
                 }
                indice2 +=1;
-             }  
+               porcentajeExito = (intentos-fallos)/intentos*100; 
               if (nUsuarios>0){
-                mediaErrores =  fallos/nUsuarios;
-                porcentajeExito = (intentos-fallos)/intentos*100;
-                jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 + " tiene  una media de errores de "+mediaErrores+"(con un total de " +fallos+" fallos) . El porcentje de exito de este ejercicio es de "+porcentajeExito+"% \n " ) ;
-              }else{
-                jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 +" No se ha intentado todavia\n");}
+              jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 + " tiene  una media de errores de "+fallos/nUsuarios+"(con un total de " +fallos+" fallos) ,una media de intentos de "+ intentos/nUsuarios + "(con un total de "+intentos+" intentos). El porcentje de exito de este ejercicio es de "+porcentajeExito+"% \n " ) ;
+              }else{jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 +" No se ha intentado todavia");}
               intentos = 0;
               fallos = 0;
-              nUsuarios = 0;             
+              nUsuarios = 0;
+              porcentajeExito = 0;
             }
         }
+    }//GEN-LAST:event_jButtonEstadisticasProblemasActionPerformed
+                                              
+       
         
-    }
+    
     
    
         

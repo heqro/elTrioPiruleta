@@ -689,14 +689,13 @@ public class Tablero implements Serializable{
         }
         Tablero t = (Tablero) o;
         boolean igual = true;
-        int i,j;
-        for(i=0;i<7;i++){
-            for (j=0;j<7;j++){
+        for(int i=0;i<7;i++){
+            for (int j=0;j<7;j++){
                 if(Marcador[i][j] == null){
                     igual = igual && (t.Marcador[i][j] == null);
                 }else{
                     if(t.Marcador[i][j] == null){
-                        return false;
+                        igual = false;
                     }else{
                         igual = igual && (t.Marcador[i][j].equals(Marcador[i][j]));
                     }

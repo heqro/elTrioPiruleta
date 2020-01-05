@@ -13,8 +13,13 @@ public class Posicion implements Serializable{
     public Posicion(int x, char y){
         coordenadax = x;
         coordenaday = y;
-        
     }
+    
+    public Posicion(Posicion pos){
+        coordenadax = pos.getCoordenadax();
+        coordenaday = pos.getCoordenaday();
+    }
+    
     public void setCoordenadax(int x){
         coordenadax = x;
     }

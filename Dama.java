@@ -1,9 +1,9 @@
 package p_final;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-
-public class Dama extends Pieza{
+public class Dama extends Pieza implements Serializable{
     public Dama (char color, Tablero t, Posicion pos){
         super(new Color(color), 'D', t, pos);
     }

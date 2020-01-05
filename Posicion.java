@@ -1,10 +1,11 @@
 package p_final;
+import java.io.Serializable;
 
 /**
  *
  * @author j.montes.2018
  */
-public class Posicion {
+public class Posicion implements Serializable{
     private int coordenadax;
     private char coordenaday;
     

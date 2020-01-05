@@ -1,8 +1,9 @@
 package p_final;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Rey extends Pieza{
+public class Rey extends Pieza implements Serializable{
 //    public Rey (char color, Tablero t){
 //        super(new Color(color), 'R', t);
 //    }

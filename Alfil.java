@@ -1,8 +1,10 @@
 package p_final;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Alfil extends Pieza{
+
+public class Alfil extends Pieza implements Serializable{
     public Alfil (char color, Tablero t, Posicion pos){
         super(new Color(color), 'A', t, pos);/*Llamar al constructor de Pieza*/
      }

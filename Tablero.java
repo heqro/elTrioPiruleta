@@ -8,12 +8,13 @@ package p_final;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.Serializable;
 
 /**
  *
  * @author j.montes.2018
  */
-public class Tablero {
+public class Tablero implements Serializable{
     private Pieza Marcador[][] = new Pieza[8][8];
     private int contReyNegro, contReyBlanco = 0;
     private int contAlfilBlancoCasillasBlancas, contAlfilBlancoCasillasNegras,

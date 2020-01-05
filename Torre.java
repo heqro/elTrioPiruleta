@@ -1,8 +1,9 @@
 package p_final;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Torre extends Pieza{
+public class Torre extends Pieza implements Serializable{
     public Torre (char color, Tablero t, Posicion pos){
         super(new Color(color), 'T', t, pos);
     }

@@ -5,11 +5,12 @@ package p_final;
  * and open the template in the editor.
  */
 import java.util.ArrayList;
+import java.io.Serializable;
 /**
  *
  * @author hr.iglesias.2018
  */
-public abstract class Pieza {
+public abstract class Pieza implements Serializable{
     private final Color color;
     private char nombre;
     private ArrayList<Posicion> posiblesMovimientos;

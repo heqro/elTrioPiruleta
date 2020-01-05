@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 package p_final;
+import java.io.Serializable;
 
 /**
  *
  * @author Heqro
  */
-public class Solucion {
+public class Solucion implements Serializable{
     private Posicion posInicial;
     private Posicion posFinal;
     private char letraCoronacion;

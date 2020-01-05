@@ -1,9 +1,9 @@
 package p_final;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-
-public class Peon extends Pieza{
+public class Peon extends Pieza implements Serializable{
     public Peon (char color, Tablero t, Posicion pos){
         super(new Color(color), 'P', t, pos);
     }

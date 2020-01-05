@@ -290,7 +290,7 @@ public void LeerBinarioModelos(String dir){
         try {
            FileOutputStream fileInput = new FileOutputStream(dir);
            ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-           this.LeerBinarioUsuarios(dir); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario
+           //this.LeerBinarioUsuarios(dir); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario cuidado serial id
            oos.writeObject(usuarios);
            
           
@@ -301,7 +301,7 @@ public void LeerBinarioModelos(String dir){
            try{//asignamos direccion por defecto si la direccion que ha metido no sirve
                FileOutputStream fileInput = new FileOutputStream("src/p_final/interfaz_grafica/binusuarios.bin");
                ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-               this.LeerBinarioUsuarios("src/p_final/interfaz_grafica/binmodelos.dat"); 
+               //this.LeerBinarioUsuarios("src/p_final/interfaz_grafica/binusuarios.bin"); cuidado serial id 
                oos.writeObject(usuarios);
            }catch(Exception ex){
                
@@ -331,7 +331,7 @@ public void LeerBinarioModelos(String dir){
         try {
            FileOutputStream fileInput = new FileOutputStream(dir);
            ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-           this.LeerBinarioModelos(dir); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario
+           //this.LeerBinarioModelos(dir); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario¡¡¡¡¡¡¡ cuidado : serializable id
            oos.writeObject(modelos);
            
           
@@ -343,7 +343,7 @@ public void LeerBinarioModelos(String dir){
             try{
             FileOutputStream fileInput = new FileOutputStream("src/p_final/interfaz_grafica/binusuarios.bin");
            ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-           this.LeerBinarioModelos("src/p_final/interfaz_grafica/binusuarios.dat"); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario
+           //this.LeerBinarioModelos("src/p_final/interfaz_grafica/binusuarios.dat"); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario
            oos.writeObject(modelos);
            
             

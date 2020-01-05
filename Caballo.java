@@ -1,9 +1,9 @@
 package p_final;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-
-public class Caballo extends Pieza{
+public class Caballo extends Pieza implements Serializable{
     public Caballo (char color, Tablero t, Posicion pos){
         super(new Color(color), 'C', t, pos);
     }

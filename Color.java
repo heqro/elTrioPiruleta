@@ -4,12 +4,12 @@ package p_final;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import java.io.Serializable;
 /**
  *
  * @author hr.iglesias.2018
  */
-public class Color {
+public class Color implements Serializable{
     public enum ColorPieza {BLANCO, NEGRO};
     private final ColorPieza color; 
     public Color(char colorDePieza) {

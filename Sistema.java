@@ -108,24 +108,17 @@ public class Sistema implements Serializable{
         int resuelto=0;
         int intentos=0;
         for(Usuario u: usuarios){
-            for(ModeloUsuario modeloU: u.getModelosUsuario()){
-                Modelo m = modeloU.getModelo();
+            ArrayList<ModeloUsuario> amu = u.getModelosUsuario();
+            for(int i=0; i<amu.size();i++){
+                Modelo m = amu.get(i).getModelo();
                 if(m.equals(p)){
-                    intentos = intentos + modeloU.getIntentos();
-                    if(modeloU.getResuelto()){
-                        resuelto++;
-                    }
+                   intentos =+ amu.get(i).getIntentos();
+                    if(amu.get(i).getResuelto()) resuelto=+1;
                 }
             }
-        }
-        int a = resuelto * 100;
-        if(intentos != 0){
-            return (a/intentos);
-        }else{
-            return 0;
-        }
+        } 
+            return (resuelto/intentos*100);
     }
-    
     public ArrayList<Usuario> usuariosNoResolvieron(Modelo p){
         ArrayList<Usuario> auser = new ArrayList<>();
         for(Usuario u: usuarios){

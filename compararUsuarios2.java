@@ -14,12 +14,12 @@ public class compararUsuarios2 implements Comparator<Usuario>{
     @Override //no return 0 porque son doubles, a la hora de usarlo no tendremos en cuenta
     public int compare(Usuario e1, Usuario e2){
         if(e1.getNProblemasSol()<e2.getNProblemasSol()){
-            return -1;
+            return 1;
         }else{
             if(e1.getNProblemasSol()==e2.getNProblemasSol()){
                 return 0;
             }else{
-                return 1;
+                return -1;
             }
         }
     }

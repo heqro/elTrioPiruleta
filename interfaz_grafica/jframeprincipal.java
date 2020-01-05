@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.ImageIcon;
@@ -35,6 +37,7 @@ public class jframeprincipal extends javax.swing.JFrame {
     public jframeprincipal() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initComponents();
+        this.cerrarVentanaPpal();
         deshabilitarUI();
         cargarListaBotones();
         desactivarBotones();
@@ -1111,7 +1114,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                     sacarError(codigoError);
                 } 
             }
-    }  //GEN-LAST:event_jButtonGuardarLeerDatosActionPerformed
+    }                                                         
 
     private void jButtonVerClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerClasificacionActionPerformed
     int respuesta;
@@ -1153,10 +1156,10 @@ public class jframeprincipal extends javax.swing.JFrame {
                         String str1 = u.getNombre() + "                                     ";
                         str1= str1.substring(0,20);
                         str = str + str1;
-                        String str2 = u.porcentajeExito() + "                               ";
+                        String str2 = u.porcentajeExito() + "                                                    ";
                         str2 = str2.substring(0,41);
                         str = str + str2;
-                        String str3 = u.getNProblemasInt() + "                              ";
+                        String str3 = u.getNProblemasInt() + "                                                 ";
                         str3 = str3.substring(0,47);
                         str = str + str3;
                         String str4 = u.getNProblemasSol() + "";
@@ -1195,7 +1198,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                 "Clasificación personal",
                 JOptionPane.PLAIN_MESSAGE,
                 null);
-    }//GEN-LAST:event_jButtonEstadisticasPersonalesActionPerformed
+    }                                                             
     private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
        String botones[] = {"Guardar", "Cerrar"};
        int eleccion = JOptionPane.showOptionDialog(this, "¿Deseas guardar los datos antes de salir?", "Salir del programa", 0, 0, null, botones, botones[1]);
@@ -1206,6 +1209,28 @@ public class jframeprincipal extends javax.swing.JFrame {
            System.exit(0);
        }
     } 
+    private void cerrarVentanaPpal(){
+        try{
+            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e){
+                    confSalida();
+                }
+            });
+            this.setVisible(true);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void confSalida(){
+        int respuesta = JOptionPane.showConfirmDialog(this,"¿Quieres guardar antes de cerrar?","Cuidado",JOptionPane.YES_NO_OPTION);
+        if (respuesta== JOptionPane.YES_OPTION){
+            this.guardarDatos();
+            System.exit( 0 );
+        } else{
+            System.exit( 0 );
+        }
+    }
      private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
        int nUsuarios = 0;
        int intentos=0;

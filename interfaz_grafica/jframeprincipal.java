@@ -1191,7 +1191,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                 null);
     }//GEN-LAST:event_jButtonEstadisticasPersonalesActionPerformed
 
-    private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
+     private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
        int nUsuarios = 0;
        int intentos=0;
        int fallos =0;
@@ -1220,9 +1220,10 @@ public class jframeprincipal extends javax.swing.JFrame {
               fallos = 0;
               nUsuarios = 0;             
             }
-        }
         
-    }//GEN-LAST:event_jButtonEstadisticasProblemasActionPerformed
+        
+    
+    } 
                                               
        
         

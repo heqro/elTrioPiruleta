@@ -1084,9 +1084,12 @@ public class jframeprincipal extends javax.swing.JFrame {
                     sys.EscribirBinarioUsuarios(jLabelInformacion.getText());
                 } catch (FileNotFoundException ex) {
                     codigoError = "Archivo no encontrado.";
-                } catch (Exception ex) {
-                    codigoError = ex.getMessage();
-                } 
+                    sacarError(codigoError);
+                } catch (IOException ex) {
+                    codigoError = "Archivo con características no válidas";
+                    sacarError(codigoError);
+                }
+                
             }
     }
     private void leerDatos(){
@@ -1102,11 +1105,13 @@ public class jframeprincipal extends javax.swing.JFrame {
                     sys.LeerBinarioUsuarios(jLabelInformacion.getText());
                 } catch (FileNotFoundException ex) {
                     codigoError = "Archivo no encontrado.";
-                } catch (Exception ex) {
-                    codigoError = ex.getMessage();
+                    sacarError(codigoError);
+                } catch (IOException ex) {
+                    codigoError = "Archivo con características no válidas";
+                    sacarError(codigoError);
                 } 
             }
-    }//GEN-LAST:event_jButtonGuardarLeerDatosActionPerformed
+    }  //GEN-LAST:event_jButtonGuardarLeerDatosActionPerformed
 
     private void jButtonVerClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerClasificacionActionPerformed
     int respuesta;

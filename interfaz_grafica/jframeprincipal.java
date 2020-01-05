@@ -589,15 +589,12 @@ public class jframeprincipal extends javax.swing.JFrame {
         jButtonEstadisticasProblemas.setVisible(false);
     }
     
-    
-    
     private void jButtonNombrePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNombrePasswordActionPerformed
         nombre = jTextNombre.getText();
         pass = jTextPassword.getText();
         int respuesta = 0;
         if(!nombre.equalsIgnoreCase("") && !pass.equalsIgnoreCase("")){
             if(sys.buscarUsuario(nombre, pass) == null){
-                
                 Object[] options = { "Sí", "No" };
                 respuesta = JOptionPane.showOptionDialog(
                         this, //Ventana padre
@@ -1016,7 +1013,6 @@ public class jframeprincipal extends javax.swing.JFrame {
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {
         try{
-            
             this.pintarTablero(sys.elegirModeloAleatorio());
         }
        catch(IllegalTableroException e1){ 

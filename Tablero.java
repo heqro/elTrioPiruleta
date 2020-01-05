@@ -636,7 +636,7 @@ public class Tablero {
             for(Posicion pos: arrayAux){
                 try{
                     p.Mover(pos);
-                    mate = false;/*Si hemos llegado a esta línea, hemos encontrado una jugada
+                    return false;/*Si hemos llegado a esta línea, hemos encontrado una jugada
                     que no es ilegal, por tanto no es jaque mate.*/
                 }catch (IllegalMovementException  | CoronacionException e){
                     /*No queremos hacer nada, porque estamos 

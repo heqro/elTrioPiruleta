@@ -45,30 +45,28 @@ public class ManejadorDeBotones implements ActionListener {
             try {
                 pAux.Mover(pos);/*Movemos la pieza seleccionada previamente a la posición
                 indicada por el botón pulsado en este caso*/
-                interfazGrafica.actualizarFotoTablero(t);
                 if(t.JaqueMate(new Color ('n'))){
                         interfazGrafica.sacarVictoria();
                 }else{
-                    interfazGrafica.sacarError("La jugada introducida no es jaque mate.");
+                    interfazGrafica.sacarError("La jugada introducida no es jaque mate.\n"
+                                + "Pulsa \"Aceptar\" para ver el movimiento que evita el jaque mate.");
                 }
+                interfazGrafica.actualizarFotoTablero(t);
             } catch (IllegalMovementException ex) {
                 interfazGrafica.sacarError(ex.getMessage());/*Si la jugada es ilegal, lanzaremos
                 un mensaje de error*/
             } catch (CoronacionException ex) {/*Si se produce una coronación, lanzaremos un mensaje
                 con opciones de coronación.*/
-                Object[] options = {new JButton("Dama", new ImageIcon(getClass().getResource("wq.png"))) ,
-                                    new JButton("Caballo", new ImageIcon(getClass().getResource("wn.png"))),
-                                    new JButton("Torre", new ImageIcon(getClass().getResource("wr.png"))),
-                                    new JButton("Alfil", new ImageIcon(getClass().getResource("wb.png")))};
+                String[] opciones = {"Dama", "Caballo", "Torre", "Alfil"};
                 int respuesta = JOptionPane.showOptionDialog(
                 interfazGrafica, //Ventana padre
                 "Elige en qué pieza deseas coronar.",//Mensaje del cuerpo
                 ex.getMessage(),//Texto de encabezado
-                JOptionPane.YES_NO_OPTION, //Tipo de opciones a mostrar
-                JOptionPane.QUESTION_MESSAGE, //Tipo del mensaje a mostrar
+                JOptionPane.DEFAULT_OPTION, //Tipo de opciones a mostrar
+                JOptionPane.INFORMATION_MESSAGE, //Tipo del mensaje a mostrar
                 null,//Icono a mostrar
-                options,//array con las elecciones posibles
-                options[0]);//Coronar en dama
+                opciones,//array con las elecciones posibles
+                opciones[0]);//Coronar en dama
                 char letra = 'x';
                 switch(respuesta){
                     case 0:{
@@ -92,6 +90,9 @@ public class ManejadorDeBotones implements ActionListener {
                     t.coronarPeon(pAux, letra);
                     if(t.JaqueMate(new Color ('n'))){
                         interfazGrafica.sacarVictoria();
+                    }else{
+                        interfazGrafica.sacarError("La jugada introducida no es jaque mate.\n"
+                                + "Pulsa \"Aceptar\" para ver el movimiento que evita el jaque mate.");
                     }
                     interfazGrafica.actualizarFotoTablero(t);
                 } catch (IllegalTableroException ex1) {//Nunca llegamos a este caso

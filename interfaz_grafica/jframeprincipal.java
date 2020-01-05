@@ -33,6 +33,7 @@ public class jframeprincipal extends javax.swing.JFrame {
      * Creates new form jframeprincipal
      */
     public jframeprincipal() {
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initComponents();
         deshabilitarUI();
         cargarListaBotones();
@@ -1048,7 +1049,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         }
     }
 
-    private void jButtonGuardarLeerDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarLeerDatosActionPerformed
+    private void jButtonGuardarLeerDatosActionPerformed(java.awt.event.ActionEvent evt) {                                                        
         
         int respuesta;
         Object[] options = { "Guardar", "Leer" };
@@ -1063,7 +1064,15 @@ public class jframeprincipal extends javax.swing.JFrame {
                 options[0]);
 
         if(respuesta==0){
-            int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
+            this.guardarDatos();
+        }
+        if(respuesta==1){
+            this.leerDatos();
+        }
+        sys.actualizarSistemaModelos();
+    }                                                       
+    private void guardarDatos(){
+        int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
                 de archivos*/
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 /*Obtener el archivo seleccionado*/
@@ -1079,8 +1088,8 @@ public class jframeprincipal extends javax.swing.JFrame {
                     codigoError = ex.getMessage();
                 } 
             }
-        }
-        if(respuesta==1){
+    }
+    private void leerDatos(){
             int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
             de archivos*/
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1097,8 +1106,6 @@ public class jframeprincipal extends javax.swing.JFrame {
                     codigoError = ex.getMessage();
                 } 
             }
-        }
-        sys.actualizarSistemaModelos();
     }//GEN-LAST:event_jButtonGuardarLeerDatosActionPerformed
 
     private void jButtonVerClasificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerClasificacionActionPerformed
@@ -1186,7 +1193,16 @@ public class jframeprincipal extends javax.swing.JFrame {
                 JOptionPane.PLAIN_MESSAGE,
                 null);
     }//GEN-LAST:event_jButtonEstadisticasPersonalesActionPerformed
-
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+       String botones[] = {"Guardar", "Cerrar"};
+       int eleccion = JOptionPane.showOptionDialog(this, "¿Deseas guardar los datos antes de salir?", "Salir del programa", 0, 0, null, botones, botones[1]);
+       if (eleccion ==JOptionPane.YES_OPTION){
+           guardarDatos();
+           System.exit(0);
+       }else if(eleccion == JOptionPane.NO_OPTION){
+           System.exit(0);
+       }
+    } 
      private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
        int nUsuarios = 0;
        int intentos=0;

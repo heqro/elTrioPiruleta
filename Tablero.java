@@ -401,8 +401,19 @@ public class Tablero {
     }
     
     public void JugadaIlegal(Color c) throws IllegalMovementException{
+        String mensaje = "";
+        switch(c.toString()){
+            case "N":{
+                mensaje = "NEGRO";
+                break;
+            }
+            case "B":{
+                mensaje = "BLANCO";
+                break;
+            }    
+        }
         if(Jaque(c)){
-            throw new IllegalMovementException("¡Jugada ilegal! El rey "+c.toString()+ " está en jaque.");
+            throw new IllegalMovementException("¡Jugada ilegal! El rey "+mensaje+ " está en jaque.");
         }
     }
     

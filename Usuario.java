@@ -152,29 +152,46 @@ public class Usuario implements Serializable{
         }
         return false;
     }
-    public void jugar(Modelo M, Solucion sol) throws IllegalMovementException, IllegalTableroException{
-        for(ModeloUsuario m : ModelosUsuario ){
-            if(m.getModelo().equals(M)){
-                m.setIntentos(m.getIntentos()+1);
-                try {
-                    if(m.getModelo().proponerMovimiento(sol)){
-                        m.setResuelto(true);
-                    }else{
-                        m.setErrores(m.getErrores() + 1);
-                    }
-                } catch (CoronacionException ex) {
-                    Tablero t = m.getModelo().getTablero();
-                    Pieza piezaAux = t.GetPiezaPos(sol.getPosInicial());
-                    t.coronarPeon(piezaAux, sol.getLetraCoronacion());
-                    if(t.JaqueMate(new Color('n'))){
-                        m.setResuelto(true);
-                    }else{
-                        m.setErrores(m.getErrores() + 1);
-                    }
-                }
-                
+    public boolean jugar(Modelo M) {
+        if(ModelosUsuario.contains(M)){
+            int posicion = ModelosUsuario.indexOf(M);
+            ModeloUsuario modeloAux = ModelosUsuario.get(posicion);
+            if(!modeloAux.getResuelto()){
+                modeloAux.setIntentos(modeloAux.getIntentos()+1);
+                return true;
+            }else{
+                return false;
             }
+        }else{
+            ModelosUsuario.add(new ModeloUsuario(M, false, 0, 0));
+            return true;
         }
+//        for(ModeloUsuario m: ModelosUsuario ){
+//            
+//            
+//            if(m.getModelo().equals(M)){
+//                m.setIntentos(m.getIntentos()+1);
+//                try {
+//                    
+//                    if(m.getModelo().proponerMovimiento(sol)){
+//                        m.setResuelto(true);
+//                    }else{
+//                        m.setErrores(m.getErrores() + 1);
+//                    }
+//                } catch (CoronacionException ex) {
+//                    Tablero t = m.getModelo().getTablero();
+//                    Pieza piezaAux = t.GetPiezaPos(sol.getPosInicial());
+//                    t.coronarPeon(piezaAux, sol.getLetraCoronacion());
+//                    if(t.JaqueMate(new Color('n'))){
+//                        m.setResuelto(true);
+//                    }else{
+//                        m.setErrores(m.getErrores() + 1);
+//                    }
+//                }
+//            }else{
+//                
+//            }
+//        }
     }
     
     

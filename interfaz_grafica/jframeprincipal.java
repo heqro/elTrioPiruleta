@@ -643,13 +643,13 @@ public class jframeprincipal extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             /*Obtener el archivo seleccionado*/
             File archivo = selectorArchivos.getSelectedFile();
-            String codigoError = "";
             try {
                 /*Obtener la ruta del archivo seleccionado*/
                 jLabelInformacion.setText(archivo.getCanonicalPath());
                 user.leerEjemplo(jLabelInformacion.getText());
                 ArrayList<ModeloUsuario> aux = user.getModelosUsuario();
-                Modelo modelo = aux.get(aux.size()-1).getModelo();
+                ModeloUsuario modelo = aux.get(aux.size()-1);
+                //Modelo modelo = aux.get(aux.size()-1).getModelo();
                 pintarTablero(modelo);
                 sys.actualizarSistemaModelos();
             } catch (FileNotFoundException ex) {
@@ -877,8 +877,9 @@ public class jframeprincipal extends javax.swing.JFrame {
         }//end for variable j
     }
     
-    public void pintarTablero(Modelo modelo) throws IllegalTableroException{
-        T = new Tablero(modelo.getTablero());
+    public void pintarTablero(ModeloUsuario modeloUser) throws IllegalTableroException{
+        Modelo m = modeloUser.getModelo();
+        T = new Tablero(m.getTablero());
         T.tableroIlegal();
         int seleccionboton;
         for (int i=1; i<9; i++){ //con el array de botones, le vamos a asignar a cada uno un icono dependiendo de su figura src/interfaz_grafica/jugada.txt
@@ -1012,15 +1013,12 @@ public class jframeprincipal extends javax.swing.JFrame {
     }
     
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
-            this.pintarTablero(sys.elegirModeloAleatorio());
+        Modelo modeloAux = sys.elegirModeloAleatorio();
+        
+        while(!user.jugar(modeloAux)){
+            modeloAux = sys.elegirModeloAleatorio();
+            user.jugar(modeloAux);
         }
-       catch(IllegalTableroException e1){ 
-           System.out.println(sys.getModelos().size());
-          // System.out.println(sys.getModelos().get(0).toString());
-          // System.out.println("aaa");
-           deshabilitarUI();
-       }
     }
 
     private void jButtonGuardarLeerDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarLeerDatosActionPerformed

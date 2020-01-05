@@ -1168,25 +1168,28 @@ private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEv
        int fallos =0;
        int indice1;
        int indice2 = 0;
+       double mediaErrores;
        double porcentajeExito;
        jLabelInformacion.setText("");
         for(Modelo m : sys.getModelos() ){
             for (Usuario u: sys.getUsuarios()){
                 if(u.getModelosResueltos().contains(m)){
-                   indice1 = u.getModelosUsuario().indexOf(m)-1;
+                   indice1 = u.getModelosUsuario().indexOf(m);
                    intentos += u.getModelosUsuario().get(indice1).getIntentos();
                    fallos += u.getModelosUsuario().get(indice1).getErrores();
                    nUsuarios +=1;
                 }
                indice2 +=1;
-               porcentajeExito = (intentos-fallos)/intentos*100; 
+             }  
               if (nUsuarios>0){
-              jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 + " tiene  una media de errores de "+fallos/nUsuarios+"(con un total de " +fallos+" fallos) ,una media de intentos de "+ intentos/nUsuarios + "(con un total de "+intentos+" intentos). El porcentje de exito de este ejercicio es de "+porcentajeExito+"% \n " ) ;
-              }else{jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 +" No se ha intentado todavia");}
+                mediaErrores =  fallos/nUsuarios;
+                porcentajeExito = (intentos-fallos)/intentos*100;
+                jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 + " tiene  una media de errores de "+mediaErrores+"(con un total de " +fallos+" fallos) . El porcentje de exito de este ejercicio es de "+porcentajeExito+"% \n " ) ;
+              }else{
+                jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 +" No se ha intentado todavia\n");}
               intentos = 0;
               fallos = 0;
-              nUsuarios = 0;
-              porcentajeExito = 0;
+              nUsuarios = 0;             
             }
         }
         

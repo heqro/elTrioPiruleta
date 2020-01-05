@@ -117,7 +117,7 @@ public class Sistema implements Serializable{
                 }
             }
         } 
-            return (resuelto/intentos*100);
+            return 100*(resuelto/intentos);
     }
     public ArrayList<Usuario> usuariosNoResolvieron(Modelo p){
         ArrayList<Usuario> auser = new ArrayList<>();

@@ -1027,28 +1027,24 @@ public class jframeprincipal extends javax.swing.JFrame {
     private void jButtonResolverProblemaActionPerformed(java.awt.event.ActionEvent evt) {
         Modelo modeloAux = null;
         boolean jugable = false;
-        int intentos = 1;
-        int indice = 0;
-        while(!jugable && intentos <= sys.cardinalidadProblemas()){
-            modeloAux = sys.elegirModeloAleatorio();
-            jugable = user.jugar(modeloAux);
-            intentos++;
-            /*No saldremos nunca del bucle sin tener un modelo aleatorio válido
-            con el que jugar.*/
-        }
-        if(intentos <= sys.cardinalidadProblemas()){
-            System.out.println("s puede jugar");
-            System.out.println(user.recogerIndiceModelo(modeloAux));
-            indice = user.recogerIndiceModelo(modeloAux);
+        //int intentos = 1;
+        int indice;
+        modeloAux = sys.elegirModeloAleatorio();
+        jugable = user.jugar(modeloAux);
+        indice = user.recogerIndiceModelo(modeloAux);
+        modeloActual = user.getModelosUsuario().get(indice);
+        
+        if(modeloActual.getResuelto()){
+            JOptionPane.showMessageDialog(this, "Este problema ya está resuelto.\n"
+                    + "No se cargará nueva información.");
         }else{
-            JOptionPane.showMessageDialog(this, "Enhorabuena. Has resuelto todos los problemas.");
+            modeloActual.setIntentos(modeloActual.getIntentos() + 1);
         }
         try{
-            modeloActual = user.getModelosUsuario().get(indice);
-            modeloActual.setIntentos(modeloActual.getIntentos() + 1);
             this.pintarTablero(modeloActual);
         } catch (IllegalTableroException ex) {
-            sacarError(ex.getMessage());
+            sacarError(ex.getMessage());/*Esto nunca sucederá, ya que los tableros
+            fueron introducidos correctamente en su momento.*/
         }
     }
 

@@ -1214,7 +1214,7 @@ public class jframeprincipal extends javax.swing.JFrame {
        jLabelInformacion.setText("");
         for(Modelo m : sys.getModelos() ){
             for (Usuario u: sys.getUsuarios()){
-                if(u.getModelosResueltos().contains(m)){
+                if(u.getModelosUsuario().contains(m)){
                    indice1 = u.getModelosUsuario().indexOf(m);
                    intentos += u.getModelosUsuario().get(indice1).getIntentos();
                    fallos += u.getModelosUsuario().get(indice1).getErrores();

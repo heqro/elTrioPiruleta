@@ -643,6 +643,9 @@ public class Tablero implements Serializable{
         ArrayList<Pieza> piezasColorC = this.ObtenerPiezasColor(c);
         ArrayList<Posicion> arrayAux;
         boolean mate = true;
+        if(!Jaque(c)){
+            return false;
+        }
         for(Pieza p: piezasColorC){
             arrayAux = p.getPosiblesMovimientos();
             for(Posicion pos: arrayAux){

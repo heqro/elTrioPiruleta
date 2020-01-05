@@ -57,7 +57,9 @@ public class ManejadorDeBotones implements ActionListener {
             } catch (IllegalMovementException ex) {
                 interfazGrafica.sacarError(ex.getMessage());/*Si la jugada es ilegal, lanzaremos
                 un mensaje de error*/
-                modelo.setErrores(modelo.getErrores() + 1);
+                if(!modelo.getResuelto()){
+                    modelo.setErrores(modelo.getErrores() + 1);
+                }
             } catch (CoronacionException ex) {/*Si se produce una coronación, lanzaremos un mensaje
                 con opciones de coronación.*/
                 String[] opciones = {"Dama", "Caballo", "Torre", "Alfil"};
@@ -97,7 +99,9 @@ public class ManejadorDeBotones implements ActionListener {
                     }else{
                         interfazGrafica.sacarError("La jugada introducida no es jaque mate.\n"
                                 + "Pulsa \"Aceptar\" para ver el movimiento que evita el jaque mate.");
-                        modelo.setErrores(modelo.getErrores() + 1);
+                        if(!modelo.getResuelto()){
+                            modelo.setErrores(modelo.getErrores() + 1);
+                        }
                     }
                     interfazGrafica.actualizarFotoTablero(t);
                 } catch (IllegalTableroException ex1) {//Nunca llegamos a este caso

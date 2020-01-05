@@ -30,9 +30,14 @@ public class Usuario implements Serializable{
         return ModelosUsuario;
     }
     public double porcentajeExito(){
-        if(this.getNProblemasInt()==0){
-        return 0;}
-        else{return(this.getNProblemasSol()/this.getNProblemasInt()*100);
+        int solucionados = getNProblemasSol();
+        int intentados = getNProblemasInt();
+        if(intentados==0){
+            return 0;
+        }
+        else{
+            int a = solucionados * 100;
+            return a/intentados;
         }
     }
    
@@ -120,22 +125,23 @@ public class Usuario implements Serializable{
     }
     public int getNProblemasInt(){
         int cont=0;
-        for(ModeloUsuario m : ModelosUsuario ){
-            cont+= cont + m.getIntentos();
+        for(ModeloUsuario m: ModelosUsuario ){
+            cont = cont + m.getIntentos();
         }
         return cont;
     }
     public int getNProblemasSol(){
         int cont=0;
         for(ModeloUsuario m : ModelosUsuario ){
-            if(m.getResuelto()) cont+= cont + 1;
+            if(m.getResuelto())
+                cont = cont + 1;
         }
         return cont;
     }
     public int getNErrores(){
         int cont=0;
         for(ModeloUsuario m : ModelosUsuario ){
-            cont+= cont + m.getErrores();
+            cont = cont + m.getErrores();
         }
         return cont;
     }

@@ -264,13 +264,7 @@ public class Sistema implements Serializable{
         }
         return auser;
     }
-    public void subirProblema(Tablero p, Solucion sol){ //haremos un subprograma en los jframe que permita construir problemas
-        /*A este método solo vamos a acceder desde leerEjemplo: así, el problema siempre será válido.*/
-        Modelo m = new Modelo(p, sol);
-        modelos.add(m);
-    }
-    
-    
+
     public void actualizarSistemaModelos(){
         ArrayList<Modelo> arrayAuxModelo = new ArrayList<>();
         for(Usuario u: this.getUsuarios()){//Recoger todos los usuarios de la base de datos

@@ -35,7 +35,8 @@ public class Posicion implements Serializable{
     }
     
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o){/*dos posiciones son iguales si tienen la misma coordenada
+    x y la misma coordenada y*/
         if (o == null){
             return false;
         }
@@ -51,7 +52,8 @@ public class Posicion implements Serializable{
         return (this.coordenadax == pos.coordenadax && this.coordenaday == pos.coordenaday);
     }
     
-    public boolean posicionLegal(){
+    public boolean posicionLegal(){/*una posición es legal si su coordenada x está entre 0 y 8, y si su coordenada y
+    está entre 0 y 7 (es decir, si está entre "a" y "h" en el alfabeto.*/
         boolean xCorrecta = (coordenadax <= 8) && (coordenadax > 0);
         int yNumerico = coordenaday - 97;
         boolean yCorrecta = (yNumerico >= 0) && (yNumerico <=7);

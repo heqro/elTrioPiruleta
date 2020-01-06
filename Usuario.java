@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.Serializable;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -76,7 +77,12 @@ public class Usuario implements Serializable{
             }
             contadorFila++;//incrementamos la fila para poder introducir la siguiente
         }
-        solucion = entrada.next();
+        try{
+            solucion = entrada.next();
+        }catch (java.util.NoSuchElementException e){
+            throw new NoSuchElementException("Tablero con solución no válida.");
+        }
+        
         Solucion sol = new Solucion(solucion);
         Modelo modeloAux = new Modelo(tablero2, sol);
         /*Si hemos llegado a esta línea, entonces creamos un Modelo

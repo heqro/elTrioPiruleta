@@ -1033,6 +1033,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         boolean jugable = false;
         //int intentos = 1;
         int indice;
+        jButtonResolverProblema.setEnabled(false);
         modeloAux = sys.elegirModeloAleatorio();
         jugable = user.jugar(modeloAux);
         indice = user.recogerIndiceModelo(modeloAux);

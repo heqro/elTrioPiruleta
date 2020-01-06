@@ -1265,7 +1265,21 @@ public class jframeprincipal extends javax.swing.JFrame {
             indice1 +=1;
             problemas[indice1-1] ="Problema nº"+indice1;      
         }
-        int eleccion1 = JOptionPane.showOptionDialog(this,"Elija un problema :","Estadisticas problemas",0,0,null,problemas,null);
+        String str = (String)JOptionPane.showInputDialog(this,  
+                "Elija un problema : ", "Estadísticas personales",  
+                JOptionPane.PLAIN_MESSAGE, null, problemas, "Numbers");
+        
+        int eleccion1 = -1;
+        if(str==null){ 
+            eleccion1=-1;
+        }else{
+           for(int i = 0; i<9 ; i++){
+               if(problemas[i].equals(str)){
+                   eleccion1 = i;
+               }
+           }}
+          //int eleccion1 = JOptionPane.showOptionDialog(this,"Elija un problema :","Estadisticas problemas",0,0,null,problemas,null);
+          //editado hasta aqui
         if(eleccion1!=-1){
             for (Usuario u:sys.getUsuarios()){
                 indice2+=1;

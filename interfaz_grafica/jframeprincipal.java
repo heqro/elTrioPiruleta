@@ -1274,7 +1274,7 @@ public class jframeprincipal extends javax.swing.JFrame {
         if(str==null){ 
             eleccion1=-1;
         }else{
-           for(int i = 0; i< 10; i++){
+           for(int i = 0; i< sys.getModelos().size(); i++){
                if(problemas[i].equals(str)){
                    eleccion1 = i;
                }

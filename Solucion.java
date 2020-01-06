@@ -15,15 +15,20 @@ public class Solucion implements Serializable{
     private Posicion posFinal;
     private char letraCoronacion;
     public Solucion(String cadenaSolucion) throws IllegalFormatException{
-        if(cadenaSolucion.length() == 4 || cadenaSolucion.length() == 5){
-            int posInicialX = Character.getNumericValue(cadenaSolucion.charAt(0));
-            char posInicialY = cadenaSolucion.charAt(1);
-            posInicial = new Posicion(posInicialX, posInicialY);
-            int posFinalX = Character.getNumericValue(cadenaSolucion.charAt(2));
-            char posFinalY = cadenaSolucion.charAt(3);
-            posFinal = new Posicion(posFinalX, posFinalY);
-            if(cadenaSolucion.length() == 5 ){
-                letraCoronacion = cadenaSolucion.charAt(4);
+        if(cadenaSolucion.length() == 4 || cadenaSolucion.length() == 5){/*solo aceptaremos como válidas
+        aquellas soluciones de longitud de caracteres = 4 (soluciones sin coronación) o igual a 5 (soluciones
+        con coronación, o con un caracter basura al final).*/
+            int posInicialX = Character.getNumericValue(cadenaSolucion.charAt(0));/*recoger el número asociado
+            al primer caracter del String*/
+            char posInicialY = cadenaSolucion.charAt(1);/*recoger la letra asociada al segundo caracter
+            del string*/
+            posInicial = new Posicion(posInicialX, posInicialY);/*creamos posición inicial con los datos recogidos*/
+            int posFinalX = Character.getNumericValue(cadenaSolucion.charAt(2));/*recoger número asociado al tercer
+            caracter del String*/
+            char posFinalY = cadenaSolucion.charAt(3);/*recoger letra asociada al cuarto caracter del String*/
+            posFinal = new Posicion(posFinalX, posFinalY);/*crear posición final con los datos recogidos*/
+            if(cadenaSolucion.length() == 5 ){//si hay un caracter más en la cadena,
+                letraCoronacion = cadenaSolucion.charAt(4);/*lo recogemos en letraCoronacion*/
             }else{
                 letraCoronacion = 'x';//Caracter basura que no utilizaremos.
             }
@@ -34,7 +39,7 @@ public class Solucion implements Serializable{
         }
     }
     
-    public Solucion(Solucion s){
+    public Solucion(Solucion s){//crear solución como copia de otra dada
         posInicial = new Posicion(s.getPosInicial());
         posFinal = new Posicion(s.getPosFinal());
         letraCoronacion = s.getLetraCoronacion();
@@ -55,7 +60,7 @@ public class Solucion implements Serializable{
     public char getLetraCoronacion(){
         return letraCoronacion;
     }
-    public boolean equals(Object o){
+    public boolean equals(Object o){/*dos piezas son iguales si coinciden las posiciones finales y las iniciales.*/
         if (o == null){return false;}
         if (o==this){return true;}
         if (getClass()!=o.getClass()){return false;}

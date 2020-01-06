@@ -37,6 +37,7 @@ public class jframeprincipal extends javax.swing.JFrame {
     public jframeprincipal() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("iconogrande.png")).getImage());
         this.cerrarVentanaPpal();
         deshabilitarUI();
         cargarListaBotones();

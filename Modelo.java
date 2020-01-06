@@ -24,7 +24,7 @@ public class Modelo implements Serializable{
         try {
             tablero = new Tablero(M.getTablero());
             jugada_ganadora = new Solucion(M.getSolucion());
-        } catch (IllegalTableroException ex) {
+        } catch (IllegalTableroException ex) {//nunca saldrá este caso
             System.out.println("fallo al copiar modelo");
         }
     }
@@ -70,7 +70,9 @@ public class Modelo implements Serializable{
             return false;
         }
         Modelo m = (Modelo) o;
-        return tablero.equals(m.getTablero());
+        return tablero.equals(m.getTablero());/*dos modelos son iguales
+        si sus tableros asociados lo son, (no tienen por qué ser iguales las soluciones, pues
+        pueden haber problemas con múltiples soluciones)*/
     }
     
     

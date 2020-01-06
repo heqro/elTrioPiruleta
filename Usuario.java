@@ -26,6 +26,10 @@ public class Usuario implements Serializable{
         this.sys = sys;
     }
     
+    public void addModeloUsuario(ModeloUsuario modeloAux){
+        ModelosUsuario.add(modeloAux);
+    }
+    
     public ArrayList<ModeloUsuario> getModelosUsuario (){
         return ModelosUsuario;
     }

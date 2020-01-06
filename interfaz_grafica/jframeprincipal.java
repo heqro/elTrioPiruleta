@@ -605,6 +605,14 @@ public class jframeprincipal extends javax.swing.JFrame {
         jButtonEstadisticasProblemas.setVisible(false);
     }
     
+    public void setEstadoBotonesClasificacion(boolean valor){
+        jButtonResolverProblema.setEnabled(valor);
+        jButtonSubirProblema.setEnabled(valor);
+        jButtonEstadisticasPersonales.setEnabled(valor);
+        jButtonVerClasificacion.setEnabled(valor);
+        jButtonEstadisticasProblemas.setEnabled(valor);
+    }
+    
     private void jButtonNombrePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNombrePasswordActionPerformed
         nombre = jTextNombre.getText();
         pass = jTextPassword.getText();
@@ -653,7 +661,7 @@ public class jframeprincipal extends javax.swing.JFrame {
             options[0]);
     }
     
-    private void jButtonSubirProblemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubirProblemaActionPerformed
+    private void jButtonSubirProblemaActionPerformed(java.awt.event.ActionEvent evt) {                                                     
         int returnVal = selectorArchivos.showOpenDialog(this);/*Mostrar el explorador
         de archivos*/
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -667,6 +675,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                 modeloActual = aux.get(aux.size()-1);
                 //Modelo modelo = aux.get(aux.size()-1).getModelo();
                 pintarTablero(modeloActual);
+                this.setEstadoBotonesClasificacion(false);
                 sys.actualizarSistemaModelos();
             } catch (FileNotFoundException ex) {
                 sacarError(ex.getMessage());
@@ -676,7 +685,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                 sacarError(ex.getMessage());
             }
         }
-    }//GEN-LAST:event_jButtonSubirProblemaActionPerformed
+    } //GEN-LAST:event_jButtonSubirProblemaActionPerformed
        
     
     private void cargarListaBotones(){
@@ -1032,8 +1041,11 @@ public class jframeprincipal extends javax.swing.JFrame {
         Modelo modeloAux = null;
         boolean jugable = false;
         //int intentos = 1;
+        //this.deshabilitarBotonesVaciosONegros();
+        //this.desactivarBotones();
+        
         int indice;
-        jButtonResolverProblema.setEnabled(false);
+        this.setEstadoBotonesClasificacion(false);
         modeloAux = sys.elegirModeloAleatorio();
         jugable = user.jugar(modeloAux);
         indice = user.recogerIndiceModelo(modeloAux);

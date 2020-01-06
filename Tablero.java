@@ -295,10 +295,6 @@ public class Tablero implements Serializable{
         p = this.GetPiezaPos(p.getPosicion());//hacemos que p apunte a la nueva pieza
         actualizarTablero();
     }
-//    public void descoronarPeon(Pieza p){
-//        this.insertarPieza("P"+p.getColor().toString(), p.getPosicion());
-//        p = this.GetPiezaPos(p.getPosicion());
-//    }
     
     public void peonCoronado(Pieza p) throws CoronacionException{
         if(p.getNombre() == 'P'){
@@ -680,7 +676,8 @@ public class Tablero implements Serializable{
         }
     }
     
-    public boolean equals (Object o){
+    public boolean equals (Object o){/*dos tableros lo son iguales si todos los objetos
+    de tipo pieza asociados a ellos lo son entre sí.*/
         if (o == null){
             return (false);
         }

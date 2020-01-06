@@ -38,7 +38,7 @@ public class Sistema implements Serializable{
         modelos = new ArrayList<>();
         usuarios = new ArrayList<>();
         añadirAdmin();
-        subirProblemasAlt();
+        subirProblemas();
     }
     public void añadirAdmin(){
         this.registrarUsuario("admin","admin");

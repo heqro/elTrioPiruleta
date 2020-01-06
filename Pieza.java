@@ -78,6 +78,7 @@ public abstract class Pieza implements Serializable{
         Pieza p = (Pieza) o;
         return (this.nombre == p.nombre) && this.getPosicion().equals(p.getPosicion()) 
                 && this.getColor().equals(p.getColor());
+        /*dos piezas son iguales si tienen el mismo nombre, la misma posición y el mismo color.*/
     }
     public abstract void calcularMovimientos();
 }

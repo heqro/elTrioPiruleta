@@ -1245,6 +1245,10 @@ public class jframeprincipal extends javax.swing.JFrame {
         }
     }
       private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) { 
+       jButtonGuardarLeerDatos.setEnabled(false);
+       jButtonSubirProblema.setEnabled(false);
+       jButtonEstadisticasProblemas.setEnabled(false);
+       jButtonResolverProblema.setEnabled(false);
        String problemas[] = new String[sys.getModelos().size()];
        ArrayList<Usuario> aux = new ArrayList<Usuario>();
        String usuarios [] ;
@@ -1254,7 +1258,6 @@ public class jframeprincipal extends javax.swing.JFrame {
        int indice2 =0;
        int indiceModelo;
        int indice3=0;
-       int indiceUsuario;
        double porcentajeExito;
        String mensaje;       
       int control;
@@ -1283,9 +1286,9 @@ public class jframeprincipal extends javax.swing.JFrame {
                     usuarios[indice3] =u.getNombre();
                     indice3+=1;
                 }
-           mensaje ="Este problema ha sido resuelto por "+nUsuarios+" teniendo un porcentaje de exito del "+porcentajeExito+"%/n.Seleccione de cual de los siguientes usuarios desea conocer sus estadísticas en este problema o pinche en RESOLVER(la ultima opción),para intentareste problema";
+           mensaje ="Este problema ha sido resuelto por "+nUsuarios+" usuarios. Teniendo un porcentaje de exito del "+porcentajeExito+"% \n.Seleccione de cual de los siguientes usuarios desea conocer sus estadísticas en este problema o pinche en RESOLVER(la ultima opción),para intentareste problema";
         }else{
-                mensaje ="Nadie a resuelto este problema, seleccione resolver para intentarlo usted";
+                mensaje ="Nadie ha resuelto este problema, seleccione resolver para intentarlo usted";
             }
             usuarios[indice3]="RESOLVER";
             int eleccion2 =0;
@@ -1301,10 +1304,11 @@ public class jframeprincipal extends javax.swing.JFrame {
                         "\n Errores: " + aux.get(eleccion2).getNErrores(),"Estadísticas personles",JOptionPane.PLAIN_MESSAGE,null);
                              
                  }else if(eleccion2 == indice3){
-                     indiceModelo= user.recogerIndiceModelo(sys.getModelos().get(eleccion1));
-                     user.jugar(sys.getModelos().get(eleccion1));
+                    user.jugar(sys.getModelos().get(eleccion1));
+                    indiceModelo= user.recogerIndiceModelo(sys.getModelos().get(eleccion1));                                         
                      eleccion2 =-1;
-                     if(user.getModelosUsuario().get(indiceModelo).getResuelto()){
+                     modeloActual = user.getModelosUsuario().get(indiceModelo);
+                     if(modeloActual.getResuelto()){
                         JOptionPane.showMessageDialog(this, "Este problema ya está resuelto.\n"
                         + "No se cargará nueva información.");
                     }else{
@@ -1323,6 +1327,10 @@ public class jframeprincipal extends javax.swing.JFrame {
         
     
     }
+    jButtonGuardarLeerDatos.setEnabled(true);
+    jButtonSubirProblema.setEnabled(true);
+    jButtonEstadisticasProblemas.setEnabled(true);
+    jButtonResolverProblema.setEnabled(true);
 }
                                               
        

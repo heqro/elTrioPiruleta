@@ -1,10 +1,11 @@
-El formato con el que se tienen que introducir los problemas es igual al que esta ejemplificado 
+El formato con el que se tienen que introducir los problemas es igual al que está ejemplificado 
 en el enunciado del trabajo, cambiando únicamente el formato de la respuesta en el que se tiene
-la cual sigue estando en la quinta línea, pero en ella se especifica primero la posición de la 
-pieza que se va a mover y posteriormente la posición que va adoptar esta pieza; ademas si esta 
-pieza es un peón y corona a otra pieza, se añadirá la letra en mayúscula de la pieza a la que se
-va a coronar y en caso contrario, se deja en blanco .Asi por ejemplo,si tenemos el tablero en 
+la cual sigue estando en la novena línea: en la nuestra se especifica primero la posición de la 
+pieza que se va a mover y posteriormente la posición que va adoptar esta pieza; además, si esta 
+pieza es un peón y corona, se añadirá la letra en mayúscula de la pieza a la que se
+va a coronar y en caso contrario, se deja en blanco. Así, por ejemplo, si tenemos el tablero en 
 txt con la siguiente forma:
+
 V,RN,V,V,V,V,V,V
 V,V,V,TB,V,V,V,V
 DB,V,V,V,V,V,V,V
@@ -14,7 +15,8 @@ V,V,V,V,V,V,V,V
 V,V,V,V,V,V,V,V
 V,V,V,V,V,V,RB,V
 6a7b
-Se tendría en el tablero inicializados un Rey Negro en la posición 8-b,una Torre Blanca 
-en la posición7-d, una Dama Blanca en la posición 6-a y un Rey Blanco en la posición 1-g, y se 
-indica que la jugada gandora es la que mueve la pieza en la posición 6-a(la Dama blanca) a 
+
+Se tendría en el tablero inicializados un Rey Negro en la posición 8-b, una Torre Blanca 
+en la posición 7-d, una Dama Blanca en la posición 6-a y un Rey Blanco en la posición 1-g, y se 
+indica que la jugada gandora es la que mueve la pieza en la posición 6-a (la Dama blanca) a 
 la posición 7-b.

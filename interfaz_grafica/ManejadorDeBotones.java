@@ -54,6 +54,7 @@ public class ManejadorDeBotones implements ActionListener {
                     modelo.setErrores(modelo.getErrores() + 1);
                 }
                 interfazGrafica.actualizarFotoTablero(t);
+                interfazGrafica.setEstadoBotonesClasificacion(true);
             } catch (IllegalMovementException ex) {
                 interfazGrafica.sacarError(ex.getMessage());/*Si la jugada es ilegal, lanzaremos
                 un mensaje de error*/
@@ -104,6 +105,7 @@ public class ManejadorDeBotones implements ActionListener {
                         }
                     }
                     interfazGrafica.actualizarFotoTablero(t);
+                    interfazGrafica.setEstadoBotonesClasificacion(true);
                 } catch (IllegalTableroException ex1) {//Nunca llegamos a este caso
                     interfazGrafica.sacarError(ex1.getMessage());
                 }

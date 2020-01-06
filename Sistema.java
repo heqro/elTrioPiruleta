@@ -44,26 +44,6 @@ public class Sistema implements Serializable{
         this.registrarUsuario("admin","admin");
     }
     
-    public void subirProblemas() throws IllegalFileExtension, IOException, 
-            FileNotFoundException, IllegalFormatException, IllegalTableroException, 
-            IllegalSolutionException, IllegalMovementException{
-        String rutaArchivo;
-        String extension = "";
-        Usuario admin = this.buscarUsuario("admin", "admin");
-        for(int i = 1; i < 11; i++){
-            rutaArchivo = "docked/partidaobligatoria" + i + ".txt";
-            int j = rutaArchivo.lastIndexOf('.');
-            if (j >= 0) {
-                extension = rutaArchivo.substring(j+1);
-            }
-            if(!extension.equals("txt")){
-                throw new IllegalFileExtension("Extensión de archivo no válida. Se esperaba"
-                        + " txt, y se obtuvo \""+ extension + "\"" );
-            }
-            admin.leerEjemplo(rutaArchivo);
-        }
-    }
-
     public void subirProblemasAlt() throws IllegalTableroException, IllegalFormatException{
         Usuario admin = this.buscarUsuario("admin", "admin");
         Modelo modeloAux;
@@ -230,7 +210,7 @@ public class Sistema implements Serializable{
             if (u.getNombre().equals(nombre)) 
                 return u;
         }
-        return null; //devolvemos null si no devuelve no
+        return null; //devolvemos null si no encuentra al usuario
     
     }
     
@@ -253,7 +233,7 @@ public class Sistema implements Serializable{
             if(control)
                 sum=+1;
         }
-            return sum;
+        return sum;
     }
     public double porcentajeExito(Modelo p){
         int resuelto=0;

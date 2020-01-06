@@ -682,7 +682,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                 sacarError(ex.getMessage());
             } catch (p_final.IllegalFormatException | IllegalTableroException| 
                     IllegalSolutionException | IllegalMovementException | 
-                    IllegalFileExtension | IOException ex) {
+                    IllegalFileExtension | IOException | NoSuchElementException ex ) {
                 sacarError(ex.getMessage());
             }
         }

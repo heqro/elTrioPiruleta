@@ -1231,39 +1231,86 @@ public class jframeprincipal extends javax.swing.JFrame {
             System.exit( 0 );
         }
     }
-     private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) {                                                             
+      private void jButtonEstadisticasProblemasActionPerformed(java.awt.event.ActionEvent evt) { 
+       String problemas[] = new String[sys.getModelos().size()];
+       ArrayList<Usuario> aux = new ArrayList<Usuario>();
+       String usuarios [] ;
        int nUsuarios = 0;
        int intentos=0;
-       int fallos =0;
-       int indice1;
-       int indice2 = 0;
-       double mediaErrores;
+       int indice1 =0;
+       int indice2 =0;
+       int indiceModelo;
+       int indice3=0;
+       int indiceUsuario;
        double porcentajeExito;
-       jLabelInformacion.setText("");
+       String mensaje;       
+      int control;
         for(Modelo m : sys.getModelos() ){
-            for (Usuario u: sys.getUsuarios()){
-                if(u.getModelosUsuario().contains(m)){
-                   indice1 = u.getModelosUsuario().indexOf(m);
-                   intentos += u.getModelosUsuario().get(indice1).getIntentos();
-                   fallos += u.getModelosUsuario().get(indice1).getErrores();
-                   nUsuarios +=1;
+            indice1 +=1;
+            problemas[indice1-1] ="Problema nº"+indice1;      
+        }
+        int eleccion1 = JOptionPane.showOptionDialog(this,"Elija un problema :","Estadisticas problemas",0,0,null,problemas,null);
+        if(eleccion1!=-1){
+            for (Usuario u:sys.getUsuarios()){
+                indice2+=1;
+                if(sys.getUsuarios().get(indice2-1).comprobarResuelto(sys.getModelos().get(eleccion1))){ 
+                   aux.add(sys.getUsuarios().get(indice2-1));                  
+                   control =aux.get(nUsuarios).recogerIndiceModelo(sys.getModelos().get(eleccion1));
+                   intentos+=aux.get(nUsuarios).getModelosUsuario().get(control).getIntentos();
+                   nUsuarios +=1;                   
+                   
+                                         
+                }                           
+            } 
+            
+            usuarios = new String[nUsuarios+1];
+            if (!aux.isEmpty()){
+                porcentajeExito =(nUsuarios/intentos)*100;           
+                for(Usuario u:aux ){              
+                    usuarios[indice3] =u.getNombre();
+                    indice3+=1;
                 }
-               indice2 +=1;
-             }  
-              if (nUsuarios>0){
-                mediaErrores =  fallos/nUsuarios;
-                porcentajeExito = (intentos-fallos)/intentos*100;
-                jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 + " tiene  una media de errores de "+mediaErrores+"(con un total de " +fallos+" fallos) . El porcentje de exito de este ejercicio es de "+porcentajeExito+"% \n " ) ;
-              }else{
-                jLabelInformacion.setText(jLabelInformacion.getText()+" .El problema nº " + indice2 +" No se ha intentado todavia\n");}
-              intentos = 0;
-              fallos = 0;
-              nUsuarios = 0;             
+           mensaje ="Este problema ha sido resuelto por "+nUsuarios+" teniendo un porcentaje de exito del "+porcentajeExito+"%/n.Seleccione de cual de los siguientes usuarios desea conocer sus estadísticas en este problema o pinche en RESOLVER(la ultima opción),para intentareste problema";
+        }else{
+                mensaje ="Nadie a resuelto este problema, seleccione resolver para intentarlo usted";
             }
+            usuarios[indice3]="RESOLVER";
+            int eleccion2 =0;
+            while (eleccion2 !=-1){
+                 eleccion2 = JOptionPane.showOptionDialog(this, mensaje, "Jugadores que lo han resuelto", 0, 0, null, usuarios, null);
+                 
+                 if(eleccion2 !=-1 && eleccion2 <indice3) {
+                     
+                     JOptionPane.showMessageDialog(this,"Clasificación personal de " + usuarios[eleccion2]+
+                        "\n Porcentaje" + " de éxito: "+aux.get(eleccion2).porcentajeExito()+"% "
+                        + "\n Problemas intentados: " +aux.get(eleccion2).getModelosUsuario().get(aux.get(eleccion2).recogerIndiceModelo(sys.getModelos().get(eleccion1))).getIntentos()  + 
+                        "\n Problemas solucionados: " +aux.get(eleccion2).getNProblemasSol()  + 
+                        "\n Errores: " + aux.get(eleccion2).getNErrores(),"Estadísticas personles",JOptionPane.PLAIN_MESSAGE,null);
+                             
+                 }else if(eleccion2 == indice3){
+                     indiceModelo= user.recogerIndiceModelo(sys.getModelos().get(eleccion1));
+                     user.jugar(sys.getModelos().get(eleccion1));
+                     eleccion2 =-1;
+                     if(user.getModelosUsuario().get(indiceModelo).getResuelto()){
+                        JOptionPane.showMessageDialog(this, "Este problema ya está resuelto.\n"
+                        + "No se cargará nueva información.");
+                    }else{
+                        user.getModelosUsuario().get(indiceModelo).setIntentos(modeloActual.getIntentos() + 1);
+                     }
+                    try{
+                         this.pintarTablero(user.getModelosUsuario().get(indiceModelo));
+                    } catch (IllegalTableroException ex) {
+                        sacarError(ex.getMessage());/*Esto nunca sucederá, ya que los tableros
+            fueron introducidos correctamente en su momento.*/
+                    }
+                 }
+            }   
+              
         
         
     
-    } 
+    }
+}
                                               
        
         

@@ -95,8 +95,6 @@ public class Sistema implements Serializable{
                 t.insertarPieza("PB", new Posicion(4, 'e'));
                 t.insertarPieza("PB", new Posicion(3, 'a'));
                 t.insertarPieza("DB", new Posicion(3, 'b'));
-                t.insertarPieza("PB", new Posicion(3, 'a'));
-                t.insertarPieza("PB", new Posicion(2, 'b'));
                 t.insertarPieza("PB", new Posicion(2, 'f'));
                 t.insertarPieza("PB", new Posicion(2, 'g'));
                 t.insertarPieza("RB", new Posicion(1, 'h'));
@@ -173,13 +171,12 @@ public class Sistema implements Serializable{
                 t.insertarPieza("PB", new Posicion(6, 'e'));
                 t.insertarPieza("CB", new Posicion(5, 'c'));
                 t.insertarPieza("TB", new Posicion(2, 'c'));
-                t.insertarPieza("RB", new Posicion(8, 'h'));
+                t.insertarPieza("RB", new Posicion(1, 'h'));
                 s = new Solucion("5c7d");
                 break;
             }
             case 8:{
                 t.insertarPieza("AB", new Posicion(7, 'f'));
-                t.insertarPieza("PN", new Posicion(6, 'e'));
                 t.insertarPieza("PN", new Posicion(6, 'e'));
                 t.insertarPieza("RN", new Posicion(5, 'e'));
                 t.insertarPieza("PN", new Posicion(5, 'f'));
@@ -207,10 +204,10 @@ public class Sistema implements Serializable{
                 t.insertarPieza("TN", new Posicion(8, 'd'));
                 t.insertarPieza("PN", new Posicion(7, 'c'));
                 t.insertarPieza("TB", new Posicion(7, 'g'));
-                t.insertarPieza("PN", new Posicion(6, 'd'));
+                t.insertarPieza("PB", new Posicion(6, 'd'));
                 t.insertarPieza("TB", new Posicion(1, 'b'));
                 t.insertarPieza("RB", new Posicion(1, 'g'));
-                s = new Solucion("6d7d");
+                s = new Solucion("7g7c");
                 break;
             }
         }

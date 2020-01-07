@@ -297,7 +297,16 @@ public class Sistema implements Serializable{
            ObjectInputStream oos = new ObjectInputStream(fileInput);
            
            ArrayList<Usuario> auser = (ArrayList<Usuario>) oos.readObject();
-           usuarios=auser;
+           
+               for(Usuario uaux: auser){
+                   if(usuarios.contains(uaux)){
+                       
+                   }else{
+                       usuarios.add(uaux);
+                   }
+               }
+           
+           //usuarios=auser;
            
 
             

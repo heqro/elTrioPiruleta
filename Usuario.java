@@ -45,6 +45,14 @@ public class Usuario implements Serializable{
             return a/intentados;
         }
     }
+    @Override
+    public boolean equals (Object o){
+        if(o == null){ return false; }
+        if(this == o){ return true; }
+        if(this.getClass() != o.getClass()){ return false; }
+        Usuario u = (Usuario) o;
+        return(this.nombre.equals(u.nombre));
+    }
    
    public void leerEjemplo(String archivo)throws FileNotFoundException, IOException, 
             IllegalFormatException, IllegalTableroException, 

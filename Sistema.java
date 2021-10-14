@@ -41,29 +41,9 @@ public class Sistema implements Serializable{
         subirProblemasAlt();
     }
     public void añadirAdmin(){
-        this.registrarUsuario("admin","admin");
+        this.registrarUsuario("admin","admin"); //añadir admin al sistema
     }
     
-    public void subirProblemas() throws IllegalFileExtension, IOException, 
-            FileNotFoundException, IllegalFormatException, IllegalTableroException, 
-            IllegalSolutionException, IllegalMovementException{
-        String rutaArchivo;
-        String extension = "";
-        Usuario admin = this.buscarUsuario("admin", "admin");
-        for(int i = 1; i < 11; i++){
-            rutaArchivo = "docked/partidaobligatoria" + i + ".txt";
-            int j = rutaArchivo.lastIndexOf('.');
-            if (j >= 0) {
-                extension = rutaArchivo.substring(j+1);
-            }
-            if(!extension.equals("txt")){
-                throw new IllegalFileExtension("Extensión de archivo no válida. Se esperaba"
-                        + " txt, y se obtuvo \""+ extension + "\"" );
-            }
-            admin.leerEjemplo(rutaArchivo);
-        }
-    }
-
     public void subirProblemasAlt() throws IllegalTableroException, IllegalFormatException{
         Usuario admin = this.buscarUsuario("admin", "admin");
         Modelo modeloAux;
@@ -71,7 +51,7 @@ public class Sistema implements Serializable{
         for(int i=1; i<=10; i++){
             modeloAux = escogerProblema(i);
             modeloUAux = new ModeloUsuario(modeloAux, false, 0, 0);
-            admin.addModeloUsuario(modeloUAux);
+            admin.addModeloUsuario(modeloUAux); //añadimos problema desde el usuario admin que siempre esta en sistema
         }
         this.actualizarSistemaModelos();
     }
@@ -227,10 +207,10 @@ public class Sistema implements Serializable{
     }
     public Usuario buscarUsuario(String nombre, String contraseña){
         for(Usuario u: usuarios){
-            if (u.getNombre().equals(nombre)) 
+            if (u.getNombre().equals(nombre)) //lo buscamos unicamente en funcion del nombre
                 return u;
         }
-        return null; //devolvemos null si no devuelve no
+        return null; //devolvemos null si no encuentra al usuario
     
     }
     
@@ -253,7 +233,7 @@ public class Sistema implements Serializable{
             if(control)
                 sum=+1;
         }
-            return sum;
+        return sum;
     }
     public double porcentajeExito(Modelo p){
         int resuelto=0;
@@ -284,13 +264,7 @@ public class Sistema implements Serializable{
         }
         return auser;
     }
-    public void subirProblema(Tablero p, Solucion sol){ //haremos un subprograma en los jframe que permita construir problemas
-        /*A este método solo vamos a acceder desde leerEjemplo: así, el problema siempre será válido.*/
-        Modelo m = new Modelo(p, sol);
-        modelos.add(m);
-    }
-    
-    
+
     public void actualizarSistemaModelos(){
         ArrayList<Modelo> arrayAuxModelo = new ArrayList<>();
         for(Usuario u: this.getUsuarios()){//Recoger todos los usuarios de la base de datos
@@ -323,20 +297,29 @@ public class Sistema implements Serializable{
            ObjectInputStream oos = new ObjectInputStream(fileInput);
            
            ArrayList<Usuario> auser = (ArrayList<Usuario>) oos.readObject();
-           usuarios=auser;
+           
+               for(Usuario uaux: auser){
+                   if(usuarios.contains(uaux)){
+                       
+                   }else{ //no esta luego lo añadimos
+                       usuarios.add(uaux);
+                   }
+               }
+           
+           
            
 
             
-        } catch (FileNotFoundException e) {                                         //"src/p_final/interfaz_grafica/binmodelos.dat"
+        } catch (FileNotFoundException e) {                                         
             try{System.out.println(e.getMessage());
-            FileInputStream fileInput = new FileInputStream("src/p_final/interfaz_grafica/binmodelos.bin");
+            FileInputStream fileInput = new FileInputStream("src/p_final/interfaz_grafica/binmodelos.bin"); //direccion por defecto en caso de error
             ObjectInputStream oos = new ObjectInputStream(fileInput);
            
            ArrayList<Usuario> auser = (ArrayList<Usuario>)oos.readObject();
            
            usuarios=auser;
             } catch(Exception ex){}finally {
-            try {
+            try { //cerramos ficheros
                 if (fis != null) {
                     fis.close();
                 }
@@ -350,7 +333,7 @@ public class Sistema implements Serializable{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
+            try { //cerramos ficheros
                 if (fis != null) {
                     fis.close();
                 }
@@ -410,7 +393,7 @@ public void LeerBinarioModelos(String dir){
            }catch(Exception ex){
                
            }finally {
-            try {
+            try { //cerramos ficheros
                 if (fis != null) {
                     fis.close();
                 }
@@ -425,7 +408,7 @@ public void LeerBinarioModelos(String dir){
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
+            try {//cerramos ficheros
                 if (fis != null) {
                     fis.close();
                 }
@@ -446,7 +429,6 @@ public void LeerBinarioModelos(String dir){
         try {
            FileOutputStream fileInput = new FileOutputStream(dir);
            ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-           //this.LeerBinarioUsuarios(dir); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario cuidado serial id
            oos.writeObject(usuarios);
            
           
@@ -457,7 +439,6 @@ public void LeerBinarioModelos(String dir){
            try{//asignamos direccion por defecto si la direccion que ha metido no sirve
                FileOutputStream fileInput = new FileOutputStream("src/p_final/interfaz_grafica/binusuarios.bin");
                ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-               //this.LeerBinarioUsuarios("src/p_final/interfaz_grafica/binusuarios.bin"); cuidado serial id 
                oos.writeObject(usuarios);
            }catch(Exception ex){
                
@@ -466,7 +447,7 @@ public void LeerBinarioModelos(String dir){
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
+            try { //cerramos ficheros
                 if (fis != null) {
                     fis.close();
                 }
@@ -487,7 +468,6 @@ public void LeerBinarioModelos(String dir){
         try {
            FileOutputStream fileInput = new FileOutputStream(dir);
            ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-           //this.LeerBinarioModelos(dir); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario¡¡¡¡¡¡¡ cuidado : serializable id
            oos.writeObject(modelos);
            
           
@@ -499,7 +479,6 @@ public void LeerBinarioModelos(String dir){
             try{
             FileOutputStream fileInput = new FileOutputStream("src/p_final/interfaz_grafica/binusuarios.bin");
            ObjectOutputStream oos = new ObjectOutputStream(fileInput);
-           //this.LeerBinarioModelos("src/p_final/interfaz_grafica/binusuarios.dat"); //asi comprobamos que estan actualizados y que no vamos a repetir ningun usuario
            oos.writeObject(modelos);
            
             
@@ -507,7 +486,7 @@ public void LeerBinarioModelos(String dir){
             catch(Exception ex){
                 
             }finally {
-            try {
+            try {//cerramos ficheros
                 if (fis != null) {
                     fis.close();
                 }
@@ -521,7 +500,7 @@ public void LeerBinarioModelos(String dir){
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            try {
+            try {//cerramos ficheros
                 if (fis != null) {
                     fis.close();
                 }
@@ -537,25 +516,20 @@ public void LeerBinarioModelos(String dir){
     public Modelo elegirModeloAleatorio (){
         int indiceProblemas = modelos.size()-1;
         double j =  Math.random()*(indiceProblemas) + 1;
-        //System.out.println(j);
+        
         indiceProblemas = (int)(j);
-        //System.out.println(indiceProblemas);
         return(modelos.get(indiceProblemas));
     }
     public ArrayList<Usuario> ordenarPExito(){
         ArrayList<Usuario> auser = (ArrayList<Usuario>)usuarios.clone();
-        Collections.sort(auser, new compararUsuarios());
-        /*for(Usuario aux: auser){
-            System.out.println(aux.toString());
-        }*/
+        Collections.sort(auser, new compararUsuarios()); //mayor a menor
+        
         return auser;
     }
     public ArrayList<Usuario> ordenarProblemasResueltos(){
         ArrayList<Usuario> auser = (ArrayList<Usuario>)usuarios.clone();
-        Collections.sort(auser, new compararUsuarios2());
-        /* for(Usuario aux: auser){
-            System.out.println(aux.toString());
-        }*/
+        Collections.sort(auser, new compararUsuarios2()); //mayor a menor
+        
         return auser;
     }
     
@@ -563,25 +537,7 @@ public void LeerBinarioModelos(String dir){
         return this.getModelos().size();
     }
     
-    /*public void crearBinarioUsuarios(){
-        try{ //asignamos esta direccion por defecto
-            
-            FileInputStream fileInput = new FileInputStream("src/p_final/interfaz_grafica/binusuarios.dat");
-        
-        }catch(FileNotFoundException e){
-            System.out.println(e.getMessage());
-        }
     }
-    public void crearBinarioModelos(){
-        try{ //asignamos esta direccion por defecto
-            
-            FileInputStream fileInput = new FileInputStream("src/p_final/interfaz_grafica/binmodelos.dat");
-        
-        }catch(FileNotFoundException e){
-            System.out.println(e.getMessage());
-        }
-    }
-    */}
     
     
     

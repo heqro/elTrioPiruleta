@@ -37,6 +37,7 @@ public class jframeprincipal extends javax.swing.JFrame {
     public jframeprincipal() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("iconogrande.png")).getImage());
         this.cerrarVentanaPpal();
         deshabilitarUI();
         cargarListaBotones();
@@ -676,6 +677,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                 modeloActual = aux.get(aux.size()-1);
                 //Modelo modelo = aux.get(aux.size()-1).getModelo();
                 pintarTablero(modeloActual);
+                modeloActual.setIntentos(modeloActual.getIntentos() + 1);
                 this.setEstadoBotonesClasificacion(false);
                 sys.actualizarSistemaModelos();
             } catch (FileNotFoundException ex) {
@@ -1163,7 +1165,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,str,"Clasficación global: Porcentaje de éxito", JOptionPane.PLAIN_MESSAGE);
                 }else{
                     if(respuesta==1){
-                        ArrayList<Usuario> auser = sys.ordenarPExito();
+                        ArrayList<Usuario> auser = sys.ordenarProblemasResueltos();
                         String str = "Nombre     Porcentaje exito     Nº Problemas intentados    Nº Problemas solucionados\n";
                     
                     for(Usuario u: auser){
@@ -1180,7 +1182,7 @@ public class jframeprincipal extends javax.swing.JFrame {
                         str = str + str4 + "\n";
                         System.out.println(str);
                     }
-                    JOptionPane.showMessageDialog(this,str,"Clasficación global: Porcentaje de éxito", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(this,str,"Clasficación global: Problemas resueltos", JOptionPane.PLAIN_MESSAGE);
                         
                     }
                 }
@@ -1261,9 +1263,11 @@ public class jframeprincipal extends javax.swing.JFrame {
        String mensaje;       
       int control;
         for(Modelo m : sys.getModelos() ){
+            /*Recorrmos todos los problemas del sistema, con el objetivo de recogerlos todos en un array*/
             indice1 +=1;
             problemas[indice1-1] ="Problema nº"+indice1;      
         }
+        /* con el array anterior, creamos una pestaña emergente en la que aparecerán todos los problemas numerados según su orden en el arraylist */
         String str = (String)JOptionPane.showInputDialog(this,  
                 "Elija un problema : ", "Estadísticas personales",  
                 JOptionPane.PLAIN_MESSAGE, null, problemas, "Numbers");
@@ -1272,7 +1276,8 @@ public class jframeprincipal extends javax.swing.JFrame {
         if(str==null){ 
             eleccion1=-1;
         }else{
-           for(int i = 0; i< 10; i++){
+           for(int i = 0; i< sys.getModelos().size(); i++){
+               /*En este punto estamos buscando obtener el indice del problema que ha sido seleccionado*/
                if(problemas[i].equals(str)){
                    eleccion1 = i;
                }
@@ -1280,6 +1285,7 @@ public class jframeprincipal extends javax.swing.JFrame {
           //int eleccion1 = JOptionPane.showOptionDialog(this,"Elija un problema :","Estadisticas problemas",0,0,null,problemas,null);
           //editado hasta aqui
         if(eleccion1!=-1){
+            /*Si el usuario hizo alguna eleccion, buscaremos entre los usuarios registrados en el sistema a aquellos que hayan resuelto el problema obteniendo el numero de intentos que ha realizado antes de acertar*/
             for (Usuario u:sys.getUsuarios()){
                 indice2+=1;
                 if(sys.getUsuarios().get(indice2-1).comprobarResuelto(sys.getModelos().get(eleccion1))){ 
@@ -1293,9 +1299,9 @@ public class jframeprincipal extends javax.swing.JFrame {
             } 
             
             usuarios = new String[nUsuarios+1];
-            if (!aux.isEmpty()){
+            if (!aux.isEmpty()){/*Como cada usuario ha acertado una vez el problema(solo se recogen datos hasta que se resuelve el problema), el porcentaje de exito es igual al numero de usuarios partido el numero de intentos.*/
                 porcentajeExito =(nUsuarios/intentos)*100;           
-                for(Usuario u:aux ){              
+                for(Usuario u:aux ){ /*Habiendo gente que ha resuelto el problema, se recoge en el array usuarios los nombres de estos segun su orden en el array*/             
                     usuarios[indice3] =u.getNombre();
                     indice3+=1;
                 }
@@ -1305,12 +1311,12 @@ public class jframeprincipal extends javax.swing.JFrame {
                    + " o pinche en RESOLVER (la ultima opción), para intentar este problema";
         }else{
                 mensaje ="Nadie ha resuelto este problema, seleccione resolver para intentarlo usted";
-            }
+            }/*ademas de todos los usarios que los hayan resuelto, se añade una opción resolver para que si el usuario la selecciona pueda resolver el problema */ 
             usuarios[indice3]="RESOLVER";
             int eleccion2 =0;
             while (eleccion2 !=-1){
                  eleccion2 = JOptionPane.showOptionDialog(this, mensaje, "Jugadores que lo han resuelto", 0, 0, null, usuarios, null);
-                 
+                 /*Se abre una pestaña en la que se le da a elegir al usuario entre ver las estadísticas de quien lo ha resuelto o resolverlo el, la cual se abrirá hasta seleccionar la última opción o cerrar la pestaña*/
                  if(eleccion2 !=-1 && eleccion2 <indice3) {
                      
                      JOptionPane.showMessageDialog(this,"Clasificación personal de " + usuarios[eleccion2]+

@@ -45,6 +45,14 @@ public class Usuario implements Serializable{
             return a/intentados;
         }
     }
+    @Override
+    public boolean equals (Object o){
+        if(o == null){ return false; }
+        if(this == o){ return true; }
+        if(this.getClass() != o.getClass()){ return false; }
+        Usuario u = (Usuario) o;
+        return(this.nombre.equals(u.nombre));
+    }
    
    public void leerEjemplo(String archivo)throws FileNotFoundException, IOException, 
             IllegalFormatException, IllegalTableroException, 
@@ -162,14 +170,15 @@ public class Usuario implements Serializable{
         }
         return aux;
     }
-    public boolean comprobarResuelto(Modelo p){
+    public boolean comprobarResuelto(Modelo p){//comprobar si el modelo está resuelto
         for(ModeloUsuario m : ModelosUsuario ){
             if(m.getModelo().equals(p)) return m.getResuelto();
         }
         return false;
     }
     
-    public boolean comprobarContenido(Modelo m){
+    public boolean comprobarContenido(Modelo m){/*comprobar si el Modelo está contenido
+    en algún ModeloUsuario del arrayList de ModelosUsuario*/
         for(ModeloUsuario modelo: ModelosUsuario ){
             if(modelo.getModelo().equals(m)) 
                 return true;
@@ -177,7 +186,8 @@ public class Usuario implements Serializable{
         return false;
     }
     
-    public int recogerIndiceModelo(Modelo m){
+    public int recogerIndiceModelo(Modelo m){/*Dado un Modelo m, encuentra el ModeloUsuario
+    que tiene por Modelo asociado a m, devolviendo el índice del arrayList en que fue encontrado.*/
         int contador = 0;
         for(ModeloUsuario modelo: ModelosUsuario ){
             if(modelo.getModelo().equals(m)) 
@@ -187,16 +197,15 @@ public class Usuario implements Serializable{
         return -1;
     }
     
-    public boolean jugar(Modelo M) {
+    public boolean jugar(Modelo M) {/*Este método comprueba si el modelo ya está 
+    dentro del array de modelos de usuario del usuario en cuestión, y en caso negativo lo añade.
+    Devuelve false si el modelo está resuelto, y true en caso contrario.*/
         if(!comprobarContenido(M)){
             ModelosUsuario.add(new ModeloUsuario(M, false, 0, 0));
-            if(comprobarContenido(M)){
-                System.out.println("añadido correctamente");//esto sucede
-            }
-            System.out.println("Su posicion es el "+this.recogerIndiceModelo(M));
+            //System.out.println("Su posicion es el "+this.recogerIndiceModelo(M));
             return true;    
         }else{
-            System.out.println("Su posicion es el "+this.recogerIndiceModelo(M));
+            //System.out.println("Su posicion es el "+this.recogerIndiceModelo(M));
             return !comprobarResuelto(M);
         }
     }

@@ -73,7 +73,7 @@ public class ManejadorDeBotones implements ActionListener {
                 null,//Icono a mostrar
                 opciones,//array con las elecciones posibles
                 opciones[0]);//Coronar en dama
-                char letra = 'x';
+                char letra = 'x';//valor basura que reescribiremos
                 switch(respuesta){
                     case 0:{
                         letra = 'D';
@@ -93,23 +93,27 @@ public class ManejadorDeBotones implements ActionListener {
                     }
                 }
                 try {
-                    t.coronarPeon(pAux, letra);
-                    if(t.JaqueMate(new Color ('n'))){
-                        interfazGrafica.sacarVictoria();
-                        modelo.setResuelto(true);
-                    }else{
+                    t.coronarPeon(pAux, letra);/*lanzamos sobre el tablero el método de coronar*/
+                    if(t.JaqueMate(new Color ('n'))){/*si se produce jaque mate sobre el rey negro*/
+                        interfazGrafica.sacarVictoria();//sacar mensaje de victoria
+                        modelo.setResuelto(true);//seleccionar el modelo como resuelto
+                    }else{//si no hay jaque mate
                         interfazGrafica.sacarError("La jugada introducida no es jaque mate.\n"
                                 + "Pulsa \"Aceptar\" para ver el movimiento que evita el jaque mate.");
-                        if(!modelo.getResuelto()){
-                            modelo.setErrores(modelo.getErrores() + 1);
+                        if(!modelo.getResuelto()){//si no está resuelto
+                            modelo.setErrores(modelo.getErrores() + 1);/*aumentar contador de errores*/
                         }
                     }
-                    interfazGrafica.actualizarFotoTablero(t);
-                    interfazGrafica.setEstadoBotonesClasificacion(true);
-                } catch (IllegalTableroException ex1) {//Nunca llegamos a este caso
+                    interfazGrafica.actualizarFotoTablero(t);/*actualizamos el tablero para ver la jugada*/
+                    interfazGrafica.setEstadoBotonesClasificacion(true);/*recuperamos la posibilidad del usuario
+                    para seguir realizando cualquier otra operación sobre la interfaz gráfica*/
+                } catch (IllegalTableroException ex1) {/*Nunca llegamos a este caso, ya que solo se pueden subir
+                    tablero legales*/
                     interfazGrafica.sacarError(ex1.getMessage());
                 }
             }finally{
+                /*en cualquier caso, desactivamos los botones del
+                tablero para evitar posibles errores*/
                 interfazGrafica.desactivarBotones();
             }
         }else{
